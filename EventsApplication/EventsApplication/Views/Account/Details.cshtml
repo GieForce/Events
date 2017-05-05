@@ -1,0 +1,50 @@
+﻿@model EventsApplication.Models.Account
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Account</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Gebruikersnaam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gebruikersnaam)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Activatiehash)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Activatiehash)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Geactiveerd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Geactiveerd)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
