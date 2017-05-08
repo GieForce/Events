@@ -26,9 +26,9 @@ namespace EventsApplication.Controllers
             return context.Insert(account);
         }
 
-        public bool Delete(Account account)
+        public bool Delete(int id)
         {
-            return context.Delete(account);
+            return context.Delete(id);
         }
 
         public List<Account> GetAllAccounts()

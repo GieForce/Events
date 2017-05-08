@@ -28,7 +28,19 @@ namespace EventsApplication.App_DAL
                         command.Parameters.AddWithValue("@id", id);
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            return ReaderToAccount(reader);
+                            //return ReaderToAccount(reader);
+
+                            while (reader.Read())
+                            {
+                                int userid = Convert.ToInt32(reader["ID"]);
+                                string gebruikersnaam = (string)reader["gebruikersnaam"];
+                                string email = (string)reader["email"];
+                                string activatiehash = (string)reader["activatiehash"];
+                                bool geactiveerd = Convert.ToBoolean(reader["geactiveerd"]);
+                                Account account = new Account(userid, gebruikersnaam, email, activatiehash, geactiveerd);
+                                return account;
+                            }
+                            return null;
                         }
                     }
                 }
@@ -54,6 +66,7 @@ namespace EventsApplication.App_DAL
                         command.Parameters.AddWithValue("@email", account.Email);
                         command.Parameters.AddWithValue("@activatiehash", account.Activatiehash);
                         command.Parameters.AddWithValue("@geactiveerd", account.Geactiveerd);
+                        command.ExecuteNonQuery();
                     }
                 }
                 return true;
@@ -69,7 +82,7 @@ namespace EventsApplication.App_DAL
         /// </summary>
         /// <param name="account"></param>
         /// <returns></returns>
-        public bool Delete(Account account)
+        public bool Delete(int id)
         {
             try
             {
@@ -79,7 +92,7 @@ namespace EventsApplication.App_DAL
                         "DELETE FROM account WHERE ID = @id";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@id", account.Id);
+                        command.Parameters.AddWithValue("@id", id);
                         command.ExecuteNonQuery();
                     }
                 }

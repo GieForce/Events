@@ -12,7 +12,7 @@ namespace EventsApplication.App_DAL
         Account GetById(int id);
         bool Insert(Account account);
 
-        bool Delete(Account account);
+        bool Delete(int id);
         List<Account> GetAllAccounts();
     }
 }
