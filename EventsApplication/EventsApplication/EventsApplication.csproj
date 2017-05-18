@@ -146,18 +146,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_DAL\AccountContext.cs" />
+    <Compile Include="App_DAL\BerichtContext.cs" />
     <Compile Include="App_DAL\Connection.cs" />
     <Compile Include="App_DAL\IAccountContext.cs" />
+    <Compile Include="App_DAL\IBerichtContext.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountRepository.cs" />
+    <Compile Include="Controllers\BerichtController.cs" />
+    <Compile Include="Controllers\BerichtRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\AccountBijdrage.cs" />
+    <Compile Include="Models\Bericht.cs" />
+    <Compile Include="Models\Categorie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +212,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Bericht\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
