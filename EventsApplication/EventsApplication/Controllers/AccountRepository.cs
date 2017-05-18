@@ -26,6 +26,11 @@ namespace EventsApplication.Controllers
             return context.Insert(account);
         }
 
+        public bool Update(Account account)
+        {
+            return context.Update(account);
+        }
+
         public bool Delete(int id)
         {
             return context.Delete(id);

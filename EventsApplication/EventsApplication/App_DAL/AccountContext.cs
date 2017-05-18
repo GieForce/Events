@@ -62,7 +62,7 @@ namespace EventsApplication.App_DAL
                         "INSERT INTO Account (gebruikersnaam, email, activatiehash, geactiveerd) VALUES (@gebruikersnaam, @email, @activatiehash, @geactiveerd)";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("gebruikersnaam", account.Gebruikersnaam);
+                        command.Parameters.AddWithValue("@gebruikersnaam", account.Gebruikersnaam);
                         command.Parameters.AddWithValue("@email", account.Email);
                         command.Parameters.AddWithValue("@activatiehash", account.Activatiehash);
                         command.Parameters.AddWithValue("@geactiveerd", account.Geactiveerd);
@@ -99,6 +99,36 @@ namespace EventsApplication.App_DAL
                 return true;
             }
             catch
+            {
+                return false;
+            }
+        }
+
+        public bool Update(Account account)
+        {
+            try
+            {
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query =
+                        "UPDATE account " +
+                        "SET gebruikersnaam = @gebruikersnaam, email = @email," +
+                        "activatiehash = @activatiehash, geactiveerd = 1" +
+                        "WHERE ID = @id";
+
+                        using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@gebruikersnaam", account.Gebruikersnaam);
+                        command.Parameters.AddWithValue("@email", account.Email);
+                        command.Parameters.AddWithValue("@activatiehash", account.Activatiehash);
+                        command.Parameters.AddWithValue("@geactiveerd", true);
+                        command.Parameters.AddWithValue("@ID", account.Id);
+                        command.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+            }
+            catch (Exception)
             {
                 return false;
             }
