@@ -146,18 +146,35 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_DAL\AccountContext.cs" />
+    <Compile Include="App_DAL\BezoekerContext.cs" />
     <Compile Include="App_DAL\Connection.cs" />
-    <Compile Include="App_DAL\IAccountContext.cs" />
+    <Compile Include="App_DAL\Interfaces\IAccountContext.cs" />
+    <Compile Include="App_DAL\Interfaces\IBezoekerContext.cs" />
+    <Compile Include="App_DAL\Interfaces\IMateriaalContext.cs" />
+    <Compile Include="App_DAL\Interfaces\IReserveringContext.cs" />
+    <Compile Include="App_DAL\Interfaces\IStandplaatsContext.cs" />
+    <Compile Include="App_DAL\MateriaalContext.cs" />
+    <Compile Include="App_DAL\ReserveringContext.cs" />
+    <Compile Include="App_DAL\StandplaatsContext.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AccountRepository.cs" />
+    <Compile Include="Controllers\Repositorys\AccountRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Repositorys\BezoekerRepository.cs" />
+    <Compile Include="Controllers\Repositorys\MateriaalRepository.cs" />
+    <Compile Include="Controllers\Repositorys\ReserveringRepository.cs" />
+    <Compile Include="Controllers\Repositorys\StandplaatsRepository.cs" />
+    <Compile Include="Controllers\ToegangscontrolesysteemController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Bezoeker.cs" />
+    <Compile Include="Models\Materiaal.cs" />
+    <Compile Include="Models\Reservering.cs" />
+    <Compile Include="Models\Standplaats.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
