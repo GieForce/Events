@@ -1,15 +1,17 @@
-﻿using System;
+﻿using EventsApplication.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using EventsApplication.App_DAL.Interfaces;
 
 namespace EventsApplication.Controllers.Repositorys
 {
     public class ReserveringRepository
     {
-        private readonly IReserveringDAO reserveringDao;
+        private readonly IReserveringContext reserveringDao;
 
-        public ReserveringRepository(IReserveringDAO reserveringDao)
+        public ReserveringRepository(IReserveringContext reserveringDao)
         {
             this.reserveringDao = reserveringDao;
         }

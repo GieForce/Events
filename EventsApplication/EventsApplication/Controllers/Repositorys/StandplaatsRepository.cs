@@ -2,46 +2,48 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using EventsApplication.App_DAL.Interfaces;
+using EventsApplication.Models;
 
 namespace EventsApplication.Controllers.Repositorys
 {
     public class StandplaatsRepository
     {
-        private readonly IStaanPlaatsDAO istaanplaatsDAO;
+        private readonly IStandplaatsContext istandplaatsContext;
 
-        public StandplaatsRepository(IStaanPlaatsDAO iStaanPlaatsDAO)
+        public StandplaatsRepository(IStandplaatsContext istandplaatsContext)
         {
-            istaanplaatsDAO = iStaanPlaatsDAO;
+            this.istandplaatsContext = istandplaatsContext;
         }
 
-        public List<Staanplaats> GetFreeStaanplaatsenByLocatie(Locatie locatie, DateTime begindatum, DateTime einddatum)
+        public List<Standplaats> GetFreeStaanplaatsenByLocatie(Locatie locatie, DateTime begindatum, DateTime einddatum)
         {
-            return istaanplaatsDAO.GetFreeStaanplaatsenByLocatie(locatie, begindatum, einddatum);
+            return istandplaatsContext.GetFreeStaanplaatsenByLocatie(locatie, begindatum, einddatum);
         }
 
-        public List<Staanplaats> GetByLocatie(Locatie locatie)
+        public List<Standplaats> GetByLocatie(Locatie locatie)
         {
-            return istaanplaatsDAO.GetByLocatie(locatie);
+            return istandplaatsContext.GetByLocatie(locatie);
         }
 
         public bool Insert(int locatieID, int prijs, int grootte, bool status, string kenmerk)
         {
-            return istaanplaatsDAO.Insert(locatieID, prijs, grootte, status, kenmerk);
+            return istandplaatsContext.Insert(locatieID, prijs, grootte, status, kenmerk);
         }
 
         public bool Delete(int id)
         {
-            return istaanplaatsDAO.Delete(id);
+            return istandplaatsContext.Delete(id);
         }
 
         public bool Update(int ID, int prijs, int grootte, bool status, string kenmerk)
         {
-            return istaanplaatsDAO.Update(ID, prijs, grootte, status, kenmerk);
+            return istandplaatsContext.Update(ID, prijs, grootte, status, kenmerk);
         }
 
         public int getLatestEventID()
         {
-            return istaanplaatsDAO.getLatestEventID();
+            return istandplaatsContext.getLatestEventID();
         }
     }
 }

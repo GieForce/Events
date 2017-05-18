@@ -1,5 +1,8 @@
-﻿using System;
+﻿using EventsApplication.App_DAL.Interfaces;
+using EventsApplication.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -37,7 +40,7 @@ namespace EventsApplication.App_DAL
                     }
                     catch
                     {
-                        MessageBox.Show("Kan geen data vinden");
+                        //MessageBox.Show("Kan geen data vinden");
                     }
                 }
             }
@@ -66,7 +69,7 @@ namespace EventsApplication.App_DAL
                     }
                     catch
                     {
-                        MessageBox.Show("Laden bezoeker mislukt.");
+                        //MessageBox.Show("Laden bezoeker mislukt.");
                         return null;
                     }
                 }
@@ -97,7 +100,7 @@ namespace EventsApplication.App_DAL
                     }
                     catch
                     {
-                        MessageBox.Show("Laden bezoeker mislukt.");
+                        //MessageBox.Show("Laden bezoeker mislukt.");
                         return null;
                     }
                 }
@@ -130,7 +133,7 @@ namespace EventsApplication.App_DAL
                     }
                     catch (SqlException e)
                     {
-                        System.Windows.Forms.MessageBox.Show(e.Message);
+                        //System.Windows.Forms.MessageBox.Show(e.Message);
                         throw;
                     }
                 }
@@ -171,7 +174,7 @@ namespace EventsApplication.App_DAL
                     }
                     catch (Exception e)
                     {
-                        System.Windows.Forms.MessageBox.Show(e.Message);
+                        //System.Windows.Forms.MessageBox.Show(e.Message);
                     }
                 }
             }
@@ -196,7 +199,7 @@ namespace EventsApplication.App_DAL
 
                     catch (Exception e)
                     {
-                        System.Windows.Forms.MessageBox.Show(e.Message);
+                        //System.Windows.Forms.MessageBox.Show(e.Message);
                         return false;
                     }
                 }
@@ -256,7 +259,7 @@ namespace EventsApplication.App_DAL
                     }
                     catch
                     {
-                        MessageBox.Show("Laden betaalstatus mislukt.");
+                        //MessageBox.Show("Laden betaalstatus mislukt.");
 
                     }
                 }

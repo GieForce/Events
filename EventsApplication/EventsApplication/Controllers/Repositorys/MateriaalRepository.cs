@@ -1,15 +1,17 @@
-﻿using System;
+﻿using EventsApplication.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using EventsApplication.App_DAL.Interfaces;
 
 namespace EventsApplication.Controllers.Repositorys
 {
     public class MateriaalRepository
     {
-        private IMateriaalDAO context;
+        private IMateriaalContext context;
 
-        public MateriaalRepository(IMateriaalDAO context)
+        public MateriaalRepository(IMateriaalContext context)
         {
             this.context = context;
         }

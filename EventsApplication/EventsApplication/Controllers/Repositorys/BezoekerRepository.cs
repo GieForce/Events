@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using EventsApplication.App_DAL.Interfaces;
+using EventsApplication.Models;
 
 namespace EventsApplication.Controllers.Repositorys
 {
     public class BezoekerRepository
     {
-        private IBezoekerDAO context;
+        private IBezoekerContext context;
 
-        public BezoekerRepository(IBezoekerDAO context)
+        public BezoekerRepository(IBezoekerContext context)
         {
             this.context = context;
         }

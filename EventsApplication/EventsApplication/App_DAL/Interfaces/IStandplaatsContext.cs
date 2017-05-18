@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventsApplication.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,9 +8,9 @@ namespace EventsApplication.App_DAL.Interfaces
 {
     public interface IStandplaatsContext
     {
-        List<Staanplaats> GetFreeStaanplaatsenByLocatie(Locatie locatie, DateTime begindatum, DateTime einddatum);
+        List<Standplaats> GetFreeStaanplaatsenByLocatie(Locatie locatie, DateTime begindatum, DateTime einddatum);
 
-        List<Staanplaats> GetByLocatie(Locatie locatie);
+        List<Standplaats> GetByLocatie(Locatie locatie);
 
         bool Insert(int locatieID, int prijs, int grootte, bool status, string kenmerk);
 

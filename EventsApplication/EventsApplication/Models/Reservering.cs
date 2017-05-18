@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventsApplication.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,7 +21,7 @@ namespace EventsApplication.Models
         private DateTime startDatum;
         private DateTime eindDatum;
         private List<Bezoeker> bezoekers;
-        private Staanplaats staanplaats;
+        private Standplaats staanplaats;
         private List<Materiaal> materialen;
 
         public List<Bezoeker> Bezoekers
@@ -87,7 +88,7 @@ namespace EventsApplication.Models
             get { return staanplaatsid; }
         }
 
-        public Staanplaats Staanplaats
+        public Standplaats Staanplaats
         {
             get { return this.staanplaats; }
         }
@@ -118,7 +119,7 @@ namespace EventsApplication.Models
             this.betaalstatus = betaalstatus;
         }
 
-        public Reservering(string naam, string adres, string woonplaats, int aantal, DateTime startDatum, DateTime eindDatum, bool betaalstatus, List<Bezoeker> bezoekers, Staanplaats staanplaats)
+        public Reservering(string naam, string adres, string woonplaats, int aantal, DateTime startDatum, DateTime eindDatum, bool betaalstatus, List<Bezoeker> bezoekers, Standplaats staanplaats)
         {
 
             bool isNotLetterOrDigit = adres.Any(x => !char.IsLetterOrDigit(x)) && !adres.Any(x => !char.IsWhiteSpace(x));
@@ -149,7 +150,7 @@ namespace EventsApplication.Models
 
         }
 
-        public Reservering(int id, int eventID, int staanplaatsid, string naam, string adres, string woonplaats, int aantal, DateTime startDatum, DateTime eindDatum, bool betaalstatus, List<Bezoeker> bezoekers, Staanplaats staanplaats)
+        public Reservering(int id, int eventID, int staanplaatsid, string naam, string adres, string woonplaats, int aantal, DateTime startDatum, DateTime eindDatum, bool betaalstatus, List<Bezoeker> bezoekers, Standplaats staanplaats)
         {
             this.id = id;
             this.eventID = eventID;

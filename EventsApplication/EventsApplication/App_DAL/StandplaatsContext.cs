@@ -1,5 +1,8 @@
-﻿using System;
+﻿using EventsApplication.App_DAL.Interfaces;
+using EventsApplication.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -7,10 +10,10 @@ namespace EventsApplication.App_DAL
 {
     public class StandplaatsContext : IStandplaatsContext
     {
-        public List<Staanplaats> GetFreeStaanplaatsenByLocatie(Locatie locatie, DateTime startdatum, DateTime einddatum)
+        public List<Standplaats> GetFreeStaanplaatsenByLocatie(Locatie locatie, DateTime startdatum, DateTime einddatum)
         {
             SqlConnection conn = Connection.SQLconnection;
-            List<Staanplaats> staanplaatsen = new List<Staanplaats>();
+            List<Standplaats> staanplaatsen = new List<Standplaats>();
             try
             {
                 string query =
@@ -28,7 +31,7 @@ namespace EventsApplication.App_DAL
                     decimal prijs = Convert.ToDecimal(reader["standplaats_prijs"].ToString());
                     string kenmerk = reader["standplaats_kenmerk"].ToString();
 
-                    staanplaatsen.Add(new Staanplaats(ID, prijs, grootte, false, kenmerk));
+                    staanplaatsen.Add(new Standplaats(ID, prijs, grootte, false, kenmerk));
                 }
                 conn.Close();
 
@@ -42,10 +45,10 @@ namespace EventsApplication.App_DAL
         }
 
 
-        public List<Staanplaats> GetByLocatie(Locatie locatie)
+        public List<Standplaats> GetByLocatie(Locatie locatie)
         {
             SqlConnection conn = Connection.SQLconnection;
-            List<Staanplaats> staanplaatsen = new List<Staanplaats>();
+            List<Standplaats> staanplaatsen = new List<Standplaats>();
             try
             {
                 string query = "SELECT * FROM dbo.Standplaatsen WHERE locatieID = @locatieid";
@@ -61,7 +64,7 @@ namespace EventsApplication.App_DAL
                     bool status = Convert.ToBoolean(reader["standplaats_status"].ToString());
                     string kenmerk = reader["standplaats_kenmerk"].ToString();
 
-                    staanplaatsen.Add(new Staanplaats(ID, prijs, grootte, status, kenmerk));
+                    staanplaatsen.Add(new Standplaats(ID, prijs, grootte, status, kenmerk));
                 }
                 conn.Close();
 

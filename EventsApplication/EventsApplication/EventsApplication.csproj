@@ -148,11 +148,15 @@
     <Compile Include="App_DAL\AccountContext.cs" />
     <Compile Include="App_DAL\BezoekerContext.cs" />
     <Compile Include="App_DAL\Connection.cs" />
+    <Compile Include="App_DAL\EvenementContext.cs" />
     <Compile Include="App_DAL\Interfaces\IAccountContext.cs" />
     <Compile Include="App_DAL\Interfaces\IBezoekerContext.cs" />
+    <Compile Include="App_DAL\Interfaces\IEvenementContext.cs" />
+    <Compile Include="App_DAL\Interfaces\ILocatieContext.cs" />
     <Compile Include="App_DAL\Interfaces\IMateriaalContext.cs" />
     <Compile Include="App_DAL\Interfaces\IReserveringContext.cs" />
     <Compile Include="App_DAL\Interfaces\IStandplaatsContext.cs" />
+    <Compile Include="App_DAL\LocatieContext.cs" />
     <Compile Include="App_DAL\MateriaalContext.cs" />
     <Compile Include="App_DAL\ReserveringContext.cs" />
     <Compile Include="App_DAL\StandplaatsContext.cs" />
@@ -163,15 +167,19 @@
     <Compile Include="Controllers\Repositorys\AccountRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Repositorys\BezoekerRepository.cs" />
+    <Compile Include="Controllers\Repositorys\EvenementRepository.cs" />
+    <Compile Include="Controllers\Repositorys\LocatieRepository.cs" />
     <Compile Include="Controllers\Repositorys\MateriaalRepository.cs" />
     <Compile Include="Controllers\Repositorys\ReserveringRepository.cs" />
     <Compile Include="Controllers\Repositorys\StandplaatsRepository.cs" />
-    <Compile Include="Controllers\ToegangscontrolesysteemController.cs" />
+    <Compile Include="Controllers\ReserveringController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Bezoeker.cs" />
+    <Compile Include="Models\Evenement.cs" />
+    <Compile Include="Models\Locatie.cs" />
     <Compile Include="Models\Materiaal.cs" />
     <Compile Include="Models\Reservering.cs" />
     <Compile Include="Models\Standplaats.cs" />
@@ -219,6 +227,7 @@
     <Content Include="Views\Account\Delete.cshtml" />
     <Content Include="Views\Account\Create.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Reservering\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
