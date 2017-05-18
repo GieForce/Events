@@ -158,6 +158,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Bestand.cs" />
+    <Compile Include="Models\Bijdrage.cs" />
+    <Compile Include="Models\BijdrageBericht.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
