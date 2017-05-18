@@ -41,7 +41,7 @@ namespace EventsApplication.Controllers
                 // TODO: Add insert logic here
                 Account account = new Account(collection["Gebruikersnaam"], collection["Email"], collection["Activatiehash"], false);
                 accountRepository.Insert(account);
-                return RedirectToAction("Home", "Index");
+                return RedirectToAction("Index");
             }
             catch
             {

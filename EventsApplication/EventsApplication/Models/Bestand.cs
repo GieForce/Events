@@ -5,7 +5,7 @@ using System.Web;
 
 namespace EventsApplication.Models
 {
-    public class Bestand
+    public class Bestand : Bijdrage
     {
         private int bijdrageId;
         private int categorieId;
@@ -36,7 +36,7 @@ namespace EventsApplication.Models
             set { grootte = value; }
         }
 
-        public Bestand(int bijdrageId, int categorieId, string bestandlocatie, int grootte)
+        public Bestand(int accountId, DateTime datum, string soort, int bijdrageId, int categorieId, string bestandlocatie, int grootte) : base(accountId, datum, soort)
         {
             this.bijdrageId = bijdrageId;
             this.categorieId = categorieId;
@@ -44,8 +44,9 @@ namespace EventsApplication.Models
             this.grootte = grootte;
         }
 
-        public Bestand(int categorieId, string bestandlocatie, int grootte)
+        public Bestand(int id, int accountId, DateTime datum, string soort, int bijdrageId, int categorieId, string bestandlocatie, int grootte) : base(id, accountId, datum, soort)
         {
+            this.bijdrageId = bijdrageId;
             this.categorieId = categorieId;
             this.bestandlocatie = bestandlocatie;
             this.grootte = grootte;

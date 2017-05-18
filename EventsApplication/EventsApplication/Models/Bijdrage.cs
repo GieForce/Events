@@ -5,7 +5,7 @@ using System.Web;
 
 namespace EventsApplication.Models
 {
-    public class Bijdrage
+    public abstract class Bijdrage
     {
         private int id;
         private int accountId;

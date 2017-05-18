@@ -12,5 +12,7 @@ namespace EventsApplication.Controllers
         {
             return View();
         }
+
+
     }
 }
