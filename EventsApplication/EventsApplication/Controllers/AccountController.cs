@@ -41,7 +41,7 @@ namespace EventsApplication.Controllers
                 // TODO: Add insert logic here
                 Account account = new Account(collection["Gebruikersnaam"], collection["Email"], collection["Activatiehash"], false);
                 accountRepository.Insert(account);
-                return RedirectToAction("Home", "Index");
+                return RedirectToAction("Index");
             }
             catch
             {
@@ -62,7 +62,7 @@ namespace EventsApplication.Controllers
             try
             {
                 // TODO: Add update logic here
-                Account account = new Account(collection["Gebruikersnaam"], collection["Email"], collection["Activatiehash"], Convert.ToBoolean(collection["Geactiveerd"]));
+                Account account = new Account(collection["Naam"], collection["Email"], collection["Activatiehash"], Convert.ToBoolean(collection["Geactiveerd"]));
                 accountRepository.Update(account);
                 return RedirectToAction("Index");
             }

@@ -1,0 +1,82 @@
+﻿@using EventsApplication.Controllers;
+@using EventsApplication.Models;
+@model IEnumerable<EventsApplication.Models.Event>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Account</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-12">
+                <button type="button" onclick="location.href='@Url.Action("Create")'">Create Account</button>
+            </div>
+
+        </div>
+    </div>
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ID1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Naam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Datumstart)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Datumeind)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Maxbezoekers)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Locatieid)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ID1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Naam)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Datumstart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Datumeind)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Maxbezoekers)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Locatieid)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
