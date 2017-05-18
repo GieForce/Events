@@ -1,11 +1,32 @@
-﻿@{
+﻿@using EventsApplication.Models
+@model List<Event>
+
+
+@{
     ViewBag.Title = "Home Page";
+    ViewBag.HideNavBar = true;
 }
 
-
-<div class="row">
-    <div class="col-md-12 ">
-        
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Poiret+One|Quicksand" rel="stylesheet">
+</head>
+@Styles.Render("~/Content/Home.css")
+<div class="vertical-center">
+    
+    <div class="container">
+        <h2>EYECT4EVENTS</h2>
+        <div class="row">
+            <div class="list-group-item active">
+                <h4 class="list-group-item-heading">Kies een evenement</h4>
+            </div>
+            <ul class="list-group">
+                @foreach (Event e in @Model)
+                {
+                    <a href="#" class="list-group-item">@e.Naam<span class="glyphicon glyphicon-menu-right"></span></a>
+                }
+            </ul>
+        </div>
     </div>
-   
+</div>
+<div class="page-bg">
 </div>
