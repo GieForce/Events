@@ -18,10 +18,12 @@
 
 }
 
-h2 {
+#titel{
     color: white;
     font-family: 'Poiret One', cursive;
+    margin-bottom: 40px;
 }
+
 
 a, h4 {
     text-align: center;
@@ -34,105 +36,4 @@ a, h4 {
 
     display: flex;
     align-items: center;
-}
-
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,500);
-.snip1400 {
-    font-family: 'Roboto', Arial, sans-serif;
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 500;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-}
-.snip1400 * {
-    box-sizing: border-box;
-}
-.snip1400 li {
-    display: inline-block;
-    list-style: outside none none;
-    margin: 0.5em 1em;
-    overflow: hidden;
-    position: relative;
-    border-radius: 3px;
-}
-.snip1400 li:before,
-.snip1400 li:after {
-    display: block;
-}
-.snip1400 li:before {
-    bottom: 0%;
-}
-.snip1400 li:after {
-    bottom: 75%;
-}
-.snip1400 a {
-    backface-visibility: hidden;
-    color: #e6e6e6;
-    display: block;
-    padding: 0.5em 1em;
-    position: relative;
-    text-align: center;
-    text-decoration: none;
-}
-.snip1400 a:before {
-    bottom: 25%;
-}
-.snip1400 a:after {
-    bottom: 50%;
-}
-.snip1400 a:hover {
-    color: #ffffff;
-}
-.snip1400 li:before,
-.snip1400 li:after,
-.snip1400 a:before,
-.snip1400 a:after {
-    background-color: #2980b9;
-    position: absolute;
-    height: 25%;
-    width: 100%;
-    left: 0;
-    content: '';
-    z-index: -1;
-    -webkit-transform: translateX(-100%);
-    transform: translateX(-100%);
-    -webkit-transition: all 0.35s ease;
-    transition: all 0.35s ease;
-}
-.snip1400 li:hover:before,
-.snip1400 li.current:before,
-.snip1400 li:hover:after,
-.snip1400 li.current:after,
-.snip1400 li:hover a:before,
-.snip1400 li.current a:before,
-.snip1400 li:hover a:after,
-.snip1400 li.current a:after {
-    -webkit-transform: translateX(0%);
-    transform: translateX(0%);
-}
-.snip1400 li:hover:before,
-.snip1400 li.current:before {
-    -webkit-transition-delay: 0s;
-    transition-delay: 0s;
-}
-.snip1400 li:hover:after,
-.snip1400 li.current:after {
-    -webkit-transition-delay: 0.225s;
-    transition-delay: 0.225s;
-}
-.snip1400 li:hover a:before,
-.snip1400 li.current a:before {
-    -webkit-transition-delay: 0.15s;
-    transition-delay: 0.15s;
-}
-.snip1400 li:hover a:after,
-.snip1400 li.current a:after {
-    -webkit-transition-delay: 0.075s;
-    transition-delay: 0.075s;
-}
-/* Demo purposes only */
-body {
-    background-color: #212121;
-    padding: 50px 0;
 }
