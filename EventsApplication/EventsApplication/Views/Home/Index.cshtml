@@ -24,7 +24,9 @@
             <ul class="list-group">
                 @foreach (Event e in @Model)
                 {
-                    <a href="#" class="list-group-item">@e.Naam<span class="glyphicon glyphicon-menu-right"></span></a>
+                    <form action="/home/index" method="post">
+                        <button type="submit" name="eventid" value="@e.ID1" class="btn">@e.Naam<span class="glyphicon glyphicon-menu-right"></span></button>
+                    </form>
                 }
             </ul>
         </div>

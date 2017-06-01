@@ -12,5 +12,6 @@ namespace EventsApplication.App_DAL
         List<Event> GetAllEvents();
         bool Insert(Event eventi);
         bool Delete(int id);
+        Event GetById(int eventId);
     }
 }

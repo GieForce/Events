@@ -169,6 +169,7 @@
     <Compile Include="Controllers\BijdrageController.cs" />
     <Compile Include="Controllers\BijdrageRepository.cs" />
     <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\MediaSharingController.cs" />
     <Compile Include="Controllers\Repositorys\EventRepository.cs" />
     <Compile Include="Controllers\Repositorys\AccountRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -178,7 +179,9 @@
     <Compile Include="Controllers\Repositorys\MateriaalRepository.cs" />
     <Compile Include="Controllers\Repositorys\ReserveringRepository.cs" />
     <Compile Include="Controllers\Repositorys\StandplaatsRepository.cs" />
+    <Compile Include="Controllers\ReserveerController.cs" />
     <Compile Include="Controllers\ReserveringController.cs" />
+    <Compile Include="Controllers\ToegangsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -258,6 +261,9 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Bericht\" />
     <Folder Include="Views\Hosting\" />
+    <Folder Include="Views\MediaSharing\" />
+    <Folder Include="Views\Reserveer\" />
+    <Folder Include="Views\Toegangs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

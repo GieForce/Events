@@ -94,6 +94,45 @@ namespace EventsApplication.App_DAL
                 return false;
             }
         }
+
+        public Event GetById(int eventId)
+        {
+            Event re = null;
+            try
+            {
+
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query =
+                        "SELECT * FROM EVENT WHERE id = @id";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", eventId);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                int eventid = Convert.ToInt32(reader["ID"]);
+                                int locatie = Convert.ToInt32(reader["locatie_id"]);
+                                string naam = (string)reader["naam"];
+                                DateTime start = Convert.ToDateTime(reader["datumstart"]);
+                                DateTime einde = Convert.ToDateTime(reader["datumEinde"]);
+                                int bezoekers = Convert.ToInt32(reader["maxBezoekers"]);
+                                re = new Event(eventid, naam, start, einde, bezoekers, locatie);
+
+                            }
+
+                        }
+                    }
+                }
+                return re;
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 
     

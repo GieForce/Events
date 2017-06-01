@@ -12,6 +12,7 @@ namespace EventsApplication.Controllers
     public class EventController : Controller
     {
         EventRepository eventrepository = new EventRepository(new EventContext());
+
         // GET: Event
         public ActionResult Index()
         {

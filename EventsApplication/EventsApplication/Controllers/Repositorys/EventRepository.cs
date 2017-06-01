@@ -30,5 +30,10 @@ namespace EventsApplication.Controllers
         {
             return context.GetAllEvents();
         }
+
+        public Event GetById(int eventId)
+        {
+            return context.GetById(eventId);
+        }
     }
 }
