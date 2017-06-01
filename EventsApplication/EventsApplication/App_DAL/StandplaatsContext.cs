@@ -31,7 +31,7 @@ namespace EventsApplication.App_DAL
                     decimal prijs = Convert.ToDecimal(reader["standplaats_prijs"].ToString());
                     string kenmerk = reader["standplaats_kenmerk"].ToString();
 
-                    staanplaatsen.Add(new Standplaats(ID, prijs, grootte, false, kenmerk));
+                    //staanplaatsen.Add(new Standplaats(ID, prijs, grootte, false, kenmerk));
                 }
                 conn.Close();
 
@@ -64,7 +64,7 @@ namespace EventsApplication.App_DAL
                     bool status = Convert.ToBoolean(reader["standplaats_status"].ToString());
                     string kenmerk = reader["standplaats_kenmerk"].ToString();
 
-                    staanplaatsen.Add(new Standplaats(ID, prijs, grootte, status, kenmerk));
+                    //staanplaatsen.Add(new Standplaats(ID, prijs, grootte, status, kenmerk));
                 }
                 conn.Close();
 

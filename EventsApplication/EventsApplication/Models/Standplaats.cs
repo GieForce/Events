@@ -7,34 +7,33 @@ namespace EventsApplication.Models
 {
     public class Standplaats
     {
+        private int id;
         private int plaatsnummer;
-        private decimal prijs;
-        private int grootte;
-        private bool bezet;
-        private string plaatstag;
+        private int capacitieit;
+        private bool comfort;
+        private bool handicap;
+        private bool kraan;
+
+        public int Id => id;
 
         public int Plaatsnummer => plaatsnummer;
 
-        public decimal Prijs => prijs;
+        public int Capacitieit => capacitieit;
 
-        public int Grootte => grootte;
+        public bool Comfort => comfort;
 
-        public bool Bezet => bezet;
+        public bool Handicap => handicap;
 
-        public string Plaatstag => plaatstag;
+        public bool Kraan => kraan;
 
-        public Standplaats(int plaatsnummer, decimal prijs, int grootte, bool bezet, string tag)
+        public Standplaats(int id, int plaatsnummer, int capacitieit, bool comfort, bool handicap, bool kraan)
         {
+            this.id = id;
             this.plaatsnummer = plaatsnummer;
-            this.prijs = prijs;
-            this.grootte = grootte;
-            this.bezet = bezet;
-            this.plaatstag = tag;
-        }
-
-        public override string ToString()
-        {
-            return "Plaats " + this.plaatsnummer + " | P/N: €" + this.prijs + " | Pers: " + this.Grootte + " | " + this.Plaatstag;
+            this.capacitieit = capacitieit;
+            this.comfort = comfort;
+            this.handicap = handicap;
+            this.kraan = kraan;
         }
     }
 }
