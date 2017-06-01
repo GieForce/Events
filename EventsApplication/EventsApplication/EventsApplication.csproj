@@ -146,12 +146,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_DAL\AccountContext.cs" />
-    <Compile Include="App_DAL\BezoekerContext.cs" />
     <Compile Include="App_DAL\BijdrageContext.cs" />
     <Compile Include="App_DAL\Connection.cs" />
     <Compile Include="App_DAL\Interfaces\IBijdrageContext.cs" />
     <Compile Include="App_DAL\Interfaces\IAccountContext.cs" />
-    <Compile Include="App_DAL\Interfaces\IBezoekerContext.cs" />
     <Compile Include="App_DAL\Interfaces\ILocatieContext.cs" />
     <Compile Include="App_DAL\Interfaces\IMateriaalContext.cs" />
     <Compile Include="App_DAL\Interfaces\IReserveringContext.cs" />
@@ -174,7 +172,6 @@
     <Compile Include="Controllers\Repositorys\AccountRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HostingController.cs" />
-    <Compile Include="Controllers\Repositorys\BezoekerRepository.cs" />
     <Compile Include="Controllers\Repositorys\LocatieRepository.cs" />
     <Compile Include="Controllers\Repositorys\MateriaalRepository.cs" />
     <Compile Include="Controllers\Repositorys\ReserveringRepository.cs" />
@@ -188,7 +185,6 @@
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AccountBijdrage.cs" />
     <Compile Include="Models\Bericht.cs" />
-    <Compile Include="Models\Bezoeker.cs" />
     <Compile Include="Models\Evenement.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Locatie.cs" />
@@ -210,6 +206,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Home.css" />
     <Content Include="Content\navbar.css" />
+    <Content Include="Content\Toegangscontrole.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -261,6 +258,8 @@
     <Content Include="Views\Hosting\EventIndex.cshtml" />
     <Content Include="Views\Hosting\AccountEdit.cshtml" />
     <Content Include="Views\Toegangs\Index.cshtml" />
+    <Content Include="Views\Toegangs\Materialen.cshtml" />
+    <Content Include="Views\Toegangs\Aanwezig.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

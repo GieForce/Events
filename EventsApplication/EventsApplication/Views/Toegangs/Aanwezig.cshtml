@@ -1,0 +1,63 @@
+﻿@model IEnumerable<EventsApplication.Models.Bezoeker>
+@{
+    ViewBag.Title = "Aanwezig";
+}
+
+<h2>Aanwezige bezoekers</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Naam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Telefoonnummer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Aanwezig)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Account.)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Locatieid)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Naam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Datumstart)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Datumeind)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Maxbezoekers)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Locatieid)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    }
+
+</table>

@@ -64,6 +64,7 @@ namespace EventsApplication.Models
             this.email = email;
             this.activatiehash = activatiehash;
             this.geactiveerd = geactiveerd;
+            this.wachtwoord = wachtwoord;
             this.telefoonnummer = telefoonnummer;
         }
 
