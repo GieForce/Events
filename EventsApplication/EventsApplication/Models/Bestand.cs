@@ -7,16 +7,9 @@ namespace EventsApplication.Models
 {
     public class Bestand : Bijdrage
     {
-        private int bijdrageId;
         private int categorieId;
         private string bestandlocatie;
         private int grootte;
-
-        public int BijdrageId
-        {
-            get { return bijdrageId; }
-            set { bijdrageId = value; }
-        }
 
         public int CategorieId
         {
@@ -36,17 +29,15 @@ namespace EventsApplication.Models
             set { grootte = value; }
         }
 
-        public Bestand(int accountId, DateTime datum, string soort, int bijdrageId, int categorieId, string bestandlocatie, int grootte) : base(accountId, datum, soort)
+        public Bestand(int accountId, DateTime datum, string soort, int categorieId, string bestandlocatie, int grootte) : base(accountId, datum, soort)
         {
-            this.bijdrageId = bijdrageId;
             this.categorieId = categorieId;
             this.bestandlocatie = bestandlocatie;
             this.grootte = grootte;
         }
 
-        public Bestand(int id, int accountId, DateTime datum, string soort, int bijdrageId, int categorieId, string bestandlocatie, int grootte) : base(id, accountId, datum, soort)
+        public Bestand(int id, int accountId, DateTime datum, string soort, int categorieId, string bestandlocatie, int grootte) : base(id, accountId, datum, soort)
         {
-            this.bijdrageId = bijdrageId;
             this.categorieId = categorieId;
             this.bestandlocatie = bestandlocatie;
             this.grootte = grootte;

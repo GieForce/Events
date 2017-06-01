@@ -37,13 +37,14 @@ namespace EventsApplication.App_DAL
             {
                 string query =
                     "SELECT * FROM BIJDRAGE b " +
-                    "LEFT JOIN CATEGORIE c on c.bijdrage_id = b.ID " +
-                    "LEFT JOIN BESTAND be on be.bijdrage_id = b.ID " +
-                    "LEFT JOIN BERICHT br on br.bijdrage_id = b.ID " +
-                    "LEFT JOIN ACCOUNT a on a.ID = b.account_id " +
-                    "LEFT JOIN ACCOUNT_BIJDRAGE ab on ab.bijdrage_id = b.ID";
+                    "LEFT JOIN CATEGORIE c on b.ID = c.bijdrage_id " +
+                    "LEFT JOIN BESTAND be on b.ID = be.bijdrage_id " +
+                    "LEFT JOIN BERICHT br on b.ID = br.bijdrage_id " +
+                    "LEFT JOIN ACCOUNT a on b.account_id = a.ID " +
+                    "LEFT JOIN ACCOUNT_BIJDRAGE ab on b.ID = ab.bijdrage_id";
 
-                    
+
+
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
@@ -73,6 +74,7 @@ namespace EventsApplication.App_DAL
                     Convert.ToInt32(reader["account_id"]),
                     Convert.ToDateTime(reader["datum"]),
                     Convert.ToString(reader["soort"]),
+                    Convert.ToInt32(reader["categorie_id"] != DBNull.Value ? Convert.ToInt32(reader["categorie_id"]) : 0),
                     Convert.ToString(reader["naam"])
                 );
             }
@@ -84,10 +86,9 @@ namespace EventsApplication.App_DAL
                         Convert.ToInt32(reader["account_id"]),
                         Convert.ToDateTime(reader["datum"]),
                         Convert.ToString(reader["soort"]),
-                        Convert.ToInt32(reader["bijdrage_id"] != DBNull.Value ? Convert.ToInt32(reader["bijdrage_id"]) : 0),
                         Convert.ToInt32(reader["categorie_id"] != DBNull.Value ? Convert.ToInt32(reader["categorie_id"]) : 0),
-                        Convert.ToString(reader["bestandslocatie"]),
-                        Convert.ToInt32(reader["grootte"])
+                        Convert.ToString(reader["bestandslocatie"] != DBNull.Value ? Convert.ToString(reader["bestandslocatie"]) : ""),
+                        Convert.ToInt32(reader["grootte"] != DBNull.Value ? Convert.ToInt32(reader["grootte"]) : 0)
                     );
                 }
             }

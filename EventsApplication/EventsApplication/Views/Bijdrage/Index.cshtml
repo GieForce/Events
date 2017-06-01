@@ -1,6 +1,8 @@
 ﻿@using EventsApplication.Models
 @model IEnumerable<EventsApplication.Models.Bijdrage>
 
+<link rel="stylesheet" type="text/css" href="~/Content/Media.css">
+
 @{
     ViewBag.Title = "Index";
 }
@@ -21,53 +23,88 @@
         <th>
             @Html.DisplayNameFor(model => model.Soort)
         </th>
-        
+
         <th>
             @Html.DisplayNameFor(model => model.Soort)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    
-    if(item is Bericht)
+    @foreach (var item in Model)
     {
-        Bericht b = (Bericht) item;
-        <tr>
-            <td>
-                @b.Titel
-            </td>
-            <td>
-                @b.Inhoud
-            </td>
-        </tr>
-    }
-    if (item is Categorie)
-    {
-        Categorie b = (Categorie)item;
-        <tr>
-            <td>
-                @b.Naam
-            </td>
-            <td>
-                @b.Datum
-            </td>
-        </tr>
-    }
-    if (item is Bestand)
-    {
-        Bestand b = (Bestand)item;
-        <tr>
-            <td>
-                @b.Bestandlocatie
-            </td>
-            <td>
-                @b.CategorieId
-            </td>
-        </tr>
-    }
 
 
-}
+
+        @*if (item is Bestand)
+        {
+            Bestand b = (Bestand)item;
+            <tr>
+                <td>
+                    @b.Bestandlocatie
+                </td>
+                <td>
+                    @b.CategorieId
+                </td>
+            </tr>
+        }*@
+
+        <div class="col-md-8 col-md-offset-2">
+            <div class="[ panel panel-default ] panel-google-plus">
+                <div class="dropdown">
+                    <span class="dropdown-toggle" type="button" data-toggle="dropdown">
+                        <span class="[ glyphicon glyphicon-chevron-down ]"></span>
+                    </span>
+                    <ul class="dropdown-menu" role="menu">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                        <li role="presentation" class="divider"></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+                    </ul>
+                </div>
+                @if (item is Categorie)
+                {
+                    Categorie b = (Categorie)item;
+                    <div class="panel-google-plus-tags">
+                        <ul>
+                            <li>#@b.Naam</li>
+                        </ul>
+                    </div>
+                }
+                @if (item is Bestand)
+                {
+                    Bestand b = (Bestand)item;
+                    <div class="panel-heading">
+                        <img class="img-circle pull-left" src="https://lh3.googleusercontent.com/-CxXg7_7ylq4/AAAAAAAAAAI/AAAAAAAAAQ8/LhCIKQC5Aq4/s46-c-k-no/photo.jpg" alt="Mouse0270" />
+                        <h3>@b.Bestandlocatie</h3>
+                        <h5><span>Shared publicly</span> - <span>Jun 25, 2014</span> </h5>
+                    </div>
+
+                    <div class="panel-body">
+                        <p>@b.CategorieId</p>
+                        <a class="panel-google-plus-image" href="https://plus.google.com/photos/115077481218689845626/albums/6028961040749409985/6028961040650432498">
+                            <img src="https://lh4.googleusercontent.com/-6oO7re5XALY/U6ssH6ijb_I/AAAAAAAAARQ/CeqYilQH7dI/w426-h428/svbtle-inspired-menu.PNG" />
+                        </a>
+                    </div>
+                }
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-default">+1</button>
+                    <button type="button" class="btn btn-default">
+                        <span class="[ glyphicon glyphicon-share-alt ]"></span>
+                    </button>
+                    <div class="input-placeholder">Add a comment...</div>
+                </div>
+                <div class="panel-google-plus-comment">
+                    <img class="img-circle" src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46" alt="User Image" />
+                    <div class="panel-google-plus-textarea">
+                        <textarea rows="4"></textarea>
+                        <button type="submit" class="[ btn btn-success disabled ]">Post comment</button>
+                        <button type="reset" class="[ btn btn-default ]">Cancel</button>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    }
 
 </table>

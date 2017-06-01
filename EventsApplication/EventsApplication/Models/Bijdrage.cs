@@ -7,6 +7,7 @@ namespace EventsApplication.Models
 {
     public abstract class Bijdrage
     {
+
         private int id;
         private int accountId;
         private DateTime datum;
