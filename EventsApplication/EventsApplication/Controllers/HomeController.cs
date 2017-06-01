@@ -15,7 +15,7 @@ namespace EventsApplication.Controllers
         public ActionResult Index()
         {
             EventRepository eventRepo = new EventRepository(new EventContext());
-            return View(eventRepo.GetAll());
+            return View(eventRepo.GetAllEvents());
         }
 
 

@@ -32,7 +32,7 @@ namespace EventsApplication.App_DAL
                                 DateTime start = Convert.ToDateTime(reader["datumstart"]);
                                 DateTime einde = Convert.ToDateTime(reader["datumEinde"]);
                                 int bezoekers = Convert.ToInt32(reader["maxBezoekers"]);
-                                events.Add(new Event(eventid, naam, start, einde, bezoekers));
+                                events.Add(new Event(eventid, naam, start, einde, bezoekers, locatie));
                                
                             }
                             

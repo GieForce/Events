@@ -17,12 +17,12 @@ namespace EventsApplication.Models
           set { naam = value; }
         }
 
-        public Categorie(int id, int categorieID, string naam)  : base(id)
+        public Categorie(int id, int categorieID, string naam) /*: base(id)*/
         {
             this.naam = naam;
         }
 
-        public Categorie(int categorieID, string naam) : base(id)
+        public Categorie(int categorieID, string naam) /*: base(id)*/
         {
             this.naam = naam;
         }

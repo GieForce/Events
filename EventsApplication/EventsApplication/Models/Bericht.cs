@@ -11,8 +11,6 @@ namespace EventsApplication.Models
         private string titel;
         private string inhoud;
 
-
-
         public string Titel
         {
             get { return titel; }
@@ -25,12 +23,12 @@ namespace EventsApplication.Models
             set { inhoud = value; }
         }
 
-        public Bericht(int id, string titel, string inhoud) : base(id)
+        public Bericht(int id, string titel, string inhoud)/* : base(id)*/
         {
             this.titel = titel;
             this.inhoud = inhoud;
         }
-        public Bericht(string titel, string inhoud) 
+        public Bericht(string titel, string inhoud)
         {
             this.titel = titel;
             this.inhoud = inhoud;

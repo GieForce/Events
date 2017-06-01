@@ -149,6 +149,7 @@
     <Compile Include="App_DAL\BezoekerContext.cs" />
     <Compile Include="App_DAL\BijdrageContext.cs" />
     <Compile Include="App_DAL\Connection.cs" />
+    <Compile Include="App_DAL\Interfaces\IBijdrageContext.cs" />
     <Compile Include="App_DAL\Interfaces\IAccountContext.cs" />
     <Compile Include="App_DAL\Interfaces\IBezoekerContext.cs" />
     <Compile Include="App_DAL\Interfaces\ILocatieContext.cs" />
@@ -168,12 +169,11 @@
     <Compile Include="Controllers\BijdrageController.cs" />
     <Compile Include="Controllers\BijdrageRepository.cs" />
     <Compile Include="Controllers\EventController.cs" />
-    <Compile Include="Controllers\EventRepository.cs" />
+    <Compile Include="Controllers\Repositorys\EventRepository.cs" />
     <Compile Include="Controllers\Repositorys\AccountRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HostingController.cs" />
     <Compile Include="Controllers\Repositorys\BezoekerRepository.cs" />
-    <Compile Include="Controllers\Repositorys\EvenementRepository.cs" />
     <Compile Include="Controllers\Repositorys\LocatieRepository.cs" />
     <Compile Include="Controllers\Repositorys\MateriaalRepository.cs" />
     <Compile Include="Controllers\Repositorys\ReserveringRepository.cs" />
@@ -184,6 +184,7 @@
     </Compile>
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AccountBijdrage.cs" />
+    <Compile Include="Models\Bericht.cs" />
     <Compile Include="Models\Bezoeker.cs" />
     <Compile Include="Models\Evenement.cs" />
     <Compile Include="Models\Event.cs" />
@@ -270,6 +271,9 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
@@ -290,6 +294,9 @@
           <CustomServerUrl>
           </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <servers defaultServer="SelfHostServer">
+            <server name="SelfHostServer" exePath="" cmdArgs="" url="http://localhost:50559/" workingDir="" />
+          </servers>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

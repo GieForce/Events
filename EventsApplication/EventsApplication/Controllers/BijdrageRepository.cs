@@ -21,25 +21,25 @@ namespace EventsApplication.Controllers
             return context.GetById(id);
         }
 
-        public bool Insert(Bijdrage bijdrage)
-        {
-            return context.Insert(bijdrage);
-        }
+        //public bool Insert(Bijdrage bijdrage)
+        //{
+        //    return context.Insert(bijdrage);
+        //}
 
 
-        public bool Delete(int id)
-        {
-            return context.Delete(id);
-        }
+        //public bool Delete(int id)
+        //{
+        //    return context.Delete(id);
+        //}
 
         public List<Bijdrage> GetAllBijdrages()
         {
             return context.GetAllBijdrages();
         }
 
-        public bool Update(Bijdrage bijdrage)
-        {
-            return context.Update(bijdrage);
-        }
+        //public bool Update(Bijdrage bijdrage)
+        //{
+        //    return context.Update(bijdrage);
+        //}
     }
 }
