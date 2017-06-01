@@ -22,7 +22,7 @@
                 <h4 class="list-group-item-heading">Kies een evenement</h4>
             </div>
             <ul class="list-group">
-                @foreach (Event e in @Model)
+                @foreach (Event e in Model)
                 {
                     <form action="/home/index" method="post">
                         <button type="submit" name="eventid" value="@e.ID1" class="btn">@e.Naam<span class="glyphicon glyphicon-menu-right"></span></button>

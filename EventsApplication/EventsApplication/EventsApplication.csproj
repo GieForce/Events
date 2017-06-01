@@ -197,7 +197,6 @@
     <Compile Include="Models\Standplaats.cs" />
     <Compile Include="Models\Bestand.cs" />
     <Compile Include="Models\Bijdrage.cs" />
-    <Compile Include="Models\BijdrageBericht.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="App_DAL\BerichtContext.cs" />
     <Compile Include="App_DAL\Interfaces\IBerichtContext.cs" />

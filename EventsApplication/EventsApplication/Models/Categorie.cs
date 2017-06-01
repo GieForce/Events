@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EventsApplication.Models
 {
-    public class Categorie
+    public class Categorie : Bijdrage
     {
         private string naam;
    
@@ -17,12 +17,12 @@ namespace EventsApplication.Models
           set { naam = value; }
         }
 
-        public Categorie(int id, int categorieID, string naam) /*: base(id)*/
+        public Categorie(int id, int accountId, DateTime datum, string soort, string naam) : base(id, accountId, datum, soort)
         {
             this.naam = naam;
         }
 
-        public Categorie(int categorieID, string naam) /*: base(id)*/
+        public Categorie(int accountId, DateTime datum, string soort, string naam) : base(accountId, datum, soort)
         {
             this.naam = naam;
         }
