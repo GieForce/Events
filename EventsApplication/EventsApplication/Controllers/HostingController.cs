@@ -86,8 +86,8 @@ namespace EventsApplication.Controllers
             try
             {
                 // TODO: Add update logic here
-                Account account = new Account(Convert.ToInt32(collection["Id"]),collection["Naam"], collection["Email"], collection["Activatiehash"], Convert.ToBoolean(collection["Geactiveerd"]), collection["Wachtwoord"], collection["Telefoonnummer"]);
-                accountrepo.Update(account);
+                Account accounto = new Account(Convert.ToInt32(collection["Id"]),collection["GebruikersNaam"], collection["Email"], collection["Activatiehash"], true, collection["Wachtwoord"], collection["Telefoonnummer"]);
+                accountrepo.Update(accounto);
                 return RedirectToAction("AccountIndex");
             }
             catch

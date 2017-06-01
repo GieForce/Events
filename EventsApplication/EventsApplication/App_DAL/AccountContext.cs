@@ -115,11 +115,7 @@ namespace EventsApplication.App_DAL
                 using (SqlConnection connection = Connection.SQLconnection)
                 {
                     string query =
-                        "UPDATE account " +
-                        "SET gebruikersnaam = @gebruikersnaam, email = @email," +
-                        "activatiehash = @activatiehash, geactiveerd = 1" +
-                        "wachtwoord = @wachtwoord, telefoonnummer = @telefoonnummer" +
-                        "WHERE ID = @id";
+                        "UPDATE ACCOUNT SET gebruikersnaam = @gebruikersnaam, email = @email, activatiehash = @activatiehash, geactiveerd = 1, wachtwoord = @wachtwoord, telefoonnummer = @telefoonnummer WHERE ID = @ID";
 
                         using (SqlCommand command = new SqlCommand(query, connection))
                     {

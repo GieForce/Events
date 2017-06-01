@@ -60,11 +60,12 @@ namespace EventsApplication.Models
         public Account(int id, string gebruikersnaam, string email, string activatiehash, bool geactiveerd, string wachtwoord, string telefoonnummer)
         {
             ID = id;
-            this.gebruikersnaam = gebruikersnaam;
-            this.email = email;
-            this.activatiehash = activatiehash;
-            this.geactiveerd = geactiveerd;
-            this.telefoonnummer = telefoonnummer;
+            Gebruikersnaam = gebruikersnaam;
+            Email = email;
+            Activatiehash = activatiehash;
+            Geactiveerd = geactiveerd;
+            Wachtwoord = wachtwoord;
+            Telefoonnummer = telefoonnummer;
         }
 
         public Account(string gebruikersnaam, string email, string activatiehash, bool geactiveerd, string wachtwoord, string telefoonnummer)

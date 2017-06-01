@@ -12,11 +12,11 @@ namespace EventsApplication.App_DAL.Interfaces
 
         List<Standplaats> GetByLocatie(Locatie locatie);
 
-        bool Insert(int locatieID, int prijs, int grootte, bool status, string kenmerk);
+        bool Insert(int locatieID, decimal prijs, int capaciteit, int nummer);
 
         bool Delete(int id);
 
-        bool Update(int ID, int prijs, int grootte, bool status, string kenmerk);
+        bool Update(int ID, int capaciteit, int nummer, decimal prijs);
 
         int getLatestEventID();
     }
