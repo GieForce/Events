@@ -260,13 +260,13 @@
     <Content Include="Views\Hosting\AccountCreate.cshtml" />
     <Content Include="Views\Hosting\EventIndex.cshtml" />
     <Content Include="Views\Hosting\AccountEdit.cshtml" />
+    <Content Include="Views\Toegangs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Bericht\" />
     <Folder Include="Views\MediaSharing\" />
     <Folder Include="Views\Reserveer\" />
-    <Folder Include="Views\Toegangs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
