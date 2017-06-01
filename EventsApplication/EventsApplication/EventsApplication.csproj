@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
@@ -149,10 +149,8 @@
     <Compile Include="App_DAL\BezoekerContext.cs" />
     <Compile Include="App_DAL\BijdrageContext.cs" />
     <Compile Include="App_DAL\Connection.cs" />
-    <Compile Include="App_DAL\EvenementContext.cs" />
     <Compile Include="App_DAL\Interfaces\IAccountContext.cs" />
     <Compile Include="App_DAL\Interfaces\IBezoekerContext.cs" />
-    <Compile Include="App_DAL\Interfaces\IEvenementContext.cs" />
     <Compile Include="App_DAL\Interfaces\ILocatieContext.cs" />
     <Compile Include="App_DAL\Interfaces\IMateriaalContext.cs" />
     <Compile Include="App_DAL\Interfaces\IReserveringContext.cs" />
@@ -162,19 +160,16 @@
     <Compile Include="App_DAL\ReserveringContext.cs" />
     <Compile Include="App_DAL\StandplaatsContext.cs" />
     <Compile Include="App_DAL\EventContext.cs" />
-    <Compile Include="App_DAL\IAccountContext.cs" />
-    <Compile Include="App_DAL\IEventContext.cs" />
+    <Compile Include="App_DAL\Interfaces\IEventContext.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AccountRepository.cs" />
     <Compile Include="Controllers\BijdrageController.cs" />
     <Compile Include="Controllers\BijdrageRepository.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventRepository.cs" />
     <Compile Include="Controllers\Repositorys\AccountRepository.cs" />
-    <Compile Include="Controllers\EventRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HostingController.cs" />
     <Compile Include="Controllers\Repositorys\BezoekerRepository.cs" />
@@ -184,29 +179,26 @@
     <Compile Include="Controllers\Repositorys\ReserveringRepository.cs" />
     <Compile Include="Controllers\Repositorys\StandplaatsRepository.cs" />
     <Compile Include="Controllers\ReserveringController.cs" />
-    <Compile Include="Controllers\ReserveringController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\AccountBijdrage.cs" />
     <Compile Include="Models\Bezoeker.cs" />
     <Compile Include="Models\Evenement.cs" />
+    <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Locatie.cs" />
     <Compile Include="Models\Materiaal.cs" />
     <Compile Include="Models\Reservering.cs" />
     <Compile Include="Models\Standplaats.cs" />
-    <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Bestand.cs" />
     <Compile Include="Models\Bijdrage.cs" />
     <Compile Include="Models\BijdrageBericht.cs" />
-    <Compile Include="Models\Event.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="App_DAL\BerichtContext.cs" />
-    <Compile Include="App_DAL\IBerichtContext.cs" />
+    <Compile Include="App_DAL\Interfaces\IBerichtContext.cs" />
     <Compile Include="Controllers\BerichtController.cs" />
     <Compile Include="Controllers\BerichtRepository.cs" />
-    <Compile Include="Models\AccountBijdrage.cs" />
-    <Compile Include="Models\AccountBijdrage.cs" />
     <Compile Include="Models\Categorie.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -243,7 +235,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -263,7 +257,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Bericht\" />
     <Folder Include="Views\Hosting\" />
-    <Folder Include="Views\Event\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
