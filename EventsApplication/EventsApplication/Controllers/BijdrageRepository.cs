@@ -21,10 +21,10 @@ namespace EventsApplication.Controllers
             return context.GetById(id);
         }
 
-        //public bool Insert(Bijdrage bijdrage)
-        //{
-        //    return context.Insert(bijdrage);
-        //}
+        public bool Insert(Bericht bericht)
+        {
+            return context.Insert(bericht);
+        }
 
 
         //public bool Delete(int id)

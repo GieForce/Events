@@ -23,5 +23,26 @@ namespace EventsApplication.Controllers
         {
             return View();
         }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(Bericht bericht)
+        {
+            bericht.Datum = DateTime.Now;
+            try
+            {
+
+                repository.Insert(new Bericht(bericht.Id, bericht.AccountId, bericht.Datum, bericht.Soort, bericht.Titel, bericht.Inhoud));
+                return RedirectToAction("Index", "MediaSharing");
+            }
+            catch
+            {
+                return View();
+            }
+        }
     }
 }

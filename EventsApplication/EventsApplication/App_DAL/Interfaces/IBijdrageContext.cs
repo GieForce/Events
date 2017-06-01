@@ -10,7 +10,7 @@ namespace EventsApplication.App_DAL
     public interface IBijdrageContext
     {
         Bijdrage GetById(int id);
-        //bool Insert(Bijdrage bijdrage);
+        bool Insert(Bericht bijdrage);
 
         //bool Delete(int id);
         List<Bijdrage> GetAllBijdrages();

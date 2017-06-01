@@ -65,6 +65,31 @@ namespace EventsApplication.App_DAL
 
         //}
 
+        public bool Insert(Bericht bericht)
+        {
+            try
+            {
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query = "INSERT INTO BERICHT (bijdrage_id, titel, inhoud) VALUES (@bijdrageID, @titel, @inhoud)";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@bijdrageID", 8);
+                        command.Parameters.AddWithValue("@titel", bericht.Titel);
+                        command.Parameters.AddWithValue("@inhoud", bericht.Inhoud);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         private Bijdrage CreateBijdrageFromReader(SqlDataReader reader)
         {
             if (reader["soort"].ToString() == "categorie")
