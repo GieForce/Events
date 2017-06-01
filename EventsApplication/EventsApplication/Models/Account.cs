@@ -12,6 +12,8 @@ namespace EventsApplication.Models
         private string email;
         private string activatiehash;
         private bool geactiveerd;
+        private string wachtwoord;
+        private string telefoonnummer;
 
         public int Id
         {
@@ -42,22 +44,38 @@ namespace EventsApplication.Models
             get { return geactiveerd; }
             set { geactiveerd = value; }
         }
+        
+        public string Wachtwoord
+        {
+            get { return wachtwoord; }
+            set { wachtwoord = value; }
+        }
 
-        public Account(int id, string gebruikersnaam, string email, string activatiehash, bool geactiveerd)
+        public string Telefoonnummer
+        {
+            get { return telefoonnummer; }
+            set { telefoonnummer = value; }
+        }
+
+        public Account(int id, string gebruikersnaam, string email, string activatiehash, bool geactiveerd, string wachtwoord, string telefoonnummer)
         {
             ID = id;
             this.gebruikersnaam = gebruikersnaam;
             this.email = email;
             this.activatiehash = activatiehash;
             this.geactiveerd = geactiveerd;
+            this.telefoonnummer = telefoonnummer;
         }
 
-        public Account(string gebruikersnaam, string email, string activatiehash, bool geactiveerd)
+        public Account(string gebruikersnaam, string email, string activatiehash, bool geactiveerd, string wachtwoord, string telefoonnummer)
         {
             this.gebruikersnaam = gebruikersnaam;
             this.email = email;
             this.activatiehash = activatiehash;
             this.geactiveerd = geactiveerd;
+            this.telefoonnummer = telefoonnummer;
         }
+
+        
     }
 }

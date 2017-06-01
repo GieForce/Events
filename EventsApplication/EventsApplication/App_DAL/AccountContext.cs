@@ -37,7 +37,9 @@ namespace EventsApplication.App_DAL
                                 string email = (string)reader["email"];
                                 string activatiehash = (string)reader["activatiehash"];
                                 bool geactiveerd = Convert.ToBoolean(reader["geactiveerd"]);
-                                Account account = new Account(userid, gebruikersnaam, email, activatiehash, geactiveerd);
+                                string wachtwoord = (string)reader["wachtwoord"];
+                                string telefoonnummer = (string)reader["telefoonnummer"];
+                                Account account = new Account(userid, gebruikersnaam, email, activatiehash, geactiveerd, wachtwoord, telefoonnummer);
                                 return account;
                             }
                             return null;
@@ -59,13 +61,15 @@ namespace EventsApplication.App_DAL
                 using (SqlConnection connection = Connection.SQLconnection)
                 {
                     string query =
-                        "INSERT INTO Account (gebruikersnaam, email, activatiehash, geactiveerd) VALUES (@gebruikersnaam, @email, @activatiehash, @geactiveerd)";
+                        "INSERT INTO Account (gebruikersnaam, email, activatiehash, geactiveerd, wachtwoord, telefoonnummer) VALUES (@gebruikersnaam, @email, @activatiehash, @geactiveerd, @wachtwoord, @telefoonnummer)";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@gebruikersnaam", account.Gebruikersnaam);
                         command.Parameters.AddWithValue("@email", account.Email);
                         command.Parameters.AddWithValue("@activatiehash", account.Activatiehash);
                         command.Parameters.AddWithValue("@geactiveerd", account.Geactiveerd);
+                        command.Parameters.AddWithValue("@wachtwoord", account.Wachtwoord);
+                        command.Parameters.AddWithValue("@telefoonnummer", account.Telefoonnummer);
                         command.ExecuteNonQuery();
                     }
                 }
@@ -114,6 +118,7 @@ namespace EventsApplication.App_DAL
                         "UPDATE account " +
                         "SET gebruikersnaam = @gebruikersnaam, email = @email," +
                         "activatiehash = @activatiehash, geactiveerd = 1" +
+                        "wachtwoord = @wachtwoord, telefoonnummer = @telefoonnummer" +
                         "WHERE ID = @id";
 
                         using (SqlCommand command = new SqlCommand(query, connection))
@@ -123,6 +128,8 @@ namespace EventsApplication.App_DAL
                         command.Parameters.AddWithValue("@activatiehash", account.Activatiehash);
                         command.Parameters.AddWithValue("@geactiveerd", true);
                         command.Parameters.AddWithValue("@ID", account.Id);
+                        command.Parameters.AddWithValue("@wachtwoord", account.Wachtwoord);
+                        command.Parameters.AddWithValue("@telefoonnummer", account.Telefoonnummer);
                         command.ExecuteNonQuery();
                         return true;
                     }
@@ -188,8 +195,10 @@ namespace EventsApplication.App_DAL
                 Convert.ToString(reader["gebruikersnaam"]),
                 Convert.ToString(reader["email"]),
                 Convert.ToString(reader["activatiehash"]),
-                Convert.ToBoolean(reader["geactiveerd"])
-            );
+                Convert.ToBoolean(reader["geactiveerd"]),
+                Convert.ToString(reader["wachtwoord"]),
+                Convert.ToString(reader["telefoonnummer"])
+                );
         }
     }
 }
