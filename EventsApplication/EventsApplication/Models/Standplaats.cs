@@ -7,6 +7,7 @@ namespace EventsApplication.Models
 {
     public class Standplaats
     {
+        private int id;
         private int plaatsnummer;
         private int locatieid;
         private int capaciteit;
