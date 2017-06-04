@@ -15,13 +15,14 @@ namespace EventsApplication.App_DAL
             SqlConnection conn = Connection.SQLconnection;
             try
             {
-                string query = "INSERT INTO dbo.locatie(locatie_naam, locatie_adres, locatie_plaatsen, eventplattegrond_url) VALUES(@locatie_naam, @locatie_adres, @locatie_plaatsen, @locatie_url)";
+                string query = "INSERT INTO dbo.LOCATIE(naam, straat, nr, postcode, plaats) VALUES(@naam, @straat, @nr, @postcode, @plaats)";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.CommandText = query;
-                cmd.Parameters.AddWithValue("@locatie_naam", locatie.Naam);
-                cmd.Parameters.AddWithValue("@locatie_adres", locatie.Adres);
-                cmd.Parameters.AddWithValue("@locatie_plaatsen", locatie.Plaatsen);
-                cmd.Parameters.AddWithValue("@locatie_url", locatie.LocatieUrl);
+                cmd.Parameters.AddWithValue("@naam", locatie.Naam);
+                cmd.Parameters.AddWithValue("@straat", locatie.Straat);
+                cmd.Parameters.AddWithValue("@nr", locatie.Nr);
+                cmd.Parameters.AddWithValue("@postcode", locatie.Postcode);
+                cmd.Parameters.AddWithValue("@plaats", locatie.Plaats);
 
                 cmd.ExecuteNonQuery();
                 conn.Close();
@@ -42,13 +43,14 @@ namespace EventsApplication.App_DAL
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    string naam = reader["locatie_naam"].ToString();
-                    string adres = reader["locatie_adres"].ToString();
-                    int plaatsen = Convert.ToInt32(reader["locatie_plaatsen"].ToString());
+                    string naam = reader["naam"].ToString();
+                    string straat = reader["straat"].ToString();
+                    int nr = Convert.ToInt32(reader["nr"].ToString());
                     int id = Convert.ToInt32(reader["ID"].ToString());
-                    string locatieUrl = reader["eventplattegrond_url"].ToString();
+                    string postcode = reader["postcode"].ToString();
+                    string plaats = reader["plaats"].ToString();
 
-                    locaties.Add(new Locatie(naam, adres, plaatsen, id, locatieUrl));
+                    locaties.Add(new Locatie(naam, straat, nr, id, postcode, plaats));
                 }
                 conn.Close();
 
@@ -65,7 +67,7 @@ namespace EventsApplication.App_DAL
                 using (SqlConnection connection = Connection.SQLconnection)
                 {
                     string query =
-                        "SELECT * FROM dbo.locatie INNER JOIN [event] ON [event].locatieID = locatie.ID WHERE [event].id = @id";
+                        "SELECT * FROM dbo.LOCATIE INNER JOIN [EVENT] ON [event].locatie_id = LOCATIE.ID WHERE [EVENT].ID = @id";
                     SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@id", evenement.Id);
 
@@ -74,12 +76,13 @@ namespace EventsApplication.App_DAL
 
                         while (reader.Read())
                         {
-                            string naam = reader["locatie_naam"].ToString();
-                            string adres = reader["locatie_adres"].ToString();
-                            int plaatsen = Convert.ToInt32(reader["locatie_plaatsen"].ToString());
+                            string naam = reader["naam"].ToString();
+                            string straat = reader["straat"].ToString();
+                            int nr = Convert.ToInt32(reader["nr"].ToString());
                             int id = Convert.ToInt32(reader["ID"].ToString());
-                            string locatieUrl = reader["eventplattegrond_url"].ToString();
-                            locatieReturn = new Locatie(naam, adres, plaatsen, id, locatieUrl);
+                            string postcode = reader["postcode"].ToString();
+                            string plaats = reader["plaats"].ToString();
+                            locatieReturn = new Locatie(naam, straat, nr, id, postcode, plaats);
                         }
                         connection.Close();
                     }
@@ -97,7 +100,7 @@ namespace EventsApplication.App_DAL
             SqlConnection conn = Connection.SQLconnection;
             try
             {
-                string query = "DELETE FROM dbo.locatie WHERE dbo.locatie.ID = @id";
+                string query = "DELETE FROM dbo.LOCATIE WHERE dbo.LOCATIE.ID = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
 
                 cmd.CommandText = query;
@@ -118,14 +121,15 @@ namespace EventsApplication.App_DAL
             SqlConnection conn = Connection.SQLconnection;
             try
             {
-                string query = "UPDATE locatie SET locatie_naam = @locatie_naam, locatie_adres = @locatie_adres, locatie_plaatsen = @locatie_plaatsen, eventplattegrond_url = @locatie_url WHERE ID = @id";
+                string query = "UPDATE LOCATIE SET naam = @naam, straat = @straat, nr = @nr, postcode = @postcode, plaats = @plaats WHERE ID = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.CommandText = query;
                 cmd.Parameters.AddWithValue("@id", locatie.Id);
-                cmd.Parameters.AddWithValue("@locatie_naam", locatie.Naam);
-                cmd.Parameters.AddWithValue("@locatie_adres", locatie.Adres);
-                cmd.Parameters.AddWithValue("@locatie_plaatsen", locatie.Plaatsen);
-                cmd.Parameters.AddWithValue("@locatie_url", locatie.LocatieUrl);
+                cmd.Parameters.AddWithValue("@naam", locatie.Naam);
+                cmd.Parameters.AddWithValue("@straat", locatie.Straat);
+                cmd.Parameters.AddWithValue("@nr", locatie.Nr);
+                cmd.Parameters.AddWithValue("@postcode", locatie.Postcode);
+                cmd.Parameters.AddWithValue("@plaats", locatie.Plaats);
 
                 cmd.ExecuteNonQuery();
                 conn.Close();

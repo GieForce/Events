@@ -11,9 +11,10 @@ namespace EventsApplication.Models
     {
         private int id;
         private string naam;
-        private string adres;
-        private int plaatsen;
-        private string locatieUrl;
+        private string straat;
+        private int nr;
+        private string postcode;
+        private string plaats;
 
         private List<Standplaats> staanplaatsen;
 
@@ -26,14 +27,14 @@ namespace EventsApplication.Models
             get { return naam; }
         }
 
-        public string Adres
+        public string Straat
         {
-            get { return adres; }
+            get { return straat; }
         }
 
-        public int Plaatsen
+        public int Nr
         {
-            get { return plaatsen; }
+            get { return nr; }
         }
 
         public List<Standplaats> Standplaatsen
@@ -41,33 +42,40 @@ namespace EventsApplication.Models
             get { return Standplaatsen; }
         }
 
-        public string LocatieUrl
+        public string Postcode
         {
-            get { return locatieUrl; }
+            get { return postcode; }
         }
 
-        public Locatie(string naam, string adres, int plaatsen, int id, string locatieUrl)
+        public string Plaats
+        {
+            get { return plaats; }
+        }
+
+        public Locatie(string naam, string straat, int nr, int id, string postcode, string plaats)
         {
             this.naam = naam;
-            this.adres = adres;
-            this.plaatsen = plaatsen;
+            this.straat = straat;
+            this.nr = nr;
             this.id = id;
             this.staanplaatsen = new StandplaatsRepository(new StandplaatsContext()).GetByLocatie(this);
-            this.locatieUrl = locatieUrl;
+            this.postcode = postcode;
+            this.plaats = plaats;
         }
 
-        public Locatie(string naam, string adres, int plaatsen, string locatieUrl)
+        public Locatie(string naam, string straat, int nr, string postcode, string plaats)
         {
             this.naam = naam;
-            this.adres = adres;
-            this.plaatsen = plaatsen;
+            this.straat = straat;
+            this.nr = nr;
             this.staanplaatsen = new StandplaatsRepository(new StandplaatsContext()).GetByLocatie(this);
-            this.locatieUrl = locatieUrl;
+            this.postcode = postcode;
+            this.plaats = plaats;
         }
 
         public override string ToString()
         {
-            return "Naam: " + naam + " Adres: " + adres + " Plaatsen: " + plaatsen;
+            return "Naam: " + naam + " Straat: " + straat + " nr: " + nr + "Postcode" + postcode + "Plaats" + plaats;
         }
     }
 }

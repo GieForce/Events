@@ -264,12 +264,15 @@
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Reservering\Index.cshtml" />
     <Content Include="Views\Reservering\Index.cshtml" />
+    <Content Include="Views\Hosting\AccountIndex.cshtml" />
+    <Content Include="Views\Hosting\AccountCreate.cshtml" />
+    <Content Include="Views\Hosting\EventIndex.cshtml" />
+    <Content Include="Views\Hosting\AccountEdit.cshtml" />
     <Content Include="Views\Bijdrage\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Bericht\" />
-    <Folder Include="Views\Hosting\" />
     <Folder Include="Views\MediaSharing\" />
     <Folder Include="Views\Reserveer\" />
     <Folder Include="Views\Toegangs\" />

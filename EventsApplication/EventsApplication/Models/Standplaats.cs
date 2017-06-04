@@ -8,33 +8,52 @@ namespace EventsApplication.Models
     public class Standplaats
     {
         private int plaatsnummer;
+        private int locatieid;
+        private int capaciteit;
         private decimal prijs;
-        private int grootte;
-        private bool bezet;
-        private string plaatstag;
 
-        public int Plaatsnummer => plaatsnummer;
-
-        public decimal Prijs => prijs;
-
-        public int Grootte => grootte;
-
-        public bool Bezet => bezet;
-
-        public string Plaatstag => plaatstag;
-
-        public Standplaats(int plaatsnummer, decimal prijs, int grootte, bool bezet, string tag)
+        public int Plaatsnummer
         {
-            this.plaatsnummer = plaatsnummer;
-            this.prijs = prijs;
-            this.grootte = grootte;
-            this.bezet = bezet;
-            this.plaatstag = tag;
+            get { return plaatsnummer; }
+            set { plaatsnummer = value; }
+        }
+
+        public int Locatieid
+        {
+            get { return locatieid; }
+            set { locatieid = value; }
+        }
+
+        public int Capaciteit
+        {
+            get { return capaciteit; }
+            set { capaciteit = value; }
+        }
+
+        public decimal Prijs
+        {
+            get { return prijs; }
+            set { prijs = value; }
+        }
+
+        public Standplaats(int plaatsnummer, int locatieid, int capaciteit, decimal prijs)
+        {
+            Plaatsnummer = plaatsnummer;
+            Locatieid = locatieid;
+            Capaciteit = capaciteit;
+            Prijs = prijs;
+        }
+
+        public Standplaats(int plaatsnummer, int capaciteit, decimal prijs)
+        {
+            Plaatsnummer = plaatsnummer;
+            Capaciteit = capaciteit;
+            Prijs = prijs;
         }
 
         public override string ToString()
         {
-            return "Plaats " + this.plaatsnummer + " | P/N: €" + this.prijs + " | Pers: " + this.Grootte + " | " + this.Plaatstag;
+            return "Plaats " + this.Plaatsnummer + " | P/N: €" + Prijs + " | Pers: " + Capaciteit;
         }
     }
 }

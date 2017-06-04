@@ -13,10 +13,8 @@ namespace EventsApplication.Models
         private DateTime startDatum;
         private DateTime eindDatum;
         private int id;
-
-        private Locatie locatie;
-        private List<Reservering> reserveringen;
-        private List<Materiaal> materialen;
+        private int locatieid;
+        private int maxbezoekers;
 
         public string Naam
         {
@@ -42,26 +40,35 @@ namespace EventsApplication.Models
             set { id = value; }
         }
 
-        public Locatie Locatie
+        public int Locatieid
         {
-            get { return locatie; }
-            set { locatie = value; }
+            get { return locatieid; }
+            set { locatieid = value; }
         }
 
-        public Evenement(string naam, DateTime startDatum, DateTime eindDatum)
+        public int Maxbezoekers
+        {
+            get { return maxbezoekers; }
+            set { maxbezoekers = value; }
+        }
+
+        public Evenement(string naam, DateTime startDatum, DateTime eindDatum, int locatieid, int maxbezoekers)
         {
             this.naam = naam;
             this.startDatum = startDatum;
             this.eindDatum = eindDatum;
+            this.locatieid = locatieid;
+            this.maxbezoekers = maxbezoekers;
         }
 
-        public Evenement(int id, string naam, DateTime startDatum, DateTime eindDatum)
+        public Evenement(int id, string naam, DateTime startDatum, DateTime eindDatum, int locatieid, int maxbezoekers)
         {
             this.id = id;
             this.naam = naam;
             this.startDatum = startDatum;
             this.eindDatum = eindDatum;
-            this.locatie = new LocatieRepository(new LocatieContext()).GetByEvenement(this);
+            this.locatieid = locatieid;
+            this.maxbezoekers = maxbezoekers;
         }
 
         public override string ToString()

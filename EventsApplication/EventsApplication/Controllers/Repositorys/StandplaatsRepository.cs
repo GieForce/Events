@@ -26,9 +26,9 @@ namespace EventsApplication.Controllers.Repositorys
             return istandplaatsContext.GetByLocatie(locatie);
         }
 
-        public bool Insert(int locatieID, int prijs, int grootte, bool status, string kenmerk)
+        public bool Insert(int locatieID, decimal prijs, int capaciteit, int nummer)
         {
-            return istandplaatsContext.Insert(locatieID, prijs, grootte, status, kenmerk);
+            return istandplaatsContext.Insert(locatieID, prijs, capaciteit, nummer);
         }
 
         public bool Delete(int id)
@@ -36,9 +36,9 @@ namespace EventsApplication.Controllers.Repositorys
             return istandplaatsContext.Delete(id);
         }
 
-        public bool Update(int ID, int prijs, int grootte, bool status, string kenmerk)
+        public bool Update(int ID, int capaciteit, int nummer, decimal prijs)
         {
-            return istandplaatsContext.Update(ID, prijs, grootte, status, kenmerk);
+            return istandplaatsContext.Update(ID, capaciteit, nummer, prijs);
         }
 
         public int getLatestEventID()

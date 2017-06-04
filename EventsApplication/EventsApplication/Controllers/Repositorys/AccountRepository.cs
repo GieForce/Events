@@ -40,5 +40,12 @@ namespace EventsApplication.Controllers
         {
             return context.GetAllAccounts();
         }
+
+        public Guid newactivationhash()
+        {
+            Guid g;
+            g = Guid.NewGuid();
+            return g;
+        }
     }
 }
