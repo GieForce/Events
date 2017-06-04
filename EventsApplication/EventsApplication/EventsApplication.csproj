@@ -154,10 +154,14 @@
     <Compile Include="App_DAL\Interfaces\IBezoekerContext.cs" />
     <Compile Include="App_DAL\Interfaces\ILocatieContext.cs" />
     <Compile Include="App_DAL\Interfaces\IMateriaalContext.cs" />
+    <Compile Include="App_DAL\Interfaces\IProductCatContext.cs" />
+    <Compile Include="App_DAL\Interfaces\IProductContext.cs" />
     <Compile Include="App_DAL\Interfaces\IReserveringContext.cs" />
     <Compile Include="App_DAL\Interfaces\IStandplaatsContext.cs" />
     <Compile Include="App_DAL\LocatieContext.cs" />
     <Compile Include="App_DAL\MateriaalContext.cs" />
+    <Compile Include="App_DAL\ProductCatContext.cs" />
+    <Compile Include="App_DAL\ProductContext.cs" />
     <Compile Include="App_DAL\ReserveringContext.cs" />
     <Compile Include="App_DAL\StandplaatsContext.cs" />
     <Compile Include="App_DAL\EventContext.cs" />
@@ -177,6 +181,8 @@
     <Compile Include="Controllers\Repositorys\BezoekerRepository.cs" />
     <Compile Include="Controllers\Repositorys\LocatieRepository.cs" />
     <Compile Include="Controllers\Repositorys\MateriaalRepository.cs" />
+    <Compile Include="Controllers\Repositorys\ProductCatRepository.cs" />
+    <Compile Include="Controllers\Repositorys\ProductRepository.cs" />
     <Compile Include="Controllers\Repositorys\ReserveringRepository.cs" />
     <Compile Include="Controllers\Repositorys\StandplaatsRepository.cs" />
     <Compile Include="Controllers\ReserveerController.cs" />
@@ -193,6 +199,8 @@
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Locatie.cs" />
     <Compile Include="Models\Materiaal.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductCat.cs" />
     <Compile Include="Models\Reservering.cs" />
     <Compile Include="Models\Standplaats.cs" />
     <Compile Include="Models\Bestand.cs" />
