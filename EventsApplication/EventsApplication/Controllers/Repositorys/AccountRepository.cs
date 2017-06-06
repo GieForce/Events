@@ -21,6 +21,16 @@ namespace EventsApplication.Controllers
             return context.GetById(id);
         }
 
+        public List<Account> GetAllAccounts()
+        {
+            return context.GetAllAccounts();
+        }
+
+        public List<Account> GetAllAccountsPresent()
+        {
+            return context.GetAllAccountsPresent();
+        }
+
         public bool Insert(Account account)
         {
             return context.Insert(account);
@@ -34,11 +44,6 @@ namespace EventsApplication.Controllers
         public bool Delete(int id)
         {
             return context.Delete(id);
-        }
-
-        public List<Account> GetAllAccounts()
-        {
-            return context.GetAllAccounts();
         }
 
         public Guid newactivationhash()

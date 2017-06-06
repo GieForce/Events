@@ -10,6 +10,7 @@ namespace EventsApplication.Controllers
 {
     public class AccountController : Controller
     {
-        
+
     }
+
 }
