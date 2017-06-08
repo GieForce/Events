@@ -67,7 +67,7 @@ namespace EventsApplication.App_DAL
             {
                 using (SqlConnection connection = Connection.SQLconnection)
                 {
-                    string query = "INSERT INTO Reservering (product_id, volgnummer, barcode) VALUES (@productID, @volgnummer, @barcode)";
+                    string query = "INSERT INTO PRODUCTEXEMPLAAR (product_id, volgnummer, barcode) VALUES (@productID, @volgnummer, @barcode)";
 
 
 

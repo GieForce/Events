@@ -15,8 +15,7 @@ namespace EventsApplication.App_DAL
             {
                 using (SqlConnection connection = Connection.SQLconnection)
                 {
-                    string query =
-                        "SELECT * FROM PRODUCTCAT WHERE id = @id";
+                    string query = "SELECT * FROM PRODUCTCAT WHERE id = @id";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
@@ -47,8 +46,7 @@ namespace EventsApplication.App_DAL
 
                 using (SqlConnection connection = Connection.SQLconnection)
                 {
-                    string query =
-                        "SELECT * FROM PRODUCTCAT";
+                    string query = "SELECT * FROM PRODUCTCAT";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
@@ -76,8 +74,7 @@ namespace EventsApplication.App_DAL
             {
                 using (SqlConnection connection = Connection.SQLconnection)
                 {
-                    string query =
-                        "SELECT * FROM PRODUCTCAT WHERE id = (SELECT productcat_id FROM product WHERE id = @id)";
+                    string query = "SELECT * FROM PRODUCTCAT WHERE id = (SELECT productcat_id FROM product WHERE id = @id)";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
@@ -107,8 +104,7 @@ namespace EventsApplication.App_DAL
             {
                 using (SqlConnection connection = Connection.SQLconnection)
                 {
-                    string query =
-                        "SELECT * FROM productcat WHERE productcat_id = @id";
+                    string query = "SELECT * FROM productcat WHERE productcat_id = @id";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
@@ -137,11 +133,11 @@ namespace EventsApplication.App_DAL
             {
                 using (SqlConnection connection = Connection.SQLconnection)
                 {
-                    string query =
-                        "INSERT INTO PRODUCTCAT VALUES (0,@naam)";
+                    string query = "INSERT INTO PRODUCTCAT VALUES (@addcat,@naam)";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@naam", productCat.Naam);
+                        command.Parameters.AddWithValue("@addcat", DBNull.Value);
                         command.ExecuteNonQuery();
                     }
                 }
@@ -158,8 +154,7 @@ namespace EventsApplication.App_DAL
             {
                 using (SqlConnection connection = Connection.SQLconnection)
                 {
-                    string query =
-                        "INSERT INTO PRODUCTCAT VALUES (@pid ,@naam)";
+                    string query = "INSERT INTO PRODUCTCAT VALUES (@pid ,@naam)";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@pid", parentCat.Id);
@@ -180,8 +175,7 @@ namespace EventsApplication.App_DAL
             {
                 using (SqlConnection connection = Connection.SQLconnection)
                 {
-                    string query =
-                        "DELETE FROM productcat WHERE ID = @id";
+                    string query = "DELETE FROM productcat WHERE ID = @id";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@id", productCat.Id);
@@ -192,6 +186,37 @@ namespace EventsApplication.App_DAL
             catch
             {
 
+            }
+        }
+
+        public ProductCat getlatestcategorie()
+        {
+            ProductCat productcat = null;
+            try
+            {
+
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query = "SELECT * FROM PRODUCTCAT WHERE ID IN (SELECT MAX(ID) FROM PRODUCTCAT)";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                productcat = ProductCatFromReader(reader);
+
+                            }
+
+                        }
+                    }
+                }
+                return productcat;
+            }
+            catch
+            {
+                return null;
             }
         }
 

@@ -17,8 +17,7 @@ namespace EventsApplication.App_DAL
 
                 using (SqlConnection connection = Connection.SQLconnection)
                 {
-                    string query =
-                        "SELECT * FROM PRODUCT";
+                    string query = "SELECT * FROM PRODUCT";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
@@ -49,8 +48,7 @@ namespace EventsApplication.App_DAL
 
                 using (SqlConnection connection = Connection.SQLconnection)
                 {
-                    string query =
-                        "SELECT * FROM PRODUCT WHERE productcat_id = @id";
+                    string query = "SELECT * FROM PRODUCT WHERE productcat_id = @id";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
@@ -80,8 +78,7 @@ namespace EventsApplication.App_DAL
             {
                 using (SqlConnection connection = Connection.SQLconnection)
                 {
-                    string query =
-                        "DELETE FROM PRODUCT WHERE ID = @id";
+                    string query = "DELETE FROM PRODUCT WHERE ID = @id";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@id", product.Id);
@@ -101,8 +98,7 @@ namespace EventsApplication.App_DAL
             {
                 using (SqlConnection connection = Connection.SQLconnection)
                 {
-                    string query =
-                        "INSERT INTO PRODUCT VALUES (@productcat, @merk, @serie, @typenummer, @prijs)";
+                    string query = "INSERT INTO PRODUCT VALUES (@productcat, @merk, @serie, @typenummer, @prijs)";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@productcat", product.Categorie.Id);
@@ -117,6 +113,37 @@ namespace EventsApplication.App_DAL
             catch (Exception)
             {
 
+            }
+        }
+
+        public Product getlatestproduct()
+        {
+            Product product = null;
+            try
+            {
+
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query = "SELECT * FROM PRODUCT WHERE ID IN (SELECT MAX(ID) FROM PRODUCT)";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                product = ProductFromReader(reader);
+
+                            }
+
+                        }
+                    }
+                }
+                return product;
+            }
+            catch
+            {
+                return null;
             }
         }
 

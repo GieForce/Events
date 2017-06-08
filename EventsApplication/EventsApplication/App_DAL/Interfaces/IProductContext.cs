@@ -16,5 +16,7 @@ namespace EventsApplication
         void Delete(Product product);
 
         void Insert(Product product);
+
+        Product getlatestproduct();
     }
 }

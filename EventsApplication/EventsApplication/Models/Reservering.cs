@@ -21,11 +21,11 @@ namespace EventsApplication.Models
         private DateTime startDatum;
         private DateTime eindDatum;
         private Standplaats staanplaats;
-        private List<Materiaal> materialen;
+        private List<Product> products;
 
-        public List<Materiaal> Materialen
+        public List<Product> Materialen
         {
-            get { return materialen; }
+            get { return products; }
         }
 
         public string Naam
@@ -139,7 +139,7 @@ namespace EventsApplication.Models
             this.eindDatum = eindDatum;
             this.betaalstatus = betaalstatus;
             this.staanplaats = staanplaats;
-            this.materialen = new List<Materiaal>();
+            this.products = new List<Product>();
 
         }
 
@@ -156,12 +156,12 @@ namespace EventsApplication.Models
             this.eindDatum = eindDatum;
             this.betaalstatus = betaalstatus;
             this.staanplaats = staanplaats;
-            this.materialen = new List<Materiaal>();
+            this.products = new List<Product>();
         }
 
-        public void AddMateriaal(Materiaal materiaal)
+        public void AddMateriaal(Product product)
         {
-            materialen.Add(materiaal);
+            products.Add(product);
         }
     }
 }
