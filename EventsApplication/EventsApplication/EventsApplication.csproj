@@ -198,6 +198,7 @@
     <Compile Include="Models\Bestand.cs" />
     <Compile Include="Models\Bijdrage.cs" />
     <Compile Include="Models\BijdrageBericht.cs" />
+    <Compile Include="Models\Utility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="App_DAL\BerichtContext.cs" />
     <Compile Include="App_DAL\Interfaces\IBerichtContext.cs" />
@@ -260,6 +261,10 @@
     <Content Include="Views\Hosting\AccountCreate.cshtml" />
     <Content Include="Views\Hosting\EventIndex.cshtml" />
     <Content Include="Views\Hosting\AccountEdit.cshtml" />
+    <Content Include="Views\Hosting\EventDetails.cshtml" />
+    <Content Include="Views\Hosting\HostingHome.cshtml" />
+    <Content Include="Views\Hosting\LocatieIndex.cshtml" />
+    <Content Include="Views\Hosting\LocatieCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -8,11 +8,11 @@ namespace EventsApplication.App_DAL.Interfaces
 {
     public interface IStandplaatsContext
     {
-        List<Standplaats> GetFreeStaanplaatsenByLocatie(Locatie locatie, DateTime begindatum, DateTime einddatum);
+        List<Standplaats> GetFreeStaanplaatsenByLocatie(Locatie locatie, DateTime startdatum, DateTime einddatum);
 
         List<Standplaats> GetByLocatie(Locatie locatie);
 
-        bool Insert(int locatieID, decimal prijs, int capaciteit, int nummer);
+        bool Insert(Locatie locatie, decimal prijs, int capaciteit, int nummer, string specificatie);
 
         bool Delete(int id);
 

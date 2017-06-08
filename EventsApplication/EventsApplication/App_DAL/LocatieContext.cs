@@ -137,5 +137,33 @@ namespace EventsApplication.App_DAL
             }
             catch { return false; }
         }
+
+        public int locatieidophalen(string naam, string straat, int nummer, string postcode, string plaats)
+        {
+            SqlConnection conn = Connection.SQLconnection;
+            int id = 0;
+            try
+            {
+                string query = "SELECT * FROM LOCATIE WHERE naam = @naam AND straat = @straat AND nr = @nr AND postcode = @postcode AND plaats = @plaats";
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue("@naam", naam);
+                cmd.Parameters.AddWithValue("@straat", straat);
+                cmd.Parameters.AddWithValue("@nr", nummer);
+                cmd.Parameters.AddWithValue("@postcode", postcode);
+                cmd.Parameters.AddWithValue("@plaats", plaats);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+
+                     id = Convert.ToInt32(reader["ID"].ToString());
+                }
+                conn.Close();
+
+            }
+            catch { }
+            return id;
+        }
     }
 }

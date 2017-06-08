@@ -17,5 +17,7 @@ namespace EventsApplication.App_DAL.Interfaces
         bool Delete(Locatie locatie);
 
         bool Update(Locatie locatie);
+
+        int locatieidophalen(string naam, string straat, int nummer, string postcode, string plaats);
     }
 }
