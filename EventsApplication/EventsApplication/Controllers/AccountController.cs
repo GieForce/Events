@@ -101,20 +101,33 @@ namespace EventsApplication.Controllers
             }
         }
 
-        public ActionResult Login(Account account)
+        public ActionResult Login()
+        {
+            return View();  
+        }
+
+        [HttpPost]
+        public ActionResult Login(string gebruikersnaam, string wachtwoord)
         {
             AccountRepository db = new AccountRepository(new AccountContext());
 
-            var userLoggedIn = db.GetAllAccounts().SingleOrDefault(x => x.Gebruikersnaam == account.Gebruikersnaam);
+            Account userLoggedIn = db.Login(wachtwoord, gebruikersnaam);
+            
             if (userLoggedIn != null)
             {
-                Session["Gebruikersnaam"] = account.Gebruikersnaam;
-                return View("Index");
+                Session["user"] = userLoggedIn;
+                return RedirectToAction("Index", "MediaSharing");
             }
             else
             {
                 return View("Error");
             }
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Login");
         }
     }
 }

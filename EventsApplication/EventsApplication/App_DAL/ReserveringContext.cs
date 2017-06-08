@@ -119,7 +119,7 @@ namespace EventsApplication.App_DAL
                     {
                         command.ExecuteNonQuery();
                     }
-                    catch (SqlException e)
+                    catch (SqlException)
                     {
 
                         //System.Windows.Forms.MessageBox.Show(e.Message);
@@ -143,7 +143,7 @@ namespace EventsApplication.App_DAL
                             }
                         }
                     }
-                    catch (SqlException e)
+                    catch (SqlException)
                     {
 
                         //System.Windows.Forms.MessageBox.Show(e.Message);
@@ -180,7 +180,7 @@ namespace EventsApplication.App_DAL
                         command.ExecuteNonQuery();
                         return true;
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         //System.Windows.Forms.MessageBox.Show(e.Message);
                         return false;
@@ -208,7 +208,7 @@ namespace EventsApplication.App_DAL
                             return true;
                         }
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         //System.Windows.Forms.MessageBox.Show(e.Message);
                     }

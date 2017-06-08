@@ -1,0 +1,138 @@
+﻿@using System.Globalization
+@using EventsApplication.Models
+@model EventsApplication.ViewModels.BijdrageViewModel
+
+
+<script src="/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/Self/Mediasharing.js"></script>
+@{
+    ViewBag.Title = "Bijdrages";
+    List<Categorie> categorieList = new List<Categorie>();
+    List<Bestand> bestandList = new List<Bestand>();    
+    List<Bericht> berichtList = new List<Bericht>();
+}
+<div class="col-md-8 col-md-offset-4">
+    @foreach (var item in Model.bijdrageList)
+    {
+        if (item is Bestand)
+        {
+            Bestand b = (Bestand)item;
+            bestandList.Add(b);
+        }
+
+        if (item is Bericht)
+        {
+            Bericht b = (Bericht) item;
+            berichtList.Add(b);
+        }
+
+        if (item is Categorie)
+        {
+            Categorie b = (Categorie)item;
+            categorieList.Add(b);
+        }
+    }
+    @if (bestandList.Count == 0)
+    {
+        <h4>U heeft nog geen posts geuploadt! <span class="glyphicon glyphicon-info-sign"></span></h4>
+    }
+    @foreach (Bestand item in bestandList)
+    {
+        Categorie categorie = categorieList.Find(a => a.CategorieId == item.CategorieId);
+
+        <div class="container">
+                <div class="panel panel-white post panel-shadow">
+                    <div class="post-heading">
+                        <div class="pull-left image">
+                            <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">
+                        </div>
+                        <div class="pull-left meta">
+                            <div class="title h5">
+                                <a href="#"><b>@item.Account.Gebruikersnaam</b></a>
+                                made a post.
+                            </div>
+                            <h6 class="text-muted time"><span> @item.Datum.DayOfWeek - @item.Datum.Day @item.Datum.ToString("MMMM", CultureInfo.InvariantCulture)</span></h6>
+                        </div>
+                        <div class="dropdown pull-right">
+                            <span class="dropdown-toggle" type="button" data-toggle="dropdown">
+                                <span class="[ glyphicon glyphicon-chevron-down ]"></span>
+                            </span>
+                            <ul class="dropdown-menu" role="menu">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+                            </ul>
+                   
+                        </div>
+                    </div> 
+                    <div class="post-description"> 
+                        <p>@item.Bestandlocatie</p>
+                        <div class="stats">
+                            <a href="#" class="btn btn-default stat-item">
+                                <i class="fa fa-thumbs-up icon"></i>@item.AccountBijdrage.Like
+                            </a>
+                            <a href="#" class="btn btn-default stat-item">
+                                <i class="fa fa-share icon"></i>
+                            </a>
+                            <a href="#" class="btn btn-default stat-item">
+                                <i class="fa fa-tag icon"></i>@categorie.Naam
+                            </a>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <div class="input-group"> 
+                            <input class="form-control" placeholder="Add a comment" type="text">
+                            <span class="input-group-addon">
+                                <a href="#"><i class="fa fa-edit"></i></a>  
+                            </span>
+                        </div>
+                        <ul class="comments-list">
+                            <li class="comment">
+                                <a class="pull-left" href="#">
+                                    <img class="avatar" src="http://bootdey.com/img/Content/user_1.jpg" alt="avatar">
+                                </a>
+                                <div class="comment-body">
+                                    <div class="comment-heading">
+                                        <h4 class="user">Gavino Free</h4>
+                                        <h5 class="time">5 minutes ago</h5>
+                                    </div>
+                                    <p>Sure, oooooooooooooooohhhhhhhhhhhhhhhh</p>
+                                </div>
+                                <ul class="comments-list">
+                                    <li class="comment">
+                                        <a class="pull-left" href="#">
+                                            <img class="avatar" src="http://bootdey.com/img/Content/user_3.jpg" alt="avatar">
+                                        </a>
+                                        <div class="comment-body">
+                                            <div class="comment-heading">
+                                                <h4 class="user">Ryan Haywood</h4>
+                                                <h5 class="time">3 minutes ago</h5>
+                                            </div>
+                                            <p>Relax my friend</p>
+                                        </div>
+                                    </li> 
+                                    <li class="comment">
+                                        <a class="pull-left" href="#">
+                                            <img class="avatar" src="http://bootdey.com/img/Content/user_2.jpg" alt="avatar">
+                                        </a>
+                                        <div class="comment-body">
+                                            <div class="comment-heading">
+                                                <h4 class="user">Gavino Free</h4>
+                                                <h5 class="time">3 minutes ago</h5>
+                                            </div>
+                                            <p>Ok, cool.</p>
+                                        </div>
+                                    </li> 
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    }
+</div>
+
+
+

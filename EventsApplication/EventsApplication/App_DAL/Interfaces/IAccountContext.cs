@@ -15,6 +15,8 @@ namespace EventsApplication.App_DAL
         bool Delete(int id);
         List<Account> GetAllAccounts();
 
+        Account Login(string wachtwoord, string gebruikersnaam);
+
         bool Update(Account account);
     }
 }
