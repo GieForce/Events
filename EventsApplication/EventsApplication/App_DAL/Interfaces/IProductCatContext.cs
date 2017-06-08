@@ -22,5 +22,7 @@ namespace EventsApplication
         void Insert(ProductCat productCat, ProductCat parentCat);
 
         void Delete(ProductCat productCat);
+
+        ProductCat getlatestcategorie();
     }
 }

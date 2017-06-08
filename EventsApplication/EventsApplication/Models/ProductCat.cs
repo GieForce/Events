@@ -25,6 +25,11 @@ namespace EventsApplication.Models
             this.naam = naam;
         }
 
+        public ProductCat(string naam)
+        {
+            this.naam = naam;
+        }
+
         public ProductCat(List<ProductCat> subcats, string naam)
         {
             this.subCats = subcats;

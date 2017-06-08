@@ -182,6 +182,7 @@
     <Compile Include="Controllers\Repositorys\LocatieRepository.cs" />
     <Compile Include="Controllers\Repositorys\PolsbandjeRepository.cs" />
     <Compile Include="Controllers\Repositorys\ProductCatRepository.cs" />
+    <Compile Include="Controllers\Repositorys\ProductExemplaarRepository.cs" />
     <Compile Include="Controllers\Repositorys\ProductRepository.cs" />
     <Compile Include="Controllers\Repositorys\ReserveringRepository.cs" />
     <Compile Include="Controllers\Repositorys\StandplaatsRepository.cs" />
@@ -202,6 +203,7 @@
     <Compile Include="Models\ProductExemplaar.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductCat.cs" />
+    <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\Reservering.cs" />
     <Compile Include="Models\Standplaats.cs" />
     <Compile Include="Models\Bestand.cs" />
@@ -382,6 +384,8 @@
     <Content Include="Views\Reserveer\Gegevens.cshtml" />
     <Content Include="Views\Reserveer\Accounts.cshtml" />
     <Content Include="Views\Toegangs\Details.cshtml" />
+    <Content Include="Views\Hosting\ProductIndex.cshtml" />
+    <Content Include="Views\Hosting\ProductCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
