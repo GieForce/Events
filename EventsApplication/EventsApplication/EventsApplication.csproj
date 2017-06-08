@@ -147,9 +147,11 @@
   <ItemGroup>
     <Compile Include="App_DAL\AccountContext.cs" />
     <Compile Include="App_DAL\BijdrageContext.cs" />
+    <Compile Include="App_DAL\CategorieContext.cs" />
     <Compile Include="App_DAL\Connection.cs" />
     <Compile Include="App_DAL\Interfaces\IBijdrageContext.cs" />
     <Compile Include="App_DAL\Interfaces\IAccountContext.cs" />
+    <Compile Include="App_DAL\Interfaces\ICategorieContext.cs" />
     <Compile Include="App_DAL\Interfaces\ILocatieContext.cs" />
     <Compile Include="App_DAL\Interfaces\IMateriaalContext.cs" />
     <Compile Include="App_DAL\Interfaces\IProductExemplaarContext.cs" />
@@ -172,9 +174,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\BijdrageRepository.cs" />
+    <Compile Include="Controllers\Repositorys\BijdrageRepository.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\MediaSharingController.cs" />
+    <Compile Include="Controllers\Repositorys\CategorieRepository.cs" />
     <Compile Include="Controllers\Repositorys\EventRepository.cs" />
     <Compile Include="Controllers\Repositorys\AccountRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -211,7 +214,7 @@
     <Compile Include="App_DAL\BerichtContext.cs" />
     <Compile Include="App_DAL\Interfaces\IBerichtContext.cs" />
     <Compile Include="Controllers\BerichtController.cs" />
-    <Compile Include="Controllers\BerichtRepository.cs" />
+    <Compile Include="Controllers\Repositorys\BerichtRepository.cs" />
     <Compile Include="Models\Categorie.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\ModelToViewModel.cs" />
@@ -377,6 +380,7 @@
     <Content Include="Views\Toegangs\Index.cshtml" />
     <Content Include="Views\Toegangs\Materialen.cshtml" />
     <Content Include="Views\Toegangs\Aanwezig.cshtml" />
+    <Content Include="Views\MediaSharing\Create.cshtml" />
     <Content Include="Views\MediaSharing\NoComments.cshtml" />
     <Content Include="Views\MediaSharing\CreateBericht.cshtml" />
     <Content Include="Views\MediaSharing\CreateMediaBericht.cshtml" />

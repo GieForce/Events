@@ -57,5 +57,7 @@ namespace EventsApplication.Models
             this.like = like;
             this.ongewenst = ongewenst;
         }
+
+        public AccountBijdrage() { }
     }
 }

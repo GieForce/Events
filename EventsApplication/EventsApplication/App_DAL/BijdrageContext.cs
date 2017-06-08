@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using EventsApplication.Controllers;
 using EventsApplication.Models;
+using EventsApplication.ViewModels;
 
 namespace EventsApplication.App_DAL
 {
@@ -124,6 +125,39 @@ namespace EventsApplication.App_DAL
                         command.Parameters.AddWithValue("@bijdrageID", 8);
                         command.Parameters.AddWithValue("@titel", bericht.Titel);
                         command.Parameters.AddWithValue("@inhoud", bericht.Inhoud);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool InsertPVM(PostViewModel pvm)
+        {
+            try
+            {
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query = "CreateNew";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@accountID", pvm.account.Id);
+                        command.Parameters.AddWithValue("@datum", pvm.bericht.Datum);
+                        command.Parameters.AddWithValue("@soort", pvm.bericht.Soort);
+                        command.Parameters.AddWithValue("@titel", pvm.bericht.Titel);
+                        command.Parameters.AddWithValue("@inhoud", pvm.bericht.Inhoud);
+                        command.Parameters.AddWithValue("@categorieID", pvm.categorie.CategorieId);
+                        command.Parameters.AddWithValue("@bestandslocatie", pvm.bestand.Bestandlocatie);
+                        command.Parameters.AddWithValue("@grootte", pvm.bestand.Grootte);
+                        command.Parameters.AddWithValue("@naam", pvm.categorie.Naam);
+
+
 
                         command.ExecuteNonQuery();
                     }
