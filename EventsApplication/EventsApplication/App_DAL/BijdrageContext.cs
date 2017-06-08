@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using EventsApplication.Controllers;
 using EventsApplication.Models;
+using EventsApplication.ViewModels;
 
 namespace EventsApplication.App_DAL
 {
@@ -87,7 +88,7 @@ namespace EventsApplication.App_DAL
             return bijdrageList;
         }
 
-        public bool Insert(Bericht bericht)
+        public bool Insert(PostViewModel bericht)
         {
             try
             {
@@ -97,9 +98,17 @@ namespace EventsApplication.App_DAL
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@bijdrageID", 8);
-                        command.Parameters.AddWithValue("@titel", bericht.Titel);
-                        command.Parameters.AddWithValue("@inhoud", bericht.Inhoud);
+                        command.Parameters.AddWithValue("@accountID", bericht.account.Id);
+                        command.Parameters.AddWithValue("@datum", bericht.bericht.Datum);
+                        command.Parameters.AddWithValue("@soort", bericht.bericht.Soort);
+                        command.Parameters.AddWithValue("@bijdrageID", bericht.bericht.Id);
+                        command.Parameters.AddWithValue("@titel", bericht.bericht.Titel);
+                        command.Parameters.AddWithValue("@inhoud", bericht.bericht.Inhoud);
+                        command.Parameters.AddWithValue("@categorieID", bericht.categorie.Id);
+                        command.Parameters.AddWithValue("@bestandsLocatieID", 5);
+                        command.Parameters.AddWithValue("@grootte", bericht.account.Id);
+                        command.Parameters.AddWithValue("@naam", bericht.account.Id);
+
 
                         command.ExecuteNonQuery();
                     }

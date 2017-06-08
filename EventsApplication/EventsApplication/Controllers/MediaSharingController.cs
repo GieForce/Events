@@ -66,13 +66,19 @@ namespace EventsApplication.Controllers
             return PartialView("Bijdrages", bvm);
         }
 
-        public ActionResult CreatePost()
+        public ActionResult CreatePost(PostViewModel postmodel)
         {
             Account account = (Account)(Session["user"]);
+            AccountBijdrage ab = new AccountBijdrage();
+            Bericht bericht = new Bericht(account, DateTime.Now,"bericht", ab ,postmodel.bericht.Titel, postmodel.bericht.Inhoud );
+            Categorie categorie = new Categorie( account, DateTime.Now,"categorie" ,ab, postmodel.categorie.CategorieId, postmodel.categorie.Naam);
             accountRepository.GetById(account.Id);
-            List<Bijdrage> bijdrages = repository.GetAllBijdragesByUserId(account.Id);
-            BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
-            return PartialView("Create", bvm);
+            PostViewModel pvm = new PostViewModel() {account = account, bericht = bericht, categorie = categorie};
+           
+            return PartialView("Create");
         }
+
+
+
     }
 }

@@ -28,6 +28,23 @@ $(document).ready(function () {
                     $loading.hide();
                 });
         });
+
+
+    $("#CreatePost").on("click",
+        function () {
+            $("#CreatePost").html("");
+            $loading.show();
+            $.ajax({
+                url: "/Mediasharing/CreatePost",
+                    type: "GET"
+                })
+                .done(function (partialViewResult) {
+                    $("#CreatePost").html(partialViewResult);
+                    $loading.hide();
+                });
+        });
+
+
     $("#ShowBijdragesByUserID").on("click",
         function () {
             $("#showPosts").html("");

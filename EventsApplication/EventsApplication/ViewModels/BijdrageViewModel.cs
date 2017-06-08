@@ -11,4 +11,14 @@ namespace EventsApplication.ViewModels
         public List<Bijdrage> bijdrageList { get; set; }
         public Account account { get; set; }
     }
+
+    public class PostViewModel
+    {
+        public Account account { get; set; }
+
+     //   public Bijdrage bijdrage { get; set; }
+        public Bericht bericht { get; set; }
+        public  Categorie categorie { get; set; }
+    }
+
 }
