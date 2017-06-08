@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using EventsApplication.App_DAL;
 using EventsApplication.Models;
+using EventsApplication.ViewModels;
 
 namespace EventsApplication.Controllers
 {
@@ -23,6 +24,12 @@ namespace EventsApplication.Controllers
             Event event1 = eventRepo.GetById(eventid);
             Session["event"] = event1;
             return RedirectToAction("Index", "Event");
+        }
+
+        public ActionResult Home()
+        {
+            Event e = (Event) Session["event"];
+            return View(ModelToViewModel.EventToEventViewModel(e));
         }
     }
 }

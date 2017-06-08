@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using EventsApplication.App_DAL;
+using EventsApplication.Controllers.Repositorys;
 
 namespace EventsApplication.Models
 {
@@ -12,7 +14,7 @@ namespace EventsApplication.Models
         private DateTime datumstart;
         private DateTime datumeind;
         private int maxbezoekers;
-        private int locatieid;
+        private Locatie locatie;
 
         public Event(int iD, string naam, DateTime datumstart, DateTime datumeind, int maxbezoekers, int locatieid)
         {
@@ -21,7 +23,8 @@ namespace EventsApplication.Models
             this.datumstart = datumstart;
             this.datumeind = datumeind;
             this.maxbezoekers = maxbezoekers;
-            this.locatieid = locatieid;
+            LocatieRepository lrepo = new LocatieRepository(new LocatieContext());
+            this.locatie = lrepo.GetByEvenement(this);
         }
 
         public Event(string naam, DateTime datumstart, DateTime datumeind, int maxbezoekers)
@@ -64,10 +67,10 @@ namespace EventsApplication.Models
             set { maxbezoekers = value;}
         }
 
-        public int Locatieid
+        public Locatie Locatie
         {
-            get { return locatieid; }
-            set { locatieid = value; }
+            get { return locatie; }
+            set { locatie = value; }
         }
 
 

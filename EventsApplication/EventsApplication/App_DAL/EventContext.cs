@@ -57,7 +57,7 @@ namespace EventsApplication.App_DAL
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@naam", eventi.Naam);
-                        command.Parameters.AddWithValue("@locatieid", eventi.Locatieid);
+                        command.Parameters.AddWithValue("@locatieid", eventi.Locatie.Id);
                         command.Parameters.AddWithValue("@datumstart", eventi.Datumstart);
                         command.Parameters.AddWithValue("@datumeind", eventi.Datumeind);
                         command.Parameters.AddWithValue("@maxbezoekers", eventi.Maxbezoekers);

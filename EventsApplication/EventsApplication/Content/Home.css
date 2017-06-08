@@ -3,7 +3,7 @@
 }
 
 .page-bg {
-    background: url('https://static.pexels.com/photos/25963/pexels-photo-25963.jpg');
+    background: url('/content/pictures/background3.jpg');
     background-size: cover;
     -moz-filter: blur(5px);
     -o-filter: blur(5px);
@@ -37,4 +37,36 @@ a, h4 {
 
     display: flex;
     align-items: center;
+}
+
+h3 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 16px;
+    letter-spacing: 4px;
+    color: dodgerblue;
+    text-align: center;
+}
+
+h1 {
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    font-size: 72px;
+    font-weight: 900;
+    font-style: extra-bold;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+
+p {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    text-align: center;
+    color: white;
+    text-transform: uppercase;
+}
+
+.datetime {
+    width: 100%;
 }

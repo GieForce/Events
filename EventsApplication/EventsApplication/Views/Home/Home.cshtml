@@ -1,0 +1,38 @@
+﻿@model EventsApplication.ViewModels.EventViewModel
+
+@{
+    ViewBag.Title = @Model.Naam;
+    ViewBag.HideNavBar = true;
+}
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Poiret+One|Quicksand" rel="stylesheet">
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="~/Scripts/Self/Home.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+</head>
+@Styles.Render("~/Content/Home.css")
+<div class="vertical-center">
+    <div class="container datetime">
+        <div class="row">   
+            <h3>Come and Join!</h3>
+            <hr/>
+        </div>
+        <div class="row">
+            <h1>@Model.Naam</h1> 
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+               <p>@Model.DatumStart.ToString("dd").@Model.DatumStart.ToString("MMM").@Model.DatumStart.ToString("yyyy")</p>
+            </div>
+            <div class="col-md-6">
+               <p>@Model.Locatie.Naam</p>
+            </div>  
+        </div>
+    </div>
+</div>
+<div class="page-bg">
+</div>

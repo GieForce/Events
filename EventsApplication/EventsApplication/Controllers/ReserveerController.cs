@@ -20,7 +20,7 @@ namespace EventsApplication.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            ViewData["standplaatsen"] = repo.GetByLocatie(evenement.Locatieid);
+            ViewData["standplaatsen"] = repo.GetByLocatie(evenement.Locatie);
             return View();
         }
     }

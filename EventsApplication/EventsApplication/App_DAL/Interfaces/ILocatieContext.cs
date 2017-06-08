@@ -12,7 +12,7 @@ namespace EventsApplication.App_DAL.Interfaces
 
         List<Locatie> GetAll();
 
-        Locatie GetByEvenement(Evenement evenement);
+        Locatie GetByEvenement(Event evenement);
 
         bool Delete(Locatie locatie);
 

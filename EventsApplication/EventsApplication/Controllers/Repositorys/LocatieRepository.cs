@@ -21,7 +21,7 @@ namespace EventsApplication.Controllers.Repositorys
             return ilocatieContext.GetAll();
         }
 
-        public Locatie GetByEvenement(Evenement evenement)
+        public Locatie GetByEvenement(Event evenement)
         {
             return ilocatieContext.GetByEvenement(evenement);
         }

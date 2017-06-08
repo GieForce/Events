@@ -59,7 +59,7 @@ namespace EventsApplication.App_DAL
             return locaties;
         }
 
-        public Locatie GetByEvenement(Evenement evenement)
+        public Locatie GetByEvenement(Event evenement)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace EventsApplication.App_DAL
                     string query =
                         "SELECT * FROM dbo.LOCATIE INNER JOIN [EVENT] ON [event].locatie_id = LOCATIE.ID WHERE [EVENT].ID = @id";
                     SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@id", evenement.Id);
+                    command.Parameters.AddWithValue("@id", evenement.ID1);
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {

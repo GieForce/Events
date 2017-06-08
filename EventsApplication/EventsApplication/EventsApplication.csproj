@@ -217,6 +217,8 @@
     <Compile Include="Controllers\BerichtController.cs" />
     <Compile Include="Controllers\BerichtRepository.cs" />
     <Compile Include="Models\Categorie.cs" />
+    <Compile Include="ViewModels\EventViewModel.cs" />
+    <Compile Include="ViewModels\ModelToViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-select.css" />
@@ -230,6 +232,7 @@
     <Content Include="Content\Home.css" />
     <Content Include="Content\Media.css" />
     <Content Include="Content\navbar.css" />
+    <Content Include="Content\Pictures\background3.jpg" />
     <Content Include="Content\tag.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -361,6 +364,7 @@
     <Content Include="Views\Hosting\AccountEdit.cshtml" />
     <Content Include="Views\Bijdrage\Create.cshtml" />
     <Content Include="Views\Reserveer\Index.cshtml" />
+    <Content Include="Views\Home\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
