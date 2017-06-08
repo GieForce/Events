@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<EventsApplication.Models.Account>
 @{
-    ViewBag.Title = "Aanwezig";
+    ViewBag.Title = "Aanwezige bezoekers";
 }
 
 <h2>Aanwezige bezoekers</h2>
@@ -33,7 +33,7 @@
                 @Html.DisplayFor(modelItem => item.Aanwezig)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id })
             </td>
         </tr>
     }

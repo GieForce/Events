@@ -31,6 +31,11 @@ namespace EventsApplication.Controllers
             return context.GetAllAccountsPresent();
         }
 
+        public List<Account> GetAllAccountsByReservation(int reserveringsID)
+        {
+            return context.GetAllAccountsByReservation(reserveringsID);
+        }
+
         public bool Insert(Account account)
         {
             return context.Insert(account);

@@ -32,7 +32,7 @@ namespace EventsApplication.App_DAL
                     decimal prijs = Convert.ToDecimal(reader["a.prijs"].ToString());
                     string specificatie = reader["S.naam"].ToString();
 
-                    staanplaatsen.Add(new Standplaats(nummer, capaciteit,prijs, specificatie));
+                    staanplaatsen.Add(new Standplaats(ID, nummer, capaciteit,prijs, specificatie));
                 }
                 conn.Close();
 
@@ -65,13 +65,47 @@ namespace EventsApplication.App_DAL
                     decimal prijs = Convert.ToDecimal(reader["P.prijs"].ToString());
                     string specificatie = reader["S.naam"].ToString();
 
-                    staanplaatsen.Add(new Standplaats(nummer, capaciteit, prijs, specificatie));
+                    staanplaatsen.Add(new Standplaats(ID, nummer, capaciteit, prijs, specificatie));
                 }
                 conn.Close();
 
             }
             catch { }
             return staanplaatsen;
+
+        }
+
+        public Standplaats GetByReservation(int reservationID)
+        {
+            Standplaats splts = null;
+            SqlConnection conn = Connection.SQLconnection;
+            try
+            {
+                string query =
+                    "SELECT P.ID, P.capaciteit, P.nummer, S.naam, P.prijs FROM PLEK P INNER JOIN PLEK_SPECIFICATIE PS ON P.ID = PS.plek_id INNER JOIN SPECIFICATIE S ON PS.specificatie_id = S.ID INNER JOIN PLEK_RESERVERING ON (P.ID=PLEK_RESERVERING.plek_id) WHERE S.naam != 'coordinaat x' AND S.naam != 'coordinaat y' AND PS.waarde = 'ja' AND PLEK_RESERVERING.reservering_id = @reservering_id";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@reservering_id", reservationID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    int ID = Convert.ToInt32(reader["P.ID"].ToString());
+                    int capaciteit = Convert.ToInt32(reader["P.capaciteit"].ToString());
+                    int nummer = Convert.ToInt32(reader["P.nummer"].ToString());
+                    decimal prijs = Convert.ToDecimal(reader["P.prijs"].ToString());
+                    string specificatie = reader["S.naam"].ToString();
+
+                    splts = new Standplaats(ID, nummer, capaciteit, prijs, specificatie);
+                }
+                conn.Close();
+
+            }
+            catch
+            {
+
+            }
+
+            return splts;
 
         }
 

@@ -1,41 +1,79 @@
 ﻿using EventsApplication.Models;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Web;
+using EventsApplication.App_DAL;
+using EventsApplication.Controllers;
+using EventsApplication.Controllers.Repositorys;
 
 namespace EventsApplication.Models
 {
     public class Reservering
     {
+        StandplaatsRepository standplaatsRepository = new StandplaatsRepository(new StandplaatsContext());
+        AccountRepository accountRepository = new AccountRepository(new AccountContext());
+
         private int id;
-        private int eventID;
-        private int staanplaatsid;
-        private string naam;
-        private string adres;
+        private string voornaam;
+        private string tussenvoegsel;
+        private string achternaam;
+        private string straat;
+        private int huisnummer;
         private string woonplaats;
-        private string email;
-        private string telefoonnummer;
-        private int aantal;
+        private int betaald;
         private bool betaalstatus;
         private DateTime startDatum;
         private DateTime eindDatum;
-        private Standplaats staanplaats;
-        private List<Materiaal> materialen;
+        private int standplaatsID;
 
-        public List<Materiaal> Materialen
+        private Standplaats standplaats;
+        private List<Account> accounts;
+
+        public int Id
         {
-            get { return materialen; }
+            get { return id; }
         }
 
-        public string Naam
+        public string Voornaam
         {
-            get { return naam; }
+            get { return voornaam; }
         }
 
-        public int EventId
+        public string Tussenvoegsel
         {
-            get { return eventID; }
+            get { return tussenvoegsel; }
+        }
+
+        public string Achternaam
+        {
+            get { return achternaam; }
+        }
+
+        public string Straat
+        {
+            get { return straat; }
+        }
+
+        public int Huisnummer
+        {
+            get { return huisnummer; }
+        }
+
+        public string Woonplaats
+        {
+            get { return woonplaats; }
+        }
+
+        public int Betaald
+        {
+            get { return betaald;}
+        }
+
+        public bool Betaalstatus
+        {
+            get { return betaalstatus; }
         }
 
         public DateTime StartDatum
@@ -48,120 +86,73 @@ namespace EventsApplication.Models
             get { return eindDatum; }
         }
 
-        public string Adres
+        public int StandplaatsId
         {
-            get { return adres; }
-
-        }
-
-        public string Woonplaats
-        {
-            get { return woonplaats; }
-
-        }
-
-        public int Aantal
-        {
-            get { return aantal; }
-        }
-
-        public int Id
-        {
-            get { return id; }
-            set { this.id = value; }
-        }
-
-        public bool Betaalstatus
-        {
-            get { return betaalstatus; }
-            set { this.betaalstatus = value; }
-        }
-
-        public int Staanplaatsid
-        {
-            get { return staanplaatsid; }
+            get { return standplaatsID; }
         }
 
         public Standplaats Staanplaats
         {
-            get { return this.staanplaats; }
+            get { return standplaats; }
+            set { standplaats = value; }
         }
 
-        public string Email
+        public List<Account> Accounts
         {
-            get { return email; }
+            get { return accounts; }
+            set { accounts = value; }
         }
 
-        public string Telefoonnummer
-        {
-            get { return telefoonnummer; }
-        }
-
-        public Reservering(int id, int eventID, int staanplaatsid, string naam, string adres, string woonplaats, string email, string telefoonnummer, int aantal, DateTime startDatum, DateTime eindDatum, bool betaalstatus)
+        public Reservering(int id, string voornaam, string tussenvoegsel, string achternaam, string straat, int huisnummer, string woonplaats, int betaald, DateTime startDatum, DateTime eindDatum, int standplaatsId)
         {
             this.id = id;
-            this.eventID = eventID;
-            this.staanplaatsid = staanplaatsid;
-            this.naam = naam;
-            this.adres = adres;
+            this.voornaam = voornaam;
+            this.tussenvoegsel = tussenvoegsel;
+            this.achternaam = achternaam;
+            this.straat = straat;
+            this.huisnummer = huisnummer;
             this.woonplaats = woonplaats;
-            this.email = email;
-            this.telefoonnummer = telefoonnummer;
-            this.aantal = aantal;
-            this.startDatum = startDatum;
-            this.eindDatum = eindDatum;
-            this.betaalstatus = betaalstatus;
-        }
+            this.betaald = betaald;
 
-        public Reservering(string naam, string adres, string woonplaats, int aantal, DateTime startDatum, DateTime eindDatum, bool betaalstatus, Standplaats staanplaats)
-        {
-
-            bool isNotLetterOrDigit = adres.Any(x => !char.IsLetterOrDigit(x)) && !adres.Any(x => !char.IsWhiteSpace(x));
-            bool containsLetter = adres.Any(x => char.IsLetter(x));
-            bool containsDigit = adres.Any(x => char.IsNumber(x));
-            bool containsSpace = adres.Any(x => char.IsWhiteSpace(x));
-            bool containsSpecial = adres.Any(x => char.IsSymbol(x));
-            if (string.IsNullOrEmpty(adres) || isNotLetterOrDigit || !containsDigit || !containsLetter || !containsSpace || containsSpecial)
+            if (betaald == 1)
             {
-                string message = "Adres {0} is niet correct!";
-                throw new FormatException(String.Format(message, adres));
+                betaalstatus = true;
             }
-            if (string.IsNullOrEmpty(woonplaats))
+            else if (betaald == 0)
             {
-                string message = "Woonplaats {0} is niet correct!";
-                throw new FormatException(String.Format(message, woonplaats));
+                betaalstatus = false;
             }
-            this.naam = naam;
-            this.adres = adres;
-            this.woonplaats = woonplaats;
-            this.aantal = aantal;
+
             this.startDatum = startDatum;
             this.eindDatum = eindDatum;
-            this.betaalstatus = betaalstatus;
-            this.staanplaats = staanplaats;
-            this.materialen = new List<Materiaal>();
+            this.standplaatsID = standplaatsId;
 
+            this.standplaats = standplaatsRepository.GetByReservation(id);
+            accounts = accountRepository.GetAllAccountsByReservation(id);
         }
 
-        public Reservering(int id, int eventID, int staanplaatsid, string naam, string adres, string woonplaats, int aantal, DateTime startDatum, DateTime eindDatum, bool betaalstatus, Standplaats staanplaats)
+        public Reservering(string voornaam, string tussenvoegsel, string achternaam, string straat, int huisnummer, string woonplaats, int betaald, DateTime startDatum, DateTime eindDatum, int standplaatsId)
         {
-            this.id = id;
-            this.eventID = eventID;
-            this.staanplaatsid = staanplaatsid;
-            this.naam = naam;
-            this.adres = adres;
+            this.voornaam = voornaam;
+            this.tussenvoegsel = tussenvoegsel;
+            this.achternaam = achternaam;
+            this.straat = straat;
+            this.huisnummer = huisnummer;
             this.woonplaats = woonplaats;
-            this.aantal = aantal;
+            this.betaald = betaald;
+
+            if (betaald == 1)
+            {
+                betaalstatus = true;
+            }
+            else if (betaald == 0)
+            {
+                betaalstatus = false;
+            }
+
             this.startDatum = startDatum;
             this.eindDatum = eindDatum;
-            this.betaalstatus = betaalstatus;
-            this.staanplaats = staanplaats;
-            this.materialen = new List<Materiaal>();
-        }
-
-        public void AddMateriaal(Materiaal materiaal)
-        {
-            materialen.Add(materiaal);
+            this.standplaatsID = standplaatsId;
         }
     }
 }

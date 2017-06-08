@@ -151,15 +151,15 @@
     <Compile Include="App_DAL\Interfaces\IBijdrageContext.cs" />
     <Compile Include="App_DAL\Interfaces\IAccountContext.cs" />
     <Compile Include="App_DAL\Interfaces\ILocatieContext.cs" />
-    <Compile Include="App_DAL\Interfaces\IMateriaalContext.cs" />
+    <Compile Include="App_DAL\Interfaces\IPolsbandjeContext.cs" />
     <Compile Include="App_DAL\Interfaces\IProductExemplaarContext.cs" />
     <Compile Include="App_DAL\Interfaces\IProductCatContext.cs" />
     <Compile Include="App_DAL\Interfaces\IProductContext.cs" />
     <Compile Include="App_DAL\Interfaces\IReserveringContext.cs" />
     <Compile Include="App_DAL\Interfaces\IStandplaatsContext.cs" />
     <Compile Include="App_DAL\Interfaces\IVerhuurContext.cs" />
+    <Compile Include="App_DAL\PolsbandjeContext.cs" />
     <Compile Include="App_DAL\LocatieContext.cs" />
-    <Compile Include="App_DAL\MateriaalContext.cs" />
     <Compile Include="App_DAL\ProductExemplaarContext.cs" />
     <Compile Include="App_DAL\ProductCatContext.cs" />
     <Compile Include="App_DAL\ProductContext.cs" />
@@ -180,7 +180,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HostingController.cs" />
     <Compile Include="Controllers\Repositorys\LocatieRepository.cs" />
-    <Compile Include="Controllers\Repositorys\MateriaalRepository.cs" />
+    <Compile Include="Controllers\Repositorys\PolsbandjeRepository.cs" />
     <Compile Include="Controllers\Repositorys\ProductCatRepository.cs" />
     <Compile Include="Controllers\Repositorys\ProductRepository.cs" />
     <Compile Include="Controllers\Repositorys\ReserveringRepository.cs" />
@@ -198,7 +198,7 @@
     <Compile Include="Models\Evenement.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Locatie.cs" />
-    <Compile Include="Models\Materiaal.cs" />
+    <Compile Include="Models\Polsbandje.cs" />
     <Compile Include="Models\ProductExemplaar.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductCat.cs" />
@@ -213,6 +213,7 @@
     <Compile Include="Controllers\BerichtController.cs" />
     <Compile Include="Controllers\BerichtRepository.cs" />
     <Compile Include="Models\Categorie.cs" />
+    <Compile Include="ViewModels\AanwezigAccountViewModel.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\ModelToViewModel.cs" />
     <Compile Include="ViewModels\BijdrageViewModel.cs" />
@@ -377,6 +378,7 @@
     <Content Include="Views\Toegangs\Index.cshtml" />
     <Content Include="Views\Toegangs\Materialen.cshtml" />
     <Content Include="Views\Toegangs\Aanwezig.cshtml" />
+    <Content Include="Views\Toegangs\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

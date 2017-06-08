@@ -36,7 +36,7 @@ namespace EventsApplication.App_DAL
                                 string gebruikersnaam = (string)reader["gebruikersnaam"];
                                 string email = (string)reader["email"];
                                 string activatiehash = (string)reader["activatiehash"];
-                                bool geactiveerd = Convert.ToBoolean(reader["geactiveerd"]);
+                                int geactiveerd = Convert.ToInt32(reader["geactiveerd"]);
                                 string wachtwoord = (string)reader["wachtwoord"];
                                 string telefoonnummer = (string)reader["telefoonnummer"];
                                 Account account = new Account(userid, gebruikersnaam, email, activatiehash, geactiveerd, wachtwoord, telefoonnummer);
@@ -181,13 +181,36 @@ namespace EventsApplication.App_DAL
             return accountlist;
         }
 
+        public List<Account> GetAllAccountsByReservation(int reserveringsID)
+        {
+            List<Account> accountlist = new List<Account>();
+
+            using (SqlConnection connection = Connection.SQLconnection)
+            {
+                string query = "SELECT ACCOUNT.ID, ACCOUNT.gebruikersnaam, ACCOUNT.email, ACCOUNT.activatiehash, ACCOUNT.geactiveerd, ACCOUNT.wachtwoord, ACCOUNT.telefoonnummer FROM ACCOUNT INNER JOIN RESERVERING_POLSBANDJE ON (ACCOUNT.ID=RESERVERING_POLSBANDJE.account_id) INNER JOIN RESERVERING ON (RESERVERING_POLSBANDJE.reservering_id=RESERVERING.ID) WHERE RESERVERING.ID = @reserveringsID";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@reserveringsID", reserveringsID);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            accountlist.Add(ReaderToAccount(reader));
+                        }
+                    }
+                }
+            }
+            return accountlist;
+        }
+
         public List<Account> GetAllAccountsPresent()
         {
             List<Account> accountlist = new List<Account>();
 
             using (SqlConnection connection = Connection.SQLconnection)
             {
-                string query = "SELECT DISTINCT account.gebruikersnaam, account.telefoonnummer, reservering_polsbandje.aanwezig FROM account JOIN reservering_polsbandje ON (reservering_polsbandje.account_id=account.ID) WHERE reservering_polsbandje.aanwezig = 1;";
+                string query = "SELECT DISTINCT account.ID, account.gebruikersnaam, account.email, ACCOUNT.activatiehash, ACCOUNT.geactiveerd, account.wachtwoord, ACCOUNT.telefoonnummer, reservering_polsbandje.aanwezig FROM account JOIN reservering_polsbandje ON (reservering_polsbandje.account_id=account.ID) WHERE reservering_polsbandje.aanwezig = 1;";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
@@ -206,9 +229,13 @@ namespace EventsApplication.App_DAL
         private Account ReaderToAccount(SqlDataReader reader)
         {
             return new Account(
+                Convert.ToInt32(reader["ID"]),
                 Convert.ToString(reader["gebruikersnaam"]),
-                Convert.ToString(reader["telefoonnummer"]),
-                Convert.ToBoolean(reader["aanwezig"])
+                Convert.ToString(reader["email"]),
+                Convert.ToString(reader["activatiehash"]),
+                Convert.ToInt32(reader["geactiveerd"]),
+                Convert.ToString(reader["wachtwoord"]),
+                Convert.ToString(reader["telefoonnummer"])
                 );
         }
     }
