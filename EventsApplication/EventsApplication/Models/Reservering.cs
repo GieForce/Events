@@ -20,14 +20,8 @@ namespace EventsApplication.Models
         private bool betaalstatus;
         private DateTime startDatum;
         private DateTime eindDatum;
-        private List<Bezoeker> bezoekers;
         private Standplaats staanplaats;
         private List<Materiaal> materialen;
-
-        public List<Bezoeker> Bezoekers
-        {
-            get { return bezoekers; }
-        }
 
         public List<Materiaal> Materialen
         {
@@ -119,7 +113,7 @@ namespace EventsApplication.Models
             this.betaalstatus = betaalstatus;
         }
 
-        public Reservering(string naam, string adres, string woonplaats, int aantal, DateTime startDatum, DateTime eindDatum, bool betaalstatus, List<Bezoeker> bezoekers, Standplaats staanplaats)
+        public Reservering(string naam, string adres, string woonplaats, int aantal, DateTime startDatum, DateTime eindDatum, bool betaalstatus, Standplaats staanplaats)
         {
 
             bool isNotLetterOrDigit = adres.Any(x => !char.IsLetterOrDigit(x)) && !adres.Any(x => !char.IsWhiteSpace(x));
@@ -144,13 +138,12 @@ namespace EventsApplication.Models
             this.startDatum = startDatum;
             this.eindDatum = eindDatum;
             this.betaalstatus = betaalstatus;
-            this.bezoekers = bezoekers;
             this.staanplaats = staanplaats;
             this.materialen = new List<Materiaal>();
 
         }
 
-        public Reservering(int id, int eventID, int staanplaatsid, string naam, string adres, string woonplaats, int aantal, DateTime startDatum, DateTime eindDatum, bool betaalstatus, List<Bezoeker> bezoekers, Standplaats staanplaats)
+        public Reservering(int id, int eventID, int staanplaatsid, string naam, string adres, string woonplaats, int aantal, DateTime startDatum, DateTime eindDatum, bool betaalstatus, Standplaats staanplaats)
         {
             this.id = id;
             this.eventID = eventID;
@@ -162,7 +155,6 @@ namespace EventsApplication.Models
             this.startDatum = startDatum;
             this.eindDatum = eindDatum;
             this.betaalstatus = betaalstatus;
-            this.bezoekers = bezoekers;
             this.staanplaats = staanplaats;
             this.materialen = new List<Materiaal>();
         }

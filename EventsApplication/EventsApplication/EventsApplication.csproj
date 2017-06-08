@@ -146,12 +146,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_DAL\AccountContext.cs" />
-    <Compile Include="App_DAL\BezoekerContext.cs" />
     <Compile Include="App_DAL\BijdrageContext.cs" />
     <Compile Include="App_DAL\Connection.cs" />
     <Compile Include="App_DAL\Interfaces\IBijdrageContext.cs" />
     <Compile Include="App_DAL\Interfaces\IAccountContext.cs" />
-    <Compile Include="App_DAL\Interfaces\IBezoekerContext.cs" />
     <Compile Include="App_DAL\Interfaces\ILocatieContext.cs" />
     <Compile Include="App_DAL\Interfaces\IMateriaalContext.cs" />
     <Compile Include="App_DAL\Interfaces\IProductExemplaarContext.cs" />
@@ -181,7 +179,6 @@
     <Compile Include="Controllers\Repositorys\AccountRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HostingController.cs" />
-    <Compile Include="Controllers\Repositorys\BezoekerRepository.cs" />
     <Compile Include="Controllers\Repositorys\LocatieRepository.cs" />
     <Compile Include="Controllers\Repositorys\MateriaalRepository.cs" />
     <Compile Include="Controllers\Repositorys\ProductCatRepository.cs" />
@@ -238,6 +235,7 @@
     <Content Include="Content\navbar.css" />
     <Content Include="Content\Pictures\background3.jpg" />
     <Content Include="Content\tag.css" />
+    <Content Include="Content\Toegangscontrole.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -379,6 +377,9 @@
     <Content Include="Views\Hosting\HostingHome.cshtml" />
     <Content Include="Views\Hosting\LocatieIndex.cshtml" />
     <Content Include="Views\Hosting\LocatieCreate.cshtml" />
+    <Content Include="Views\Toegangs\Index.cshtml" />
+    <Content Include="Views\Toegangs\Materialen.cshtml" />
+    <Content Include="Views\Toegangs\Aanwezig.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -386,7 +387,6 @@
     <Folder Include="Views\MediaSharing\" />
     <Folder Include="Views\Hosting\" />
     <Folder Include="Views\Reserveer\" />
-    <Folder Include="Views\Toegangs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

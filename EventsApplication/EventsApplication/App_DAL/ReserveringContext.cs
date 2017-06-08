@@ -105,8 +105,7 @@ namespace EventsApplication.App_DAL
                 {
                     command.Parameters.AddWithValue("@standplaatsID", reservering.Staanplaats.Plaatsnummer);
                     command.Parameters.AddWithValue("@eventid", evenement.Id);
-                    command.Parameters.AddWithValue("@reservering_email", reservering.Bezoekers[0].Email);
-                    command.Parameters.AddWithValue("@reservering_telefoonnummer", reservering.Bezoekers[0].Telefoonnummer);
+
                     command.Parameters.AddWithValue("@reservering_naam", reservering.Naam);
                     command.Parameters.AddWithValue("@reservering_adres", reservering.Adres);
                     command.Parameters.AddWithValue("@reservering_woonplaats", reservering.Woonplaats);

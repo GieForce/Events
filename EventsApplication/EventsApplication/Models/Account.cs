@@ -14,6 +14,7 @@ namespace EventsApplication.Models
         private bool geactiveerd;
         private string wachtwoord;
         private string telefoonnummer;
+        private int aanwezig;
 
         public int Id
         {
@@ -57,15 +58,21 @@ namespace EventsApplication.Models
             set { telefoonnummer = value; }
         }
 
+        public int Aanwezig
+        {
+            get { return aanwezig; }
+            set { aanwezig = value; }
+        }
+
         public Account(int id, string gebruikersnaam, string email, string activatiehash, bool geactiveerd, string wachtwoord, string telefoonnummer)
         {
             ID = id;
-            Gebruikersnaam = gebruikersnaam;
-            Email = email;
-            Activatiehash = activatiehash;
-            Geactiveerd = geactiveerd;
-            Wachtwoord = wachtwoord;
-            Telefoonnummer = telefoonnummer;
+            this.gebruikersnaam = gebruikersnaam;
+            this.email = email;
+            this.activatiehash = activatiehash;
+            this.geactiveerd = geactiveerd;
+            this.wachtwoord = wachtwoord;
+            this.telefoonnummer = telefoonnummer;
         }
 
         public Account(string gebruikersnaam, string email, string activatiehash, bool geactiveerd, string wachtwoord, string telefoonnummer)
@@ -77,6 +84,13 @@ namespace EventsApplication.Models
             this.telefoonnummer = telefoonnummer;
         }
 
-        
+        public Account(string gebruikersnaam, string telefoonnummer, int aanwezig)
+        {
+            this.gebruikersnaam = gebruikersnaam;
+            this.telefoonnummer = telefoonnummer;
+            this.aanwezig = aanwezig;
+        }
+
+
     }
 }

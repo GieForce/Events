@@ -130,4 +130,5 @@ namespace EventsApplication.Controllers
             return RedirectToAction("Login");
         }
     }
+
 }

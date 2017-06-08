@@ -1,0 +1,41 @@
+﻿@model IEnumerable<EventsApplication.Models.Account>
+@{
+    ViewBag.Title = "Aanwezig";
+}
+
+<h2>Aanwezige bezoekers</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Gebruikersnaam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Telefoonnummer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Aanwezig)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gebruikersnaam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefoonnummer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aanwezig)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            </td>
+        </tr>
+    }
+
+</table>

@@ -180,18 +180,35 @@ namespace EventsApplication.App_DAL
             }
             return accountlist;
         }
-        
+
+        public List<Account> GetAllAccountsPresent()
+        {
+            List<Account> accountlist = new List<Account>();
+
+            using (SqlConnection connection = Connection.SQLconnection)
+            {
+                string query = "SELECT DISTINCT account.gebruikersnaam, account.telefoonnummer, reservering_polsbandje.aanwezig FROM account JOIN reservering_polsbandje ON (reservering_polsbandje.account_id=account.ID) WHERE reservering_polsbandje.aanwezig = 1;";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            accountlist.Add(ReaderToAccount(reader));
+                        }
+                    }
+                }
+            }
+            return accountlist;
+        }
+
 
         private Account ReaderToAccount(SqlDataReader reader)
         {
             return new Account(
-                Convert.ToInt32(reader["ID"]),
                 Convert.ToString(reader["gebruikersnaam"]),
-                Convert.ToString(reader["email"]),
-                Convert.ToString(reader["activatiehash"]),
-                Convert.ToBoolean(reader["geactiveerd"]),
-                Convert.ToString(reader["wachtwoord"]),
-                Convert.ToString(reader["telefoonnummer"])
+                Convert.ToString(reader["telefoonnummer"]),
+                Convert.ToInt32(reader["aanwezig"])
                 );
         }
     }

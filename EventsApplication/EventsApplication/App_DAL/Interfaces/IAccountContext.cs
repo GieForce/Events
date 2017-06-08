@@ -10,10 +10,14 @@ namespace EventsApplication.App_DAL
     public interface IAccountContext
     {
         Account GetById(int id);
+
+        List<Account> GetAllAccounts();
+
+        List<Account> GetAllAccountsPresent();
+
         bool Insert(Account account);
 
         bool Delete(int id);
-        List<Account> GetAllAccounts();
 
         Account Login(string wachtwoord, string gebruikersnaam);
 
