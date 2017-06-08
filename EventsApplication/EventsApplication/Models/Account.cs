@@ -14,7 +14,7 @@ namespace EventsApplication.Models
         private bool geactiveerd;
         private string wachtwoord;
         private string telefoonnummer;
-        private int aanwezig;
+        private bool aanwezig;
 
         public int Id
         {
@@ -58,7 +58,7 @@ namespace EventsApplication.Models
             set { telefoonnummer = value; }
         }
 
-        public int Aanwezig
+        public bool Aanwezig
         {
             get { return aanwezig; }
             set { aanwezig = value; }
@@ -84,13 +84,11 @@ namespace EventsApplication.Models
             this.telefoonnummer = telefoonnummer;
         }
 
-        public Account(string gebruikersnaam, string telefoonnummer, int aanwezig)
+        public Account(string gebruikersnaam, string telefoonnummer, bool aanwezig)
         {
             this.gebruikersnaam = gebruikersnaam;
             this.telefoonnummer = telefoonnummer;
             this.aanwezig = aanwezig;
         }
-
-
     }
 }

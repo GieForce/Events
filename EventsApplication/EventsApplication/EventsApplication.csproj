@@ -194,7 +194,6 @@
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AccountBijdrage.cs" />
     <Compile Include="Models\Bericht.cs" />
-    <Compile Include="Models\Bezoeker.cs" />
     <Compile Include="Models\Bijdrage.cs" />
     <Compile Include="Models\Evenement.cs" />
     <Compile Include="Models\Event.cs" />
@@ -206,8 +205,6 @@
     <Compile Include="Models\Reservering.cs" />
     <Compile Include="Models\Standplaats.cs" />
     <Compile Include="Models\Bestand.cs" />
-    <Compile Include="Models\Bijdrage.cs" />
-    <Compile Include="Models\BijdrageBericht.cs" />
     <Compile Include="Models\Utility.cs" />
     <Compile Include="Models\Verhuur.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -384,9 +381,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Bericht\" />
-    <Folder Include="Views\MediaSharing\" />
-    <Folder Include="Views\Hosting\" />
-    <Folder Include="Views\Reserveer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

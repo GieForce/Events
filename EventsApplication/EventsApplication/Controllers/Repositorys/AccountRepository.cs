@@ -46,11 +46,6 @@ namespace EventsApplication.Controllers
             return context.Delete(id);
         }
 
-        public List<Account> GetAllAccounts()
-        {
-            return context.GetAllAccounts();
-        }
-
         public Account Login(string wachtwoord, string gebruikersnaam)
         {
             return context.Login(wachtwoord, gebruikersnaam);

@@ -208,7 +208,7 @@ namespace EventsApplication.App_DAL
             return new Account(
                 Convert.ToString(reader["gebruikersnaam"]),
                 Convert.ToString(reader["telefoonnummer"]),
-                Convert.ToInt32(reader["aanwezig"])
+                Convert.ToBoolean(reader["aanwezig"])
                 );
         }
     }
