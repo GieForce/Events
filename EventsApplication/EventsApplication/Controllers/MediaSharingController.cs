@@ -65,5 +65,14 @@ namespace EventsApplication.Controllers
             BijdrageViewModel bvm = new BijdrageViewModel{bijdrageList = bijdrages, account = account};
             return PartialView("Bijdrages", bvm);
         }
+
+        public ActionResult CreatePost()
+        {
+            Account account = (Account)(Session["user"]);
+            accountRepository.GetById(account.Id);
+            List<Bijdrage> bijdrages = repository.GetAllBijdragesByUserId(account.Id);
+            BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
+            return PartialView("Create", bvm);
+        }
     }
 }

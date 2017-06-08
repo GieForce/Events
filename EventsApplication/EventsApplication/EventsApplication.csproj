@@ -172,7 +172,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\BijdrageRepository.cs" />
+    <Compile Include="Controllers\Repositorys\BijdrageRepository.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\MediaSharingController.cs" />
     <Compile Include="Controllers\Repositorys\EventRepository.cs" />
@@ -211,7 +211,7 @@
     <Compile Include="App_DAL\BerichtContext.cs" />
     <Compile Include="App_DAL\Interfaces\IBerichtContext.cs" />
     <Compile Include="Controllers\BerichtController.cs" />
-    <Compile Include="Controllers\BerichtRepository.cs" />
+    <Compile Include="Controllers\Repositorys\BerichtRepository.cs" />
     <Compile Include="Models\Categorie.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\ModelToViewModel.cs" />
@@ -377,6 +377,7 @@
     <Content Include="Views\Toegangs\Index.cshtml" />
     <Content Include="Views\Toegangs\Materialen.cshtml" />
     <Content Include="Views\Toegangs\Aanwezig.cshtml" />
+    <Content Include="Views\MediaSharing\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

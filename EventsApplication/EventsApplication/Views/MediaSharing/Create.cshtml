@@ -1,0 +1,71 @@
+﻿@model EventsApplication.Models.Bericht
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<link href="@Url.Content("~/Content/tag.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/tag.jsjs")"> </script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.css" />
+<script src="//cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.min.js"></script>
+
+<link href="<?php echo base_url(); ?>public/tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
+
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Account</h4>
+        <hr/>
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+        <div class="form-group">
+            @Html.LabelFor(model => model.Titel, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Titel, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Titel, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Inhoud, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Inhoud, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Inhoud, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+
+        <form id="bootstrapTagsInputForm" method="post" class="form-horizontal">
+            <div class="form-group2">
+                <label class="col-xs-3 control-label">Cities</label>
+                <div class="col-xs-8">
+                    <input type="text" name="cities" class="form-control"
+                           value="Hanoi" data-role="tagsinput"/>
+                </div>
+            </div>
+            <div class="form-group2">
+                <label class="col-xs-3 control-label">Countries</label>
+                <div class="col-xs-8">
+                    <input type="text" name="countries" class="form-control"
+                           value="Vietnam" data-role="tagsinput"/>
+                </div>
+            </div>
+            <div class="form-group2">
+                <div class="col-xs-5 col-xs-offset-3">
+                    <button type="submit" class="btn btn-default">Validate</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="form-group2">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default"/>
+            </div>
+        </div>
+    </div>
+}
+}
