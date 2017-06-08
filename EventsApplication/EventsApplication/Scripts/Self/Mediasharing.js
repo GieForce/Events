@@ -76,7 +76,7 @@ $(document).ready(function () {
             $("#showPosts").html("");
             $loading.show();
             $.ajax({
-                    url: "/Mediasharing/CreateNewBericht",
+                    url: "/Mediasharing/CreateNewMediaBericht",
                     type: "GET"
                 })
                 .done(function (partialViewResult) {
@@ -84,6 +84,7 @@ $(document).ready(function () {
                     $loading.hide();
                 });
         });
+
     $(".ShowCommentsById").on("click",
         function () {
             var $targetItem = $(this).attr("data-item");

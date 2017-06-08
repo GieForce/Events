@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EventsApplication.App_DAL;
+using EventsApplication.Controllers.Repositorys;
 using EventsApplication.Models;
 using EventsApplication.ViewModels;
 
@@ -13,6 +15,7 @@ namespace EventsApplication.Controllers
     {
         BijdrageRepository repository = new BijdrageRepository(new BijdrageContext());
         AccountRepository accountRepository = new AccountRepository(new AccountContext());
+        CategorieRepository categorieRepository = new CategorieRepository(new CategorieContext());
         
         // GET: MediaSharing
         public ActionResult Index()
@@ -72,23 +75,20 @@ namespace EventsApplication.Controllers
             return PartialView("Create");
         }
 
-        public ActionResult CreatePost(PostViewModel postmodel)
-        {
-            Account account = (Account)(Session["user"]);
-            AccountBijdrage ab = new AccountBijdrage();
-            Bericht bericht = new Bericht(account, postmodel.bericht.Datum,"bericht", ab ,postmodel.bericht.Titel, postmodel.bericht.Inhoud );
-            Bestand bestand = new Bestand(account, postmodel.bestand.Datum, "bestand",ab, postmodel.categorie.Id, postmodel.bestand.Bestandlocatie, postmodel.bestand.Grootte);
+        //public ActionResult CreatePost(PostViewModel postmodel)
+        //{
+        //    Account account = (Account)(Session["user"]);
+        //    AccountBijdrage ab = new AccountBijdrage();
+        //    Bericht bericht = new Bericht(account, postmodel.bericht.Datum,"bericht", ab ,postmodel.bericht.Titel, postmodel.bericht.Inhoud );
+        //    Bestand bestand = new Bestand(account, postmodel.bestand.Datum, "bestand",ab, postmodel.categorie.Id, postmodel.bestand.Bestandlocatie, postmodel.bestand.Grootte);
 
-            Categorie categorie = new Categorie( account, DateTime.Now,"categorie" ,ab, postmodel.categorie.CategorieId, postmodel.categorie.Naam);
-            accountRepository.GetById(account.Id);
-            PostViewModel pvm = new PostViewModel() {account = account, bericht = bericht, categorie = categorie, bestand = bestand};
+        //    Categorie categorie = new Categorie( account, DateTime.Now,"categorie" ,ab, postmodel.categorie.CategorieId, postmodel.categorie.Naam);
+        //    accountRepository.GetById(account.Id);
+        //    PostViewModel pvm = new PostViewModel() {account = account, bericht = bericht, categorie = categorie, bestand = bestand};
 
-            repository.insertPVM(pvm);
-            return PartialView("Create", pvm);
-        }
-
-
-
+        //    repository.insertPVM(pvm);
+        //    return PartialView("Create", pvm);
+        //}
 
         public ActionResult LoadBerichtenByPostId(int id)
         {
@@ -110,11 +110,33 @@ namespace EventsApplication.Controllers
 
         public ActionResult CreateNewMediaBericht()
         {
-            List<Bijdrage> bijdrages = repository();
+            List<Categorie> categorieList = categorieRepository.CategorieList();
             Account account = (Account)(Session["user"]);
             accountRepository.GetById(account.Id);
-            BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
+            MediaBerichtViewModel bvm = new MediaBerichtViewModel() { categorieList = categorieList, account = account };
             return PartialView("CreateMediaBericht", bvm);
+        }
+
+        [HttpPost]
+        public ActionResult CreateNewMediaBericht(HttpPostedFileBase file, MediaBerichtViewModel mvm)
+        {
+            try
+            {
+                if (file.ContentLength > 0)
+                {
+                    var path = Path.Combine(Server.MapPath("~/Content/Images"), mvm.selectedCategorieId + ".jpg");
+                    file.SaveAs(path);
+                    Account account = (Account)(Session["user"]);
+                    accountRepository.GetById(account.Id);
+                    repository.InsertMediaBericht(mvm.selectedCategorieId, mvm.bestandslocatie, account.Id);
+                }
+
+                return RedirectToAction("Index", "MediaSharing");
+            }
+            catch
+            {
+               return View("Error");
+            }
         }
     }
 }

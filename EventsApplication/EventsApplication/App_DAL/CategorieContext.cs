@@ -4,11 +4,13 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EventsApplication.App_DAL.Interfaces;
+using EventsApplication.Controllers;
 using EventsApplication.Models;
 
 namespace EventsApplication.App_DAL
 {
-    public class CategorieContext
+    public class CategorieContext : ICategorieContext
     {
         public List<Categorie> GetByBijdrageID(int id)
         {
@@ -39,7 +41,7 @@ namespace EventsApplication.App_DAL
 
             using (SqlConnection connection = Connection.SQLconnection)
             {
-                string query = "SELECT * FROM categorie";
+                string query = "select * from CATEGORIE c left join BIJDRAGE b on c.bijdrage_id = b.ID left join BIJDRAGE_BERICHT bb on b.ID = bb.bijdrage_id";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {             
 
@@ -81,10 +83,25 @@ namespace EventsApplication.App_DAL
 
         private Categorie ReaderToCategorie(SqlDataReader reader)
         {
+            AccountRepository accountRepository = new AccountRepository(new AccountContext());
+            Account account = accountRepository.GetById(Convert.ToInt32(reader["account_id"]));
+            AccountBijdrage accountBijdrage;
+            try
+            {
+                accountBijdrage = new AccountBijdrage(Convert.ToInt32(reader["account_id"]), Convert.ToInt32(reader["bijdrage_id"]), Convert.ToInt32(reader["like"]), Convert.ToInt32("ongewenst"));
+            }
+            catch (Exception)
+            {
+                accountBijdrage = new AccountBijdrage(0, 0, 0, 0, 0);
+            }
             return new Categorie(
-                Convert.ToInt32(reader["bijdrage_id"]),
-                Convert.ToInt32(reader["categorie_id"]),
-                Convert.ToString(reader["naam"])   
+                Convert.ToInt32(reader["ID"]),
+                account,
+                Convert.ToDateTime(reader["datum"]),
+                Convert.ToString(reader["soort"]),
+                accountBijdrage,
+                Convert.ToInt32(reader["categorie_id"] != DBNull.Value ? Convert.ToInt32(reader["categorie_id"]) : 0),
+                Convert.ToString(reader["naam"])
             );
         }
     }

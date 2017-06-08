@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Web;
 using EventsApplication.App_DAL;
 using EventsApplication.Models;
@@ -27,12 +28,6 @@ namespace EventsApplication.Controllers
             return context.Insert(bericht);
         }
 
-        public bool insertPVM(PostViewModel pvm)
-        {
-            return context.InsertPVM(pvm);
-        }
-
-
         //public bool Delete(int id)
         //{
         //    return context.Delete(id);
@@ -55,6 +50,11 @@ namespace EventsApplication.Controllers
         public List<Bericht> LoadBerichtenByPostId(int id)
         {
             return context.LoadBerichtenByPostId(id);
+        }
+
+        public bool InsertMediaBericht(int categorieId, string bestandlocatie, int accountid)
+        {
+            return context.InsertMediaBericht(categorieId, bestandlocatie, accountid);
         }
     }
 }

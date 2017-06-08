@@ -40,7 +40,10 @@ namespace EventsApplication.ViewModels
 
     public class MediaBerichtViewModel
     {
+        public Account account { get; set; }
         public List<Categorie> categorieList { get; set; }
+        [Required(ErrorMessage = "Geen bestand geuploadt!")]
         public string bestandslocatie { get; set; }
+        public int selectedCategorieId { get; set; }
     }
 }

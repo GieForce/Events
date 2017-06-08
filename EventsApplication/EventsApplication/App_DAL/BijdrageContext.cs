@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -137,30 +138,28 @@ namespace EventsApplication.App_DAL
             }
         }
 
-        public bool InsertPVM(PostViewModel pvm)
+        public bool InsertMediaBericht(int categorieId, string bestandlocatie, int accountid)
         {
             try
             {
                 using (SqlConnection connection = Connection.SQLconnection)
                 {
                     string query = "CreateNew";
+                    SqlCommand command = new SqlCommand(query, connection);
 
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@accountID", pvm.account.Id);
-                        command.Parameters.AddWithValue("@datum", pvm.bericht.Datum);
-                        command.Parameters.AddWithValue("@soort", pvm.bericht.Soort);
-                        command.Parameters.AddWithValue("@titel", pvm.bericht.Titel);
-                        command.Parameters.AddWithValue("@inhoud", pvm.bericht.Inhoud);
-                        command.Parameters.AddWithValue("@categorieID", pvm.categorie.CategorieId);
-                        command.Parameters.AddWithValue("@bestandslocatie", pvm.bestand.Bestandlocatie);
-                        command.Parameters.AddWithValue("@grootte", pvm.bestand.Grootte);
-                        command.Parameters.AddWithValue("@naam", pvm.categorie.Naam);
+                    command.CommandType = CommandType.StoredProcedure;
 
-
-
+                    
+                        command.Parameters.AddWithValue("@accountID", accountid);
+                        command.Parameters.AddWithValue("@datum", DateTime.Now);
+                        command.Parameters.AddWithValue("@soort", "bestand");
+                        command.Parameters.AddWithValue("@titel", "");
+                        command.Parameters.AddWithValue("@inhoud", "");
+                        command.Parameters.AddWithValue("@categorieID", categorieId);
+                        command.Parameters.AddWithValue("@bestandslocatie", bestandlocatie);
+                        command.Parameters.AddWithValue("@grootte", "");
+                        command.Parameters.AddWithValue("@naam", "");
                         command.ExecuteNonQuery();
-                    }
                 }
                 return true;
             }
@@ -169,6 +168,8 @@ namespace EventsApplication.App_DAL
                 return false;
             }
         }
+
+
 
         private Bijdrage CreateBijdrageFromReader(SqlDataReader reader)
         {

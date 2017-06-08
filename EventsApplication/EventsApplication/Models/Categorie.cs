@@ -40,5 +40,11 @@ namespace EventsApplication.Models
             this.categorieId = categorieId;
             this.naam = naam;
         }
+
+        public override string ToString()
+        {
+            string method = Naam;
+            return method;
+        }
     }
 }

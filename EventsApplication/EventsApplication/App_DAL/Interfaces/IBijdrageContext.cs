@@ -13,7 +13,7 @@ namespace EventsApplication.App_DAL
         Bijdrage GetById(int id);
         bool Insert(Bericht bijdrage);
 
-        bool InsertPVM(PostViewModel pvm);
+        bool InsertMediaBericht(int categorieId, string bestandlocatie, int accountid);
         //bool Delete(int id);
         List<Bijdrage> GetAllBijdrages();
 
