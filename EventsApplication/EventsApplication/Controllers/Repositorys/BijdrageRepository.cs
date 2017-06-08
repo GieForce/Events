@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Web;
 using EventsApplication.App_DAL;
 using EventsApplication.Models;
+using EventsApplication.ViewModels;
 
 namespace EventsApplication.Controllers
 {
@@ -26,7 +28,6 @@ namespace EventsApplication.Controllers
             return context.Insert(bericht);
         }
 
-
         //public bool Delete(int id)
         //{
         //    return context.Delete(id);
@@ -45,5 +46,15 @@ namespace EventsApplication.Controllers
         //{
         //    return context.Update(bijdrage);
         //}
+
+        public List<Bericht> LoadBerichtenByPostId(int id)
+        {
+            return context.LoadBerichtenByPostId(id);
+        }
+
+        public bool InsertMediaBericht(int categorieId, string bestandlocatie, int accountid)
+        {
+            return context.InsertMediaBericht(categorieId, bestandlocatie, accountid);
+        }
     }
 }

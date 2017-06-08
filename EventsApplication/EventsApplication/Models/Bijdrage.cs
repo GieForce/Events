@@ -60,5 +60,10 @@ namespace EventsApplication.Models
             this.soort = soort;
             this.accountBijdrage = accountBijdrage;
         }
+
+        public Bijdrage(int id)
+        {
+            this.id = id;
+        }
     }
 }

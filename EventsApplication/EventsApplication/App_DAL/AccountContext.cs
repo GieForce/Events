@@ -233,10 +233,11 @@ namespace EventsApplication.App_DAL
                 Convert.ToString(reader["gebruikersnaam"]),
                 Convert.ToString(reader["email"]),
                 Convert.ToString(reader["activatiehash"]),
-                Convert.ToInt32(reader["geactiveerd"]),
+                Convert.ToBoolean(reader["geactiveerd"]),
                 Convert.ToString(reader["wachtwoord"]),
                 Convert.ToString(reader["telefoonnummer"])
-                );
+            );
+
         }
     }
 }
