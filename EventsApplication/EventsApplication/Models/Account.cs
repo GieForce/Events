@@ -64,28 +64,46 @@ namespace EventsApplication.Models
             set { aanwezig = value; }
         }
 
-        public Account(int id, string gebruikersnaam, string email, string activatiehash, bool geactiveerd, string wachtwoord, string telefoonnummer)
+        public Account(int id, string gebruikersnaam, string email, string activatiehash, int geactiveerd, string wachtwoord, string telefoonnummer)
         {
             ID = id;
             this.gebruikersnaam = gebruikersnaam;
             this.email = email;
             this.activatiehash = activatiehash;
-            this.geactiveerd = geactiveerd;
+
+            if (geactiveerd == 1)
+            {
+                this.geactiveerd = true;
+            }
+            else if (geactiveerd == 0)
+            {
+                this.geactiveerd = false;
+            }
             this.wachtwoord = wachtwoord;
             this.telefoonnummer = telefoonnummer;
         }
 
-        public Account(string gebruikersnaam, string email, string activatiehash, bool geactiveerd, string wachtwoord, string telefoonnummer)
+        public Account(string gebruikersnaam, string email, string activatiehash, int geactiveerd, string wachtwoord, string telefoonnummer)
         {
             this.gebruikersnaam = gebruikersnaam;
             this.email = email;
             this.activatiehash = activatiehash;
-            this.geactiveerd = geactiveerd;
+
+            if (geactiveerd == 1)
+            {
+                this.geactiveerd = true;
+            }
+            else if (geactiveerd == 0)
+            {
+                this.geactiveerd = false;
+            }
+
             this.telefoonnummer = telefoonnummer;
         }
 
-        public Account(string gebruikersnaam, string telefoonnummer, bool aanwezig)
+        public Account(int id, string gebruikersnaam, string telefoonnummer, bool aanwezig)
         {
+            this.Id = id;
             this.gebruikersnaam = gebruikersnaam;
             this.telefoonnummer = telefoonnummer;
             this.aanwezig = aanwezig;

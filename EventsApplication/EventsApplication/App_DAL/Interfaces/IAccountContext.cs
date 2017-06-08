@@ -15,6 +15,8 @@ namespace EventsApplication.App_DAL
 
         List<Account> GetAllAccountsPresent();
 
+        List<Account> GetAllAccountsByReservation(int reserveringsID);
+
         bool Insert(Account account);
 
         bool Delete(int id);

@@ -1,0 +1,45 @@
+﻿@model EventsApplication.ViewModels.AanwezigAccountViewModel
+@{
+    ViewBag.Title = "Aanwezige bezoekers";
+}
+<table class="table">
+    <tr>
+    <th></th>
+    <th></th>
+    </tr>
+    <tr>
+        <td>@Html.DisplayNameFor(model => model.Reservering.Staanplaats.Plaatsnummer)</td>
+        <td>@Html.DisplayFor(modelItem => Model.Reservering.StandplaatsId)</td>
+    <tr>
+            <td>@Html.DisplayNameFor(model => model.Account.Gebruikersnaam)</td>
+            <td>@Html.DisplayFor(modelItem => Model.Account.Gebruikersnaam)</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayNameFor(model => model.Account.Email)</td>
+        <td>@Html.DisplayFor(modelItem => Model.Account.Email)</td>
+    </tr>
+    <tr>    
+        <td>@Html.DisplayNameFor(model => model.Account.Telefoonnummer)</td>
+        <td>@Html.DisplayFor(modelItem => Model.Account.Telefoonnummer)</td>
+    </tr>
+    <tr>    
+        <td>@Html.DisplayNameFor(model => model.Account.Activatiehash)</td>
+        <td>@Html.DisplayFor(modelItem => Model.Account.Activatiehash)</td>
+    </tr>
+    <tr>    
+        <td>@Html.DisplayNameFor(model => model.Polsbandje.barcode)</td>
+        <td>@Html.DisplayFor(modelItem => Model.Polsbandje.barcode)</td>
+    </tr>
+    <tr>    
+        <td>@Html.DisplayNameFor(model => model.Polsbandje.ReserveringsId)</td>
+        <td>@Html.DisplayFor(modelItem => Model.Polsbandje.ReserveringsId)</td>
+    </tr>
+    <tr>    
+        <td>@Html.DisplayNameFor(model => model.Reservering.StartDatum)</td>
+        <td>@Html.DisplayFor(modelItem => Model.Reservering.StartDatum)</td>
+    </tr>
+    <tr>    
+        <td>@Html.DisplayNameFor(model => model.Reservering.EindDatum)</td>
+        <td>@Html.DisplayFor(modelItem => Model.Reservering.EindDatum)</td>
+    </tr>
+</table>

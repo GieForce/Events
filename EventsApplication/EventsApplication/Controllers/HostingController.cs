@@ -79,7 +79,7 @@ namespace EventsApplication.Controllers
             {
 
                 // TODO: Add insert logic here
-                Account account = new Account(collection["Gebruikersnaam"], collection["Email"], Convert.ToString(accountrepo.newactivationhash()), false, collection["Wachtwoord"], collection["Telefoonnummer"]);
+                Account account = new Account(collection["Gebruikersnaam"], collection["Email"], Convert.ToString(accountrepo.newactivationhash()), 0, collection["Wachtwoord"], collection["Telefoonnummer"]);
                 accountrepo.Insert(account);
                 return RedirectToAction("AccountIndex");
             }
@@ -220,7 +220,7 @@ namespace EventsApplication.Controllers
             try
             {
                 // TODO: Add update logic here
-                Account accounto = new Account(Convert.ToInt32(collection["Id"]),collection["GebruikersNaam"], collection["Email"], collection["Activatiehash"], true, collection["Wachtwoord"], collection["Telefoonnummer"]);
+                Account accounto = new Account(Convert.ToInt32(collection["Id"]),collection["GebruikersNaam"], collection["Email"], collection["Activatiehash"], 1, collection["Wachtwoord"], collection["Telefoonnummer"]);
                 accountrepo.Update(accounto);
                 return RedirectToAction("AccountIndex");
             }

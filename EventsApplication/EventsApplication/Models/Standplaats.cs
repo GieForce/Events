@@ -16,6 +16,11 @@ namespace EventsApplication.Models
         private bool handicapbeschikbaar = false;
         private bool comfortplek = false;
 
+        public int Id
+        {
+            get { return id; }
+        }
+
         public bool Kraanbeschikbaar
         {
             get { return kraanbeschikbaar; }
@@ -63,8 +68,9 @@ namespace EventsApplication.Models
             Prijs = prijs;
         }
 
-        public Standplaats(int plaatsnummer, int capaciteit, decimal prijs, string specificatie)
+        public Standplaats(int id, int plaatsnummer, int capaciteit, decimal prijs, string specificatie)
         {
+            this.id = id;
             Plaatsnummer = plaatsnummer;
             Capaciteit = capaciteit;
             Prijs = prijs;

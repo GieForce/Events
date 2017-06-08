@@ -12,6 +12,8 @@ namespace EventsApplication.App_DAL.Interfaces
 
         List<Standplaats> GetByLocatie(Locatie locatie);
 
+        Standplaats GetByReservation(int reservationID);
+
         bool Insert(Locatie locatie, decimal prijs, int capaciteit, int nummer, string specificatie);
 
         bool Delete(int id);

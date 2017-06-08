@@ -10,22 +10,12 @@ namespace EventsApplication.App_DAL
     {
         private List<Reservering> reserveringen = new List<Reservering>();
 
-        public Reservering AddReservering(Reservering reservering)
-        {
-            reserveringen.Add(reservering);
-            return reservering;
-        }
-
-        public List<Reservering> GetReservering()
+        public List<Reservering> GetAllReserveringen()
         {
             List<Reservering> result = new List<Reservering>();
             using (SqlConnection connection = Connection.SQLconnection)
             {
-                string query = "SELECT ID, standplaatsID, reservering_naam, reservering_adres, reservering_woonplaats, reservering_aantal, reservering_startdatum, reservering_einddatum, reservering_betaalstatus" +           //////
-                               "FROM Reservering" +
-                               "INNER JOIN standplaatsen" +
-                               "ON standplaatsen.ID = reservering.standplaatsID" +
-                               "ORDER BY reservering.ID ASC";
+                string query = "SELECT reservering.id, voornaam, tussenvoegsel, achternaam, straat, huisnr, woonplaats, betaald, datumStart, datumEinde, plek_id FROM Reservering INNER JOIN Persoon ON persoon_id = persoon.id INNER JOIN PLEK_RESERVERING ON reservering.ID = PLEK_RESERVERING.plek_id;";
 
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -53,13 +43,13 @@ namespace EventsApplication.App_DAL
         {
             using (SqlConnection connection = Connection.SQLconnection)
             {
-                string query = "SELECT * FROM Reservering WHERE Id=:id LIMIT 1";
+                string query = "SELECT reservering.id, voornaam, tussenvoegsel, achternaam, straat, huisnr, woonplaats, betaald, datumStart, datumEinde, plek_id FROM Reservering INNER JOIN Persoon ON persoon_id = persoon.id INNER JOIN PLEK_RESERVERING ON reservering.ID = PLEK_RESERVERING.plek_id WHERE RESERVERING.ID = @id";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("id", id);
+                    command.Parameters.AddWithValue("@id", id);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        if (reader.Read())
+                        while (reader.Read())
                         {
                             return CreateReserveringFromReader(reader);
                         }
@@ -70,49 +60,23 @@ namespace EventsApplication.App_DAL
             return null;
         }
 
-        public Reservering GetByBezoeker(int bezoekerid)
+        public void Insert(Reservering reservering)
         {
-            Reservering reservering = null;
+            int persoonID = 0;
+
             using (SqlConnection connection = Connection.SQLconnection)
             {
-                string query = "SELECT * FROM reservering WHERE ID = (SELECT reserveringID FROM bezoeker_reservering WHERE bezoekerID = @id);";
-                using (SqlCommand command = new SqlCommand(query, connection))
+                //Insert into table PERSOON
+                string queryPERSOON = "INSERT INTO PERSOON (voornaam, tussenvoegsel, achternaam, straat, huisnr, woonplaats, banknr) VALUES (@voornaam, @tussenvoegsel, @achternaam, @straat, @huisnr, @woonplaats, n.v.t.)";
+                
+                using (SqlCommand command = new SqlCommand(queryPERSOON, connection))
                 {
-                    command.Parameters.AddWithValue("@id", bezoekerid);
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            reservering = CreateReserveringFromReader(reader);
-                        }
-                    }
-                }
-            }
-
-            return reservering;
-        }
-
-        public Reservering Insert(Reservering reservering, Evenement evenement)
-        {
-            Reservering returnReservering = null;
-            using (SqlConnection connection = Connection.SQLconnection)
-            {
-                string query = "INSERT INTO Reservering (standplaatsID, reservering_telefoonnummer, eventID, reservering_naam, reservering_adres, reservering_email, reservering_woonplaats, reservering_aantal, reservering_begindatum, reservering_einddatum, reservering_betaalstatus)" +
-               " VALUES (@standplaatsID, @reservering_telefoonnummer, @eventid, @reservering_naam, @reservering_adres, @reservering_email, @reservering_woonplaats, @reservering_aantal, @reservering_begindatum, @reservering_einddatum, @reservering_betaalstatus)";
-
-
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@standplaatsID", reservering.Staanplaats.Plaatsnummer);
-                    command.Parameters.AddWithValue("@eventid", evenement.Id);
-
-                    command.Parameters.AddWithValue("@reservering_naam", reservering.Naam);
-                    command.Parameters.AddWithValue("@reservering_adres", reservering.Adres);
-                    command.Parameters.AddWithValue("@reservering_woonplaats", reservering.Woonplaats);
-                    command.Parameters.AddWithValue("@reservering_aantal", reservering.Aantal);
-                    command.Parameters.AddWithValue("@reservering_begindatum", reservering.StartDatum);
-                    command.Parameters.AddWithValue("@reservering_einddatum", reservering.EindDatum);
-                    command.Parameters.AddWithValue("@reservering_betaalstatus", reservering.Betaalstatus);
+                    command.Parameters.AddWithValue("@voornaam", reservering.Voornaam);
+                    command.Parameters.AddWithValue("@tussenvoegsel", reservering.Tussenvoegsel);
+                    command.Parameters.AddWithValue("@achternaam", reservering.Achternaam);
+                    command.Parameters.AddWithValue("@straat", reservering.Straat);
+                    command.Parameters.AddWithValue("@huisnr", reservering.Huisnummer);
+                    command.Parameters.AddWithValue("@woonplaats", reservering.Woonplaats);
 
                     try
                     {
@@ -120,92 +84,124 @@ namespace EventsApplication.App_DAL
                     }
                     catch (SqlException)
                     {
-
                         //System.Windows.Forms.MessageBox.Show(e.Message);
 
                         throw;
                     }
+
                 }
+                //End table PERSOON
 
-                string query2 = "SELECT * FROM reservering WHERE id=(SELECT max(id) FROM reservering)";
+                //Get id from PERSOON
+                string queryPERSOONID = "SELECT ID FROM PERSOON WHERE voornaam=@voornaam, tussenvoegsel=@tussenvoegsel, achternaam=@achternaam, straat=@straat, huisnr=@huisnr, woonplaats=@woonplaats;";
 
-
-                using (SqlCommand command = new SqlCommand(query2, connection))
+                using (SqlCommand command = new SqlCommand(queryPERSOONID, connection))
                 {
+                    command.Parameters.AddWithValue("@voornaam", reservering.Voornaam);
+                    command.Parameters.AddWithValue("@tussenvoegsel", reservering.Tussenvoegsel);
+                    command.Parameters.AddWithValue("@achternaam", reservering.Achternaam);
+                    command.Parameters.AddWithValue("@straat", reservering.Straat);
+                    command.Parameters.AddWithValue("@huisnr", reservering.Huisnummer);
+                    command.Parameters.AddWithValue("@woonplaats", reservering.Woonplaats);
+
                     try
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                returnReservering = CreateReserveringFromReader(reader);
+                                persoonID = Convert.ToInt32(reader["ID"]);
                             }
                         }
                     }
                     catch (SqlException)
                     {
-
                         //System.Windows.Forms.MessageBox.Show(e.Message);
+
                         throw;
                     }
+
                 }
+                //End get PersonID
 
-            }
-            return returnReservering;
-        }
+                //Insert into table RESERVERING
+                string queryRESERVERING = "INSERT INTO RESERVERING (persoon_id, datumStart, datumEind, betaald, eventID) VALUES (@persoon_id, @datumStart, @datumEind, @betaald, @eventID)";
 
-        public bool Update(Reservering reservering)
-        {
-            using (SqlConnection connection = Connection.SQLconnection)
-            {
-                string query = "UPDATE reservering" +
-                    " SET standplaatsID = @staanplaatsID, [reservering_naam] = @reservering_naam, [reservering_adres] = @reservering_adres, [reservering_woonplaats] = @reservering_woonplaats, [reservering_aantal] = @reservering_aantal, [reservering_begindatum] = @reservering_begindatum, [reservering_einddatum] = @reservering_einddatum, [reservering_betaalstatus] = @reservering_Betaalstatus WHERE ID = @id;";
-
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlCommand command = new SqlCommand(queryRESERVERING, connection))
                 {
-                    command.Parameters.AddWithValue("id", reservering.Id);
-                    command.Parameters.AddWithValue("staanplaatsID", reservering.Staanplaatsid);
-                    command.Parameters.AddWithValue("reservering_naam", reservering.Naam);
-                    command.Parameters.AddWithValue("reservering_adres", reservering.Adres);
-                    command.Parameters.AddWithValue("reservering_woonplaats", reservering.Woonplaats);
-                    command.Parameters.AddWithValue("reservering_aantal", reservering.Aantal);
-                    command.Parameters.AddWithValue("reservering_begindatum", reservering.StartDatum);
-                    command.Parameters.AddWithValue("reservering_einddatum", reservering.EindDatum);
-                    command.Parameters.AddWithValue("reservering_betaalstatus", reservering.Betaalstatus);
-
+                    command.Parameters.AddWithValue("@persoon_id", persoonID);
+                    command.Parameters.AddWithValue("@datumStart", reservering.StartDatum);
+                    command.Parameters.AddWithValue("@datumEind", reservering.EindDatum);
+                    command.Parameters.AddWithValue("@betaald", reservering.Betaald);
+                    command.Parameters.AddWithValue("@eventID", reservering.Huisnummer);
 
                     try
                     {
                         command.ExecuteNonQuery();
-                        return true;
                     }
-                    catch (Exception)
+                    catch (SqlException)
                     {
                         //System.Windows.Forms.MessageBox.Show(e.Message);
-                        return false;
+
+                        throw;
                     }
 
+                }
+                //End insert into table RESERVERING
 
+                //Insert into plek_reservering
+                string queryPLEKRESERVERING = "INSERT INTO PLEK_RESERVERING (plek_id, reservering_id) VALUES (@plekID, @reserveringID)";
+
+                using (SqlCommand command = new SqlCommand(queryPLEKRESERVERING, connection))
+                {
+                    command.Parameters.AddWithValue("@plekID", reservering.StandplaatsId);
+                    command.Parameters.AddWithValue("@reserveringID", reservering.Id);
+
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (SqlException)
+                    {
+                        //System.Windows.Forms.MessageBox.Show(e.Message);
+
+                        throw;
+                    }
 
                 }
+                //End insert into plek_reservering
+
             }
         }
 
-        public bool Delete(int id)
+        public void Delete(Reservering reservering)
         {
 
             using (SqlConnection connection = Connection.SQLconnection)
             {
-                string query = "DELETE FROM reservering WHERE Id=" + id;
+                //Delete row in table reservering
+                string query = "DELETE FROM PLEK_RESERVERING WHERE Id= @id";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("id", id);
+                    command.Parameters.AddWithValue("id", reservering.Id);
                     try
                     {
-                        if (Convert.ToInt32(command.ExecuteNonQuery()) != 1)
-                        {
-                            return true;
-                        }
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Exception)
+                    {
+                        //System.Windows.Forms.MessageBox.Show(e.Message);
+                    }
+                }
+
+                //Delete row in table plek_reservering
+                string queryPLEKRESERVERING = "DELETE FROM reservering WHERE Id= @id";
+                using (SqlCommand command = new SqlCommand(queryPLEKRESERVERING, connection))
+                {
+                    command.Parameters.AddWithValue("id", reservering.Id);
+                    try
+                    {
+                        command.ExecuteNonQuery();
                     }
                     catch (Exception)
                     {
@@ -213,25 +209,22 @@ namespace EventsApplication.App_DAL
                     }
                 }
             }
-
-            return false;
         }
 
-        private Reservering CreateReserveringFromReader(SqlDataReader reader)
+    private Reservering CreateReserveringFromReader(SqlDataReader reader)
         {
             return new Reservering(
             Convert.ToInt32(reader["id"]),
-            Convert.ToInt32(reader["eventID"]),
-            Convert.ToInt32(reader["standplaatsID"]),
-            Convert.ToString(reader["reservering_naam"]),
-            Convert.ToString(reader["reservering_adres"]),
-            Convert.ToString(reader["reservering_woonplaats"]),
-            Convert.ToString(reader["reservering_email"]),
-            Convert.ToString(reader["reservering_telefoonnummer"]),
-            Convert.ToInt32(reader["reservering_aantal"]),
-            Convert.ToDateTime(reader["reservering_begindatum"]),
-            Convert.ToDateTime(reader["reservering_einddatum"]),
-            Convert.ToBoolean(reader["reservering_betaalstatus"]));
+            Convert.ToString(reader["voornaam"]),
+            Convert.ToString(reader["tussenvoegsel"]),
+            Convert.ToString(reader["achternaam"]),
+            Convert.ToString(reader["straat"]),
+            Convert.ToInt32(reader["huisnr"]),
+            Convert.ToString(reader["woonplaats"]),
+            Convert.ToInt32(reader["betaald"]),
+            Convert.ToDateTime(reader["datumStart"]),
+            Convert.ToDateTime(reader["datumEinde"]),
+            Convert.ToInt32(reader["plek_id"]));
         }
     }
 }
