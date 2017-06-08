@@ -216,6 +216,7 @@
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\ModelToViewModel.cs" />
     <Compile Include="ViewModels\BijdrageViewModel.cs" />
+    <Compile Include="ViewModels\ReserveringViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-select.css" />
@@ -329,7 +330,6 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\Self\Home.js" />
     <Content Include="Scripts\tag.js" />
     <Content Include="Scripts\Self\Reserveer.js" />
     <Content Include="Scripts\Self\Mediasharing.js" />
@@ -377,6 +377,9 @@
     <Content Include="Views\Toegangs\Index.cshtml" />
     <Content Include="Views\Toegangs\Materialen.cshtml" />
     <Content Include="Views\Toegangs\Aanwezig.cshtml" />
+    <Content Include="Views\Reserveer\Plaats.cshtml" />
+    <Content Include="Views\Reserveer\Gegevens.cshtml" />
+    <Content Include="Views\Reserveer\Accounts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

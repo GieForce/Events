@@ -20,7 +20,41 @@ namespace EventsApplication.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            ViewData["standplaatsen"] = repo.GetByLocatie(evenement.Locatie);
+            return View();
+        }
+
+        // GET: Reserveer/Plaats
+        public ActionResult Plaats()
+        {
+            Event evenement = (Event)Session["event"];
+            StandplaatsRepository repo = new StandplaatsRepository(new StandplaatsContext());
+            if (Session["event"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+
+        // GET: Reserveer/Gegevens
+        public ActionResult Gegevens()
+        {
+            Event evenement = (Event)Session["event"];
+            StandplaatsRepository repo = new StandplaatsRepository(new StandplaatsContext());
+            if (Session["event"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+
+        public ActionResult Accounts()
+        {
+            Event evenement = (Event)Session["event"];
+            StandplaatsRepository repo = new StandplaatsRepository(new StandplaatsContext());
+            if (Session["event"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
     }

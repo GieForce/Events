@@ -23,11 +23,15 @@ namespace EventsApplication.Controllers
             EventRepository eventRepo = new EventRepository(new EventContext());
             Event event1 = eventRepo.GetById(eventid);
             Session["event"] = event1;
-            return RedirectToAction("Index", "Event");
+            return RedirectToAction("Home", "Home");
         }
 
         public ActionResult Home()
         {
+            if (Session["event"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             Event e = (Event) Session["event"];
             return View(ModelToViewModel.EventToEventViewModel(e));
         }
