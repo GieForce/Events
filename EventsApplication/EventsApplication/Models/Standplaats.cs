@@ -12,7 +12,25 @@ namespace EventsApplication.Models
         private int locatieid;
         private int capaciteit;
         private decimal prijs;
+        private bool kraanbeschikbaar = false;
+        private bool handicapbeschikbaar = false;
+        private bool comfortplek = false;
 
+        public bool Kraanbeschikbaar
+        {
+            get { return kraanbeschikbaar; }
+            set { kraanbeschikbaar = value; }
+        }
+        public bool Handicapbeschikbaar
+        {
+            get { return handicapbeschikbaar; }
+            set { handicapbeschikbaar = value; }
+        }
+        public bool Comfortplek
+        {
+            get { return comfortplek; }
+            set { comfortplek = value; }
+        }
         public int Plaatsnummer
         {
             get { return plaatsnummer; }
@@ -45,11 +63,23 @@ namespace EventsApplication.Models
             Prijs = prijs;
         }
 
-        public Standplaats(int plaatsnummer, int capaciteit, decimal prijs)
+        public Standplaats(int plaatsnummer, int capaciteit, decimal prijs, string specificatie)
         {
             Plaatsnummer = plaatsnummer;
             Capaciteit = capaciteit;
             Prijs = prijs;
+            if(specificatie == "kraan beschikbaar")
+            {
+                Kraanbeschikbaar = true;
+            }
+            if (specificatie == "handicap geschikt")
+            {
+                Handicapbeschikbaar = true;
+            }
+            if (specificatie == "comfortplek")
+            {
+                Comfortplek = true;
+            }
         }
 
         public override string ToString()

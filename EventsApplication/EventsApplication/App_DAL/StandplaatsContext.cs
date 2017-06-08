@@ -17,7 +17,7 @@ namespace EventsApplication.App_DAL
             try
             {
                 string query =
-                    "SELECT DISTINCT a.ID, a.capaciteit, a.nummer, a.prijs FROM PLEK a FULL OUTER JOIN PLEK_RESERVERING b on b.plek_id = a.ID LEFT JOIN RESERVERING c on c.ID = b.reservering_id WHERE c.locatieID = @locatie_id AND ((@begindatum NOT BETWEEN c.datumStart AND c.datumEinde AND @einddatum NOT BETWEEN c.datumStart AND c.datumEinde) OR (c.datumStart is null AND c.datumEinde is null)) ORDER BY a.prijs; ";
+                    "SELECT DISTINCT a.ID, a.capaciteit, a.nummer, a.prijs, S.naam FROM PLEK a FULL OUTER JOIN PLEK_RESERVERING b on b.plek_id = a.ID LEFT JOIN RESERVERING c on c.ID = b.reservering_id LEFT JOIN PLEK_SPECIFICATIE PS on a.ID = PS.plek_id LEFT JOIN SPECIFICATIE S on PS.specificatie_id = S.ID WHERE a.locatie_id = @locatieid AND S.naam != 'coordinaat x' AND S.naam != 'coordinaat y' AND PS.waarde = 'ja' ORDER BY a.prijs; ";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@locatieid", locatie.Id);
                 cmd.Parameters.AddWithValue("@begindatum", startdatum);
@@ -26,12 +26,13 @@ namespace EventsApplication.App_DAL
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    int ID = Convert.ToInt32(reader["ID"].ToString());
-                    int capaciteit = Convert.ToInt32(reader["capaciteit"].ToString());
-                    int nummer = Convert.ToInt32(reader["nummer"].ToString());
-                    decimal prijs = Convert.ToDecimal(reader["prijs"].ToString());
+                    int ID = Convert.ToInt32(reader["a.ID"].ToString());
+                    int capaciteit = Convert.ToInt32(reader["a.capaciteit"].ToString());
+                    int nummer = Convert.ToInt32(reader["a.nummer"].ToString());
+                    decimal prijs = Convert.ToDecimal(reader["a.prijs"].ToString());
+                    string specificatie = reader["S.naam"].ToString();
 
-                    staanplaatsen.Add(new Standplaats(nummer, capaciteit,prijs));
+                    staanplaatsen.Add(new Standplaats(nummer, capaciteit,prijs, specificatie));
                 }
                 conn.Close();
 
@@ -51,19 +52,20 @@ namespace EventsApplication.App_DAL
             List<Standplaats> staanplaatsen = new List<Standplaats>();
             try
             {
-                string query = "SELECT * FROM dbo.Standplaatsen WHERE locatieID = @locatieid";
+                string query = "SELECT P.ID, P.capaciteit, P.nummer, S.naam, P.prijs FROM PLEK P INNER JOIN PLEK_SPECIFICATIE PS ON P.ID = PS.plek_id INNER JOIN SPECIFICATIE S ON PS.specificatie_id = S.ID WHERE S.naam != 'coordinaat x' AND S.naam != 'coordinaat y' AND PS.waarde = 'ja' AND P.locatie_id = @locatieid";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@locatieid", locatie.Id);
 
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    int ID = Convert.ToInt32(reader["ID"].ToString());
-                    int capaciteit = Convert.ToInt32(reader["capaciteit"].ToString());
-                    int nummer = Convert.ToInt32(reader["nummer"].ToString());
-                    decimal prijs = Convert.ToDecimal(reader["prijs"].ToString());
+                    int ID = Convert.ToInt32(reader["P.ID"].ToString());
+                    int capaciteit = Convert.ToInt32(reader["P.capaciteit"].ToString());
+                    int nummer = Convert.ToInt32(reader["P.nummer"].ToString());
+                    decimal prijs = Convert.ToDecimal(reader["P.prijs"].ToString());
+                    string specificatie = reader["S.naam"].ToString();
 
-                    staanplaatsen.Add(new Standplaats(nummer, capaciteit, prijs));
+                    staanplaatsen.Add(new Standplaats(nummer, capaciteit, prijs, specificatie));
                 }
                 conn.Close();
 
@@ -94,18 +96,20 @@ namespace EventsApplication.App_DAL
             }
 
         }
-        public bool Insert(int locatieID, decimal prijs, int capaciteit, int nummer)
+        public bool Insert(Locatie locatie, decimal prijs, int capaciteit, int nummer, string specificatie)
         {
             SqlConnection conn = Connection.SQLconnection;
             try
             {
-                string query = "INSERT INTO dbo.standplaatsen(locatie_id, nummer, capaciteit, prijs) VALUES(@locatieID, @nummer, @capaciteit, @prijs)";
+                string query = "Standplaatstoevoegen";
                 SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.CommandText = query;
-                cmd.Parameters.AddWithValue("@locatieID", locatieID);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@locatieid", locatie.Id);
                 cmd.Parameters.AddWithValue("@nummer", nummer);
                 cmd.Parameters.AddWithValue("@capaciteit", capaciteit);
                 cmd.Parameters.AddWithValue("@prijs", prijs);
+                cmd.Parameters.AddWithValue("@specificatie", specificatie);
                 cmd.ExecuteNonQuery();
                 conn.Close();
                 return true;
@@ -136,7 +140,7 @@ namespace EventsApplication.App_DAL
         {
             using (SqlConnection connection = Connection.SQLconnection)
             {
-                string query = "select MAX(ID) from LOCATIE";
+                string query = "select MAX(ID) from EVENT";
                 SqlCommand cmd = new SqlCommand(query, connection);
                 Int32 locatieID = (int)cmd.ExecuteScalar();
                 return locatieID;

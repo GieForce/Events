@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
+using System.Data.OleDb;
 using System.Web.Mvc;
 using EventsApplication.Controllers.Repositorys;
 using EventsApplication.App_DAL;
 using EventsApplication.Models;
+using System.IO;
 
 namespace EventsApplication.Controllers
 {
@@ -14,8 +17,14 @@ namespace EventsApplication.Controllers
         AccountRepository accountrepo = new AccountRepository(new AccountContext());
         EventRepository eventrepo = new EventRepository(new EventContext());
         LocatieRepository locatierepo = new LocatieRepository(new LocatieContext());
+        StandplaatsRepository standplaatsrepo = new StandplaatsRepository(new StandplaatsContext());
 
         // GET: Hosting
+        public ActionResult HostingHome()
+        {
+            return View();
+        }
+
         public ActionResult EventIndex()
         {
             List<Event> events = eventrepo.GetAllEvents();
@@ -28,12 +37,37 @@ namespace EventsApplication.Controllers
             return View(accounts);
         }
 
+        public ActionResult LocatieIndex()
+        {
+            List<Locatie> locaties = locatierepo.GetAll();
+            return View(locaties);
+        }
+
+        
+        public ActionResult EventDetails(int id)
+        {
+            Event evento = eventrepo.GetById(id);
+            Session["activeevent"] = evento;
+            return View(evento);
+        }
+
+
         public ActionResult AccountCreate()
         {
             return View();
         }
 
         public ActionResult EventCreate()
+        {
+            return View();
+        }
+
+        public ActionResult StandplaatsCreate()
+        {
+            return View();
+        }
+
+        public ActionResult LocatieCreate()
         {
             return View();
         }
@@ -55,22 +89,122 @@ namespace EventsApplication.Controllers
             }
         }
 
-      //  [HttpPost]
-      //  public ActionResult EventCreate(FormCollection collection)
-       // {
+        [HttpPost]
+        public ActionResult LocatieCreate(FormCollection collection, HttpPostedFileBase postedFile)
+        {
+          //  try
+          //  {
+
+                // TODO: Add insert logic here
+                Locatie locatie = new Locatie(collection["Naam"], collection["Straat"], Convert.ToInt32(collection["Nr"]), collection["Postcode"], collection["Plaats"]);
+                locatierepo.Insert(locatie);
+
+                if (Request.Files["FileUpload1"].ContentLength > 0)
+                {
+                    string extension = System.IO.Path.GetExtension(Request.Files["FileUpload1"].FileName).ToLower();
+
+                    string[] validFileTypes = { ".csv" };
+
+                    string path1 = string.Format("{0}/{1}", Server.MapPath("~/Content/Uploads"), Request.Files["FileUpload1"].FileName);
+                    if (!Directory.Exists(path1))
+                    {
+                        Directory.CreateDirectory(Server.MapPath("~/Content/Uploads"));
+                    }
+                    if (validFileTypes.Contains(extension))
+                    {
+                        if (System.IO.File.Exists(path1))
+                        {
+                            System.IO.File.Delete(path1);
+                        }
+                        Request.Files["FileUpload1"].SaveAs(path1);
+                    if (extension == ".csv")
+                    {
+                        DataTable dt = Utility.ConvertCSVtoDataTable(path1);
+                        ViewBag.Data = dt;
+                        int a = 0;
+                        decimal prijs = 0;
+                        int capaciteit = 0;
+                        int nummer = 0;
+                        string specificatie = "";
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            foreach (DataColumn column in dt.Columns)
+                            {
+
+                                string volledig = Convert.ToString(dr[column]);
+                                using (StringReader sr = new StringReader(volledig))
+                                {
+                                    string[] dingen = sr.ReadLine().Split(';');
+                                    foreach (string header in dingen)
+                                    {
+                                        if (a == 0)
+                                        {
+                                            prijs = Convert.ToDecimal(header);
+                                        }
+                                        if(a == 1)
+                                        {
+                                            capaciteit = Convert.ToInt32(header);
+                                        }
+                                        if(a == 2)
+                                        {
+                                            nummer = Convert.ToInt32(header);
+                                        }
+                                        if(a == 3)
+                                        {
+                                            specificatie = header;
+                                        }
+
+                                        a = a + 1;
+                                    }
+
+                                    
+
+                                }
+                                int locatieid = locatierepo.locatieidophalen(locatie.Naam, locatie.Straat, locatie.Nr, locatie.Postcode, locatie.Plaats);
+                                Locatie locatie2 = new Locatie(locatie.Naam, locatie.Straat, locatie.Nr, locatieid, locatie.Postcode, locatie.Plaats);
+                                standplaatsrepo.Insert(locatie2, prijs, capaciteit, nummer, specificatie);
+                                a = 0;
+                            }
+                           
+
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Please Upload Files in .csv format";
+
+                    }
+
+                    }
+
+
+                    return RedirectToAction("LocatieIndex");
+                }
+                ViewBag.Error = "Please Upload Files in .csv format";
+                return View();
+          //  }
+          //  catch
+         //   {
+          //      return View();
+          //  }
+        }
+
+        //  [HttpPost]
+        //  public ActionResult EventCreate(FormCollection collection)
+        // {
         //    try
         //    {
 
-                // TODO: Add insert logic here
+        // TODO: Add insert logic here
         //        Event evento = new Event(collection["Gebruikersnaam"], collection["Email"], Convert.ToString(accountrepo.newactivationhash()), false);
         //        accountrepo.Insert(evento);
         //        return RedirectToAction("AccountIndex");
-       //     }
-       //     catch
-       //     {
-       //         return View();
-      //      }
-      //  }
+        //     }
+        //     catch
+        //     {
+        //         return View();
+        //      }
+        //  }
 
         // GET: Account/Edit/5
         public ActionResult AccountEdit(int id)

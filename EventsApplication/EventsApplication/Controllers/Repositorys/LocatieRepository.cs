@@ -40,5 +40,10 @@ namespace EventsApplication.Controllers.Repositorys
         {
             return ilocatieContext.Update(locatie);
         }
+
+        public int locatieidophalen(string naam, string straat, int nummer, string postcode, string plaats)
+        {
+            return ilocatieContext.locatieidophalen(naam, straat, nummer, postcode, plaats);
+        }
     }
 }
