@@ -34,5 +34,11 @@ namespace EventsApplication.Models
             this.categorieId = categorieId;
             this.naam = naam;
         }
+
+        public Categorie(int id, int categorieId, string naam) : base(id)
+        {
+            this.categorieId = categorieId;
+            this.naam = naam;
+        }
     }
 }

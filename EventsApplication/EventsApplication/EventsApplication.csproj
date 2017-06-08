@@ -147,9 +147,11 @@
   <ItemGroup>
     <Compile Include="App_DAL\AccountContext.cs" />
     <Compile Include="App_DAL\BijdrageContext.cs" />
+    <Compile Include="App_DAL\CategorieContext.cs" />
     <Compile Include="App_DAL\Connection.cs" />
     <Compile Include="App_DAL\Interfaces\IBijdrageContext.cs" />
     <Compile Include="App_DAL\Interfaces\IAccountContext.cs" />
+    <Compile Include="App_DAL\Interfaces\ICategorieContext.cs" />
     <Compile Include="App_DAL\Interfaces\ILocatieContext.cs" />
     <Compile Include="App_DAL\Interfaces\IMateriaalContext.cs" />
     <Compile Include="App_DAL\Interfaces\IProductExemplaarContext.cs" />
@@ -175,6 +177,7 @@
     <Compile Include="Controllers\Repositorys\BijdrageRepository.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\MediaSharingController.cs" />
+    <Compile Include="Controllers\Repositorys\CategorieRepository.cs" />
     <Compile Include="Controllers\Repositorys\EventRepository.cs" />
     <Compile Include="Controllers\Repositorys\AccountRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />

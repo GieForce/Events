@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using EventsApplication.App_DAL;
 using EventsApplication.Models;
+using EventsApplication.ViewModels;
 
 namespace EventsApplication.Controllers
 {
@@ -24,6 +25,11 @@ namespace EventsApplication.Controllers
         public bool Insert(Bericht bericht)
         {
             return context.Insert(bericht);
+        }
+
+        public bool insertPVM(PostViewModel pvm)
+        {
+            return context.InsertPVM(pvm);
         }
 
 

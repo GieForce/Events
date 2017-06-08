@@ -88,7 +88,7 @@ namespace EventsApplication.App_DAL
             return bijdrageList;
         }
 
-        public bool Insert(PostViewModel bericht)
+        public bool Insert(Bericht bericht)
         {
             try
             {
@@ -98,16 +98,41 @@ namespace EventsApplication.App_DAL
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@accountID", bericht.account.Id);
-                        command.Parameters.AddWithValue("@datum", bericht.bericht.Datum);
-                        command.Parameters.AddWithValue("@soort", bericht.bericht.Soort);
-                        command.Parameters.AddWithValue("@bijdrageID", bericht.bericht.Id);
-                        command.Parameters.AddWithValue("@titel", bericht.bericht.Titel);
-                        command.Parameters.AddWithValue("@inhoud", bericht.bericht.Inhoud);
-                        command.Parameters.AddWithValue("@categorieID", bericht.categorie.Id);
-                        command.Parameters.AddWithValue("@bestandsLocatieID", 5);
-                        command.Parameters.AddWithValue("@grootte", bericht.account.Id);
-                        command.Parameters.AddWithValue("@naam", bericht.account.Id);
+                        command.Parameters.AddWithValue("@bijdrageID", 8);
+                        command.Parameters.AddWithValue("@titel", bericht.Titel);
+                        command.Parameters.AddWithValue("@inhoud", bericht.Inhoud);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool InsertPVM(PostViewModel pvm)
+        {
+            try
+            {
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query = "CreateNew";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@accountID", pvm.account.Id);
+                        command.Parameters.AddWithValue("@datum", pvm.bericht.Datum);
+                        command.Parameters.AddWithValue("@soort", pvm.bericht.Soort);
+                        command.Parameters.AddWithValue("@titel", pvm.bericht.Titel);
+                        command.Parameters.AddWithValue("@inhoud", pvm.bericht.Inhoud);
+                        command.Parameters.AddWithValue("@categorieID", pvm.categorie.CategorieId);
+                        command.Parameters.AddWithValue("@bestandslocatie", pvm.bestand.Bestandlocatie);
+                        command.Parameters.AddWithValue("@grootte", pvm.bestand.Grootte);
+                        command.Parameters.AddWithValue("@naam", pvm.categorie.Naam);
+
 
 
                         command.ExecuteNonQuery();

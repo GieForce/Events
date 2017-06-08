@@ -19,6 +19,7 @@ namespace EventsApplication.ViewModels
      //   public Bijdrage bijdrage { get; set; }
         public Bericht bericht { get; set; }
         public  Categorie categorie { get; set; }
+        public Bestand bestand { get; set; }
     }
 
 }
