@@ -29,14 +29,16 @@ namespace EventsApplication.Models
             set { grootte = value; }
         }
 
-        public Bestand(int accountId, DateTime datum, string soort, int categorieId, string bestandlocatie, int grootte) : base(accountId, datum, soort)
+       
+
+        public Bestand(int id, Account account, DateTime datum, string soort, AccountBijdrage accountBijdrage, int categorieId, string bestandlocatie, int grootte) : base(id, account, datum, soort, accountBijdrage)
         {
             this.categorieId = categorieId;
             this.bestandlocatie = bestandlocatie;
             this.grootte = grootte;
         }
 
-        public Bestand(int id, int accountId, DateTime datum, string soort, int categorieId, string bestandlocatie, int grootte) : base(id, accountId, datum, soort)
+        public Bestand(Account account, DateTime datum, string soort, AccountBijdrage accountBijdrage, int categorieId, string bestandlocatie, int grootte) : base(account, datum, soort, accountBijdrage)
         {
             this.categorieId = categorieId;
             this.bestandlocatie = bestandlocatie;

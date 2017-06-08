@@ -15,6 +15,6 @@ namespace EventsApplication.App_DAL
         //bool Delete(int id);
         List<Bijdrage> GetAllBijdrages();
 
-        //bool Update(Bijdrage bijdrage);
+        List<Bijdrage> GetAllBijdragesByUserId(int userid);
     }
 }

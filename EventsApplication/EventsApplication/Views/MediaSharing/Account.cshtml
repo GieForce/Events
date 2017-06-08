@@ -1,0 +1,40 @@
+﻿@model EventsApplication.Models.Account
+
+<div class="col-md-8 col-md-offset-4">
+    <h4>Account</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Gebruikersnaam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gebruikersnaam)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Activatiehash)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Activatiehash)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Geactiveerd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Geactiveerd)
+        </dd>
+
+    </dl>
+</div>

@@ -37,6 +37,10 @@ namespace EventsApplication.Controllers
             return context.GetAllBijdrages();
         }
 
+        public List<Bijdrage> GetAllBijdragesByUserId(int userid)
+        {
+            return context.GetAllBijdragesByUserId(userid);
+        }
         //public bool Update(Bijdrage bijdrage)
         //{
         //    return context.Update(bijdrage);

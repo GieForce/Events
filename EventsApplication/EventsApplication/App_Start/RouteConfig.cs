@@ -18,6 +18,11 @@ namespace EventsApplication
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "MediaSharing",
+                url: "{controller}/{action}/{id}",
+                defaults: new {controller = "MediaSharing", action = "Index", id = UrlParameter.Optional});
         }
     }
 }

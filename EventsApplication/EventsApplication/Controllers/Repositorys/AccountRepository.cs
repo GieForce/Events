@@ -41,6 +41,11 @@ namespace EventsApplication.Controllers
             return context.GetAllAccounts();
         }
 
+        public Account Login(string wachtwoord, string gebruikersnaam)
+        {
+            return context.Login(wachtwoord, gebruikersnaam);
+        }
+
         public Guid newactivationhash()
         {
             Guid g;

@@ -1,0 +1,36 @@
+﻿@using System.Globalization
+@using EventsApplication.Models
+@model EventsApplication.ViewModels.BijdrageViewModel
+
+@{
+    ViewBag.Title = "Bijdrages";
+    List<Bericht> berichtList = new List<Bericht>();
+}
+
+
+<div class="col-md-8 col-md-offset-4">
+    @foreach (var item in Model.bijdrageList)
+    {
+        if (item is Bestand)
+        {
+            continue;
+        }
+
+        if (item is Bericht)
+        {
+            Bericht b = (Bericht)item;
+            berichtList.Add(b);
+        }
+
+        if (item is Categorie)
+        {
+            continue;
+        }
+    }
+
+    @foreach (Bericht item in berichtList)
+    {
+        <h1>@item.Titel</h1>
+        <h4>@item.Inhoud</h4>
+    }
+</div>

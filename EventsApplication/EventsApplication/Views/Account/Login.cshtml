@@ -1,0 +1,81 @@
+﻿@using EventsApplication.Controllers;
+@using EventsApplication.Models;
+@model EventsApplication.Models.Account
+
+
+
+@{
+    ViewBag.Title = "Login";
+}
+
+
+<link rel="stylesheet" type="text/css" href="~/Content/Login.css">
+
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Website CSS style -->
+    <link href="https://fonts.googleapis.com/css?family=Pacifico&subset=latin-ext,vietnamese" rel="stylesheet">
+    <!-- Website Font style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&subset=latin-ext" rel="stylesheet">
+
+    <title>MegaMenu Design</title>
+</head>
+
+@using (Html.BeginForm("Login", "Account"))
+{
+    <div class="container">
+
+        <div class="col-sm-8 col-sm-offset-2 main">
+            <div class="col-sm-6 left-side">
+                <h1>EyeCT<br>Events.
+                   
+                </h1>
+            <br/>
+                <p>EyeCT staat voor het maken van evenementen. Het verzorgt aanmaken voor evenementen en het hosten van een mediasharing! Log in met uw account om onze functionaliteit te gebruiken </p>
+            
+                
+                <br />
+                <br />
+                <br />
+                
+
+            </div><!--col-sm-6-->
+
+            <div class="col-sm-6 right-side">
+                <h1>Login</h1>
+                <br />
+
+                <!--Form with header-->
+                <div class="form">
+
+
+                    <div class="form-group">
+                        <label for="form2">Gebruikersnaam</label>
+                        <input type="text" id="form2" name="gebruikersnaam" class="form-control">
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form4">Wachtwoord</label>
+                        <input type="password" id="form4" name="wachtwoord" class="form-control">
+
+                    </div>
+
+                    <div class="text-xs-center">
+                        <input type="submit" value="Login" class="btn btn-default" />
+                    </div>
+
+                    <br />
+                    <br />
+                    <br />
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+}

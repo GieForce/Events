@@ -174,7 +174,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\BijdrageController.cs" />
     <Compile Include="Controllers\BijdrageRepository.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\MediaSharingController.cs" />
@@ -199,6 +198,7 @@
     <Compile Include="Models\AccountBijdrage.cs" />
     <Compile Include="Models\Bericht.cs" />
     <Compile Include="Models\Bezoeker.cs" />
+    <Compile Include="Models\Bijdrage.cs" />
     <Compile Include="Models\Evenement.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Locatie.cs" />
@@ -219,6 +219,7 @@
     <Compile Include="Models\Categorie.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\ModelToViewModel.cs" />
+    <Compile Include="ViewModels\BijdrageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-select.css" />
@@ -230,6 +231,7 @@
     <Content Include="Content\DateTime\bootstrap-datepicker3.standalone.css" />
     <Content Include="Content\DateTime\bootstrap-datepicker3.standalone.min.css" />
     <Content Include="Content\Home.css" />
+    <Content Include="Content\Login.css" />
     <Content Include="Content\Media.css" />
     <Content Include="Content\navbar.css" />
     <Content Include="Content\Pictures\background3.jpg" />
@@ -333,6 +335,7 @@
     <Content Include="Scripts\Self\Home.js" />
     <Content Include="Scripts\tag.js" />
     <Content Include="Scripts\Self\Reserveer.js" />
+    <Content Include="Scripts\Self\Mediasharing.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -353,7 +356,6 @@
     <Content Include="Views\Account\Delete.cshtml" />
     <Content Include="Views\Account\Create.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
-    <Content Include="Views\Bijdrage\Index.cshtml" />
     <Content Include="Views\Event\Create.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Reservering\Index.cshtml" />
@@ -365,11 +367,19 @@
     <Content Include="Views\Bijdrage\Create.cshtml" />
     <Content Include="Views\Reserveer\Index.cshtml" />
     <Content Include="Views\Home\Home.cshtml" />
+    <Content Include="Views\MediaSharing\Index.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\MediaSharing\Bijdrages.cshtml" />
+    <Content Include="Views\MediaSharing\Account.cshtml" />
+    <Content Include="Views\MediaSharing\Berichten.cshtml" />
+    <Content Include="Views\MediaSharing\Comments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Bericht\" />
     <Folder Include="Views\MediaSharing\" />
+    <Folder Include="Views\Hosting\" />
+    <Folder Include="Views\Reserveer\" />
     <Folder Include="Views\Toegangs\" />
   </ItemGroup>
   <ItemGroup>

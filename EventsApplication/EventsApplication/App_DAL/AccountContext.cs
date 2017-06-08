@@ -137,30 +137,28 @@ namespace EventsApplication.App_DAL
             }
         }
 
-        //public bool Login(Account account, Evenement evenement)
-        //{
-        //    using (SqlConnection connection = Connection.SQLconnection)
-        //    {
-        //        string query = "SELECT * FROM account WHERE[account_email] = @param1 and[account_wachtwoord] = @param2 and [account_rol] = 2 or [account_rol] = 0  and eventID = @param3";
+        public Account Login(string wachtwoord, string gebruikersnaam)
+        {
+            using (SqlConnection connection = Connection.SQLconnection)
+            { 
+                string query = "SELECT * FROM Account WHERE gebruikersnaam = @param1 and wachtwoord = @param2";
 
-        //        using (SqlCommand command = new SqlCommand(query, connection))
-        //        {
-        //            command.Parameters.AddWithValue("@param1", account.Email);
-        //            command.Parameters.AddWithValue("@param2", account.Wachtwoord);
-        //            command.Parameters.AddWithValue("@param3", evenement.Id);
-
-        //            using (SqlDataReader reader = command.ExecuteReader())
-        //            {
-        //                while (reader.Read())
-        //                {
-        //                    reader.Read();
-        //                    return true;
-        //                }
-        //                return false;
-        //            }
-        //        }
-        //    }
-        //}
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@param1",gebruikersnaam);
+                    command.Parameters.AddWithValue("@param2", wachtwoord);
+                  
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return ReaderToAccount(reader);
+                        }
+                        return null;
+                    }
+                }
+            }
+        }
 
         public List<Account> GetAllAccounts()
         {

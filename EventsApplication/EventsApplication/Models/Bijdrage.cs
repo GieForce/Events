@@ -9,9 +9,10 @@ namespace EventsApplication.Models
     {
 
         private int id;
-        private int accountId;
+        private Account account;
         private DateTime datum;
         private string soort;
+        private AccountBijdrage accountBijdrage;
 
         public int Id
         {
@@ -19,10 +20,10 @@ namespace EventsApplication.Models
             set { id = value; }
         }
 
-        public int AccountId
+        public Account Account
         {
-            get { return accountId; }
-            set { accountId = value; }
+            get { return account; }
+            set { account = value; }
         }
 
         public DateTime Datum
@@ -37,19 +38,27 @@ namespace EventsApplication.Models
             set { soort = value; }
         }
 
-        public Bijdrage(int id, int accountId, DateTime datum, string soort)
+        public AccountBijdrage AccountBijdrage
         {
-            this.id = id;
-            this.accountId = accountId;
-            this.datum = datum;
-            this.soort = soort;
+            get { return accountBijdrage; }
+            set { accountBijdrage = value; }
         }
 
-        public Bijdrage(int accountId, DateTime datum, string soort)
+        public Bijdrage(int id, Account account, DateTime datum, string soort, AccountBijdrage accountBijdrage)
         {
-            this.accountId = accountId;
+            this.id = id;
+            this.account = account;
             this.datum = datum;
             this.soort = soort;
+            this.accountBijdrage = accountBijdrage;
+        }
+
+        public Bijdrage(Account account, DateTime datum, string soort, AccountBijdrage accountBijdrage)
+        {
+            this.account = account;
+            this.datum = datum;
+            this.soort = soort;
+            this.accountBijdrage = accountBijdrage;
         }
     }
 }
