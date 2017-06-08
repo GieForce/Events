@@ -377,6 +377,9 @@
     <Content Include="Views\Toegangs\Index.cshtml" />
     <Content Include="Views\Toegangs\Materialen.cshtml" />
     <Content Include="Views\Toegangs\Aanwezig.cshtml" />
+    <Content Include="Views\MediaSharing\NoComments.cshtml" />
+    <Content Include="Views\MediaSharing\CreateBericht.cshtml" />
+    <Content Include="Views\MediaSharing\CreateMediaBericht.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -206,10 +206,15 @@ namespace EventsApplication.App_DAL
         private Account ReaderToAccount(SqlDataReader reader)
         {
             return new Account(
+                Convert.ToInt32(reader["ID"]),
                 Convert.ToString(reader["gebruikersnaam"]),
-                Convert.ToString(reader["telefoonnummer"]),
-                Convert.ToBoolean(reader["aanwezig"])
-                );
+                Convert.ToString(reader["email"]),
+                Convert.ToString(reader["activatiehash"]),
+                Convert.ToBoolean(reader["geactiveerd"]),
+                Convert.ToString(reader["wachtwoord"]),
+                Convert.ToString(reader["telefoonnummer"])
+            );
+
         }
     }
 }

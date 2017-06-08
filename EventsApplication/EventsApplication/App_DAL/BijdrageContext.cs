@@ -58,6 +58,30 @@ namespace EventsApplication.App_DAL
             return bijdrageList;
         }
 
+        public List<Bericht> LoadBerichtenByPostId(int id)
+        {
+            List<Bericht> berichtenList = new List<Bericht>();
+            using (SqlConnection connection = Connection.SQLconnection)
+            {
+                string query =
+                    "select * from BERICHT b " +
+                    "left join BIJDRAGE_BERICHT bb on bb.bericht_id = b.bijdrage_id left join BIJDRAGE bd on b.bijdrage_id = bd.ID left join ACCOUNT_BIJDRAGE ab on b.bijdrage_id = ab.bijdrage_id where bb.bijdrage_id = @id";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", id);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Bericht bericht = CreateBerichtFromReader(reader);
+                            berichtenList.Add(bericht);
+                        }
+                    }
+                }
+            }
+            return berichtenList;
+        }
+
         public List<Bijdrage> GetAllBijdragesByUserId(int userid)
         {
             List<Bijdrage> bijdrageList = new List<Bijdrage>();
@@ -179,13 +203,13 @@ namespace EventsApplication.App_DAL
                         accountBijdrage = new AccountBijdrage(0, 0, 0, 0, 0);
                     }
                     return new Bericht(
-                        Convert.ToInt32(reader["ID"]),
+                        Convert.ToInt32(reader["ID"] != DBNull.Value ? Convert.ToInt32(reader["ID"]) : 0),
                         account,
-                        Convert.ToDateTime(reader["datum"]),
-                        Convert.ToString(reader["soort"]),
+                        Convert.ToDateTime(reader["datum"] ),
+                        Convert.ToString(reader["soort"] != DBNull.Value ? Convert.ToString(reader["soort"]) : ""),
                         accountBijdrage,
-                        Convert.ToString(reader["titel"]),
-                        Convert.ToString(reader["inhoud"])
+                        Convert.ToString(reader["titel"] != DBNull.Value ? Convert.ToString(reader["titel"]) : ""),
+                        Convert.ToString(reader["inhoud"] != DBNull.Value ? Convert.ToString(reader["inhoud"]) : "")
                     );
                 }
             }
@@ -193,6 +217,30 @@ namespace EventsApplication.App_DAL
             {
                 return null;
             }
+        }
+
+        private Bericht CreateBerichtFromReader(SqlDataReader reader)
+        {
+            AccountRepository accountRepository = new AccountRepository(new AccountContext());
+            Account account = accountRepository.GetById(Convert.ToInt32(reader["account_id"]));
+            AccountBijdrage accountBijdrage;
+            try
+            {
+                accountBijdrage = new AccountBijdrage(Convert.ToInt32(reader["account_id"]), Convert.ToInt32(reader["bijdrage_id"]), Convert.ToInt32(reader["like"]), Convert.ToInt32("ongewenst"));
+            }
+            catch (Exception)
+            {
+                accountBijdrage = new AccountBijdrage(0, 0, 0, 0, 0);
+            }
+            return new Bericht(
+                Convert.ToInt32(reader["ID"]),
+                account,
+                Convert.ToDateTime(reader["datum"]),
+                Convert.ToString(reader["soort"]),
+                accountBijdrage,
+                Convert.ToString(reader["titel"]),
+                Convert.ToString(reader["inhoud"])
+            );
         }
 
     }

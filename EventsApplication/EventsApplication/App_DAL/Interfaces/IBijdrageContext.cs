@@ -16,5 +16,6 @@ namespace EventsApplication.App_DAL
         List<Bijdrage> GetAllBijdrages();
 
         List<Bijdrage> GetAllBijdragesByUserId(int userid);
+        List<Bericht> LoadBerichtenByPostId(int id);
     }
 }

@@ -13,6 +13,7 @@ namespace EventsApplication.Controllers
     {
         BijdrageRepository repository = new BijdrageRepository(new BijdrageContext());
         AccountRepository accountRepository = new AccountRepository(new AccountContext());
+        
         // GET: MediaSharing
         public ActionResult Index()
         {
@@ -64,6 +65,33 @@ namespace EventsApplication.Controllers
             List<Bijdrage> bijdrages = repository.GetAllBijdragesByUserId(account.Id);
             BijdrageViewModel bvm = new BijdrageViewModel{bijdrageList = bijdrages, account = account};
             return PartialView("Bijdrages", bvm);
+        }
+
+        public ActionResult LoadBerichtenByPostId(int id)
+        {
+            Account account = (Account)(Session["user"]);
+            accountRepository.GetById(account.Id);
+            List<Bericht> berichtenList = repository.LoadBerichtenByPostId(id);
+            BerichtenViewModel bvm = new BerichtenViewModel {berichtenList = berichtenList, account = account};
+            if (berichtenList.Count == 0)
+            {
+                return PartialView("NoComments");
+            }
+            else
+            {
+                return PartialView("Comments", bvm);
+               
+            }
+            
+        }
+
+        public ActionResult CreateNewMediaBericht()
+        {
+            List<Bijdrage> bijdrages = repository();
+            Account account = (Account)(Session["user"]);
+            accountRepository.GetById(account.Id);
+            BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
+            return PartialView("CreateMediaBericht", bvm);
         }
     }
 }

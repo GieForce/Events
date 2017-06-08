@@ -54,5 +54,38 @@ $(document).ready(function () {
                     $loading.hide();
                 });
         });
-});
+    $("#CreateNewBericht").on("click",
+        function () {
+            $("#showPosts").html("");
+            $loading.show();
+            $.ajax({
+                    url: "/Mediasharing/CreateNewBericht",
+                    type: "GET"
+                })
+                .done(function (partialViewResult) {
+                    $("#showPosts").html(partialViewResult);
+                    $loading.hide();
+                });
+        });
+    $(".ShowCommentsById").on("click",
+        function () {
+            var $targetItem = $(this).attr("data-item");
+            var $loadingcomments = $("#loadingcomments-" + $targetItem).hide();
+            var $classname = $(".showComments" + "-" + $targetItem).attr("data-comment");
+
+            var self = $(this);
+
+            $(".showComments-" + $classname).html("");
+            $loadingcomments.show();
+            $.ajax({
+                    url: "/Mediasharing/LoadBerichtenByPostId/" + $targetItem,
+                    type: "GET"
+                })
+                .done(function (partialViewResult) {
+                    $(".showComments-" + $classname).html(partialViewResult);
+                    $loadingcomments.hide();
+                    self.hide();
+                });
+        });
+}); 
 

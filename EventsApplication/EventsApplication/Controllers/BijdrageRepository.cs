@@ -45,5 +45,10 @@ namespace EventsApplication.Controllers
         //{
         //    return context.Update(bijdrage);
         //}
+
+        public List<Bericht> LoadBerichtenByPostId(int id)
+        {
+            return context.LoadBerichtenByPostId(id);
+        }
     }
 }
