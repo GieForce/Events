@@ -36,7 +36,7 @@ namespace EventsApplication.App_DAL
                                 string gebruikersnaam = (string)reader["gebruikersnaam"];
                                 string email = (string)reader["email"];
                                 string activatiehash = (string)reader["activatiehash"];
-                                int geactiveerd = Convert.ToInt32(reader["geactiveerd"]);
+                                bool geactiveerd = Convert.ToBoolean(reader["geactiveerd"]);
                                 string wachtwoord = (string)reader["wachtwoord"];
                                 string telefoonnummer = (string)reader["telefoonnummer"];
                                 Account account = new Account(userid, gebruikersnaam, email, activatiehash, geactiveerd, wachtwoord, telefoonnummer);

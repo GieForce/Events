@@ -64,18 +64,18 @@ namespace EventsApplication.Models
             set { aanwezig = value; }
         }
 
-        public Account(int id, string gebruikersnaam, string email, string activatiehash, int geactiveerd, string wachtwoord, string telefoonnummer)
+        public Account(int id, string gebruikersnaam, string email, string activatiehash, bool geactiveerd, string wachtwoord, string telefoonnummer)
         {
             ID = id;
             this.gebruikersnaam = gebruikersnaam;
             this.email = email;
             this.activatiehash = activatiehash;
 
-            if (geactiveerd == 1)
+            if (geactiveerd == true)
             {
                 this.geactiveerd = true;
             }
-            else if (geactiveerd == 0)
+            else if (geactiveerd == false)
             {
                 this.geactiveerd = false;
             }
