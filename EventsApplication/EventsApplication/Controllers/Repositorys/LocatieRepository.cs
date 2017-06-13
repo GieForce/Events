@@ -45,5 +45,10 @@ namespace EventsApplication.Controllers.Repositorys
         {
             return ilocatieContext.locatieidophalen(naam, straat, nummer, postcode, plaats);
         }
+
+        public Locatie getbyid(int locatieid)
+        {
+            return ilocatieContext.GetByID(locatieid);
+        }
     }
 }

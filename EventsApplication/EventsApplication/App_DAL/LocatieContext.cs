@@ -95,6 +95,41 @@ namespace EventsApplication.App_DAL
             }
         }
 
+        public Locatie GetByID(int ID)
+        {
+            try
+            {
+                Locatie locatieReturn = null;
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query = "SELECT * FROM dbo.LOCATIE WHERE ID = @id";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@id", ID);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+
+                        while (reader.Read())
+                        {
+                            string naam = reader["naam"].ToString();
+                            string straat = reader["straat"].ToString();
+                            int nr = Convert.ToInt32(reader["nr"].ToString());
+                            int id = Convert.ToInt32(reader["ID"].ToString());
+                            string postcode = reader["postcode"].ToString();
+                            string plaats = reader["plaats"].ToString();
+                            locatieReturn = new Locatie(naam, straat, nr, id, postcode, plaats);
+                        }
+                        connection.Close();
+                    }
+                }
+                return locatieReturn;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public bool Delete(Locatie locatie)
         {
             SqlConnection conn = Connection.SQLconnection;

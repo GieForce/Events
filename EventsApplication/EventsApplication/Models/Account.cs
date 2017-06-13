@@ -15,11 +15,18 @@ namespace EventsApplication.Models
         private string wachtwoord;
         private string telefoonnummer;
         private bool aanwezig;
+        private bool status;
 
         public int Id
         {
             get { return ID; }
             set { ID = value; }
+        }
+
+        public bool Status
+        {
+            get { return status; }
+            set { status = value; }
         }
 
         public string Gebruikersnaam
@@ -99,6 +106,36 @@ namespace EventsApplication.Models
             }
 
             this.telefoonnummer = telefoonnummer;
+        }
+
+        public Account(string gebruikersnaam, string email, string activatiehash, int geactiveerd, string wachtwoord, string telefoonnummer, bool status)
+        {
+            this.gebruikersnaam = gebruikersnaam;
+            this.email = email;
+            this.activatiehash = activatiehash;
+
+            if (geactiveerd == 1)
+            {
+                this.geactiveerd = true;
+            }
+            else if (geactiveerd == 0)
+            {
+                this.geactiveerd = false;
+            }
+            this.wachtwoord = wachtwoord;
+            this.telefoonnummer = telefoonnummer;
+            this.status = status;
+        }
+
+        public Account(int id, string gebruikersnaam, string email, string activatiehash, bool geactiveerd, string wachtwoord, string telefoonnummer, bool status)
+        {
+            this.ID = id;
+            this.gebruikersnaam = gebruikersnaam;
+            this.email = email;
+            this.activatiehash = activatiehash;
+            this.geactiveerd = geactiveerd;
+            this.telefoonnummer = telefoonnummer;
+            this.status = status;
         }
 
         public Account(int id, string gebruikersnaam, string telefoonnummer, bool aanwezig)

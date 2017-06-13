@@ -19,5 +19,7 @@ namespace EventsApplication.App_DAL.Interfaces
         bool Update(Locatie locatie);
 
         int locatieidophalen(string naam, string straat, int nummer, string postcode, string plaats);
+
+        Locatie GetByID(int ID);
     }
 }

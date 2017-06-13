@@ -35,5 +35,10 @@ namespace EventsApplication.Controllers.Repositorys
         {
             context.Delete(polsbandje);
         }
+
+        public void Insertpolsbandje(Polsbandje polsbandje)
+        {
+            context.Insertpolsbandje(polsbandje);
+        }
     }
 }

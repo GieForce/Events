@@ -24,5 +24,7 @@ namespace EventsApplication.App_DAL
         Account Login(string wachtwoord, string gebruikersnaam);
 
         bool Update(Account account);
+
+        bool InsertAdmin(Account account);
     }
 }

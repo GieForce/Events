@@ -15,6 +15,7 @@ namespace EventsApplication.Models
         private DateTime datumeind;
         private int maxbezoekers;
         private Locatie locatie;
+        private int locatieid;
 
         public Event(int iD, string naam, DateTime datumstart, DateTime datumeind, int maxbezoekers, int locatieid)
         {
@@ -33,6 +34,15 @@ namespace EventsApplication.Models
             this.datumstart = datumstart;
             this.datumeind = datumeind;
             this.maxbezoekers = maxbezoekers;
+        }
+
+        public Event(string naam, DateTime datumstart, DateTime datumeind, int maxbezoekers, Locatie locatie)
+        {
+            this.naam = naam;
+            this.datumstart = datumstart;
+            this.datumeind = datumeind;
+            this.maxbezoekers = maxbezoekers;
+            this.locatie = locatie;
         }
 
         public int ID1
@@ -65,6 +75,12 @@ namespace EventsApplication.Models
         {
             get { return maxbezoekers;}
             set { maxbezoekers = value;}
+        }
+
+        public int Locatieid
+        {
+            get { return locatieid; }
+            set { locatieid = value; }
         }
 
         public Locatie Locatie

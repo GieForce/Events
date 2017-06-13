@@ -9,6 +9,7 @@ using EventsApplication.Controllers.Repositorys;
 using EventsApplication.App_DAL;
 using EventsApplication.Models;
 using System.IO;
+using EventsApplication.App_DAL.Interfaces;
 
 namespace EventsApplication.Controllers
 {
@@ -21,6 +22,7 @@ namespace EventsApplication.Controllers
         ProductRepository productrepo = new ProductRepository(new ProductContext());
         ProductCatRepository productcatrepo = new ProductCatRepository(new ProductCatContext());
         ProductExemplaarRepository productexemplaarrepo = new ProductExemplaarRepository(new ProductExemplaarContext());
+        PolsbandjeRepository polsbandjerepo = new PolsbandjeRepository(new PolsbandjeContext());
         
 
         // GET: Hosting
@@ -53,6 +55,7 @@ namespace EventsApplication.Controllers
             return View();
         }
 
+
         public ActionResult AccountIndex()
         {
             List<Account> accounts = accountrepo.GetAllAccounts();
@@ -81,6 +84,15 @@ namespace EventsApplication.Controllers
 
         public ActionResult EventCreate()
         {
+            List<Locatie> locaties = locatierepo.GetAll();
+            List<SelectListItem> locatieitems = new List<SelectListItem>();
+
+            foreach (Locatie locatie in locaties)
+            {
+                locatieitems.Add(new SelectListItem { Text = locatie.Naam, Value = Convert.ToString(locatie.Id) });
+            }
+
+            ViewBag.Locatieding = locatieitems;
             return View();
         }
 
@@ -101,12 +113,63 @@ namespace EventsApplication.Controllers
             {
 
                 // TODO: Add insert logic here
-                Account account = new Account(collection["Gebruikersnaam"], collection["Email"], Convert.ToString(accountrepo.newactivationhash()), 0, collection["Wachtwoord"], collection["Telefoonnummer"]);
-                accountrepo.Insert(account);
+                Account account = new Account(collection["Gebruikersnaam"], collection["Email"], Convert.ToString(accountrepo.newactivationhash()), 0, collection["Wachtwoord"], collection["Telefoonnummer"], true);
+                accountrepo.insertadmin(account);
                 return RedirectToAction("AccountIndex");
             }
             catch
             {
+                return View();
+            }
+        }
+
+
+        [HttpPost]
+        public ActionResult EventCreate(FormCollection collection)
+        {
+            try
+            {
+                int maxbezoekers = Convert.ToInt32(collection["Maxbezoekers"]);
+                DateTime start = Convert.ToDateTime(collection["Datumstart"]);
+                DateTime eind = Convert.ToDateTime(collection["Datumeind"]);
+                if (maxbezoekers != 0 && start < eind)
+                {
+                    Locatie locatie = locatierepo.getbyid(Convert.ToInt32(collection["Locatieding"]));
+                    Event evento = new Event(collection["Naam"], start, eind, maxbezoekers, locatie);
+                    eventrepo.Insert(evento);
+                    for (int i = 0; i < maxbezoekers; i++)
+                    {
+                        polsbandjerepo.Insertpolsbandje(new Polsbandje(evento.Naam + Convert.ToString(i), 0));
+                    }
+                }
+
+                else
+                {
+                    List<Locatie> locaties = locatierepo.GetAll();
+                    List<SelectListItem> locatieitems = new List<SelectListItem>();
+
+                    foreach (Locatie locatie in locaties)
+                    {
+                        locatieitems.Add(new SelectListItem { Text = locatie.Naam, Value = Convert.ToString(locatie.Id) });
+                    }
+
+                    ViewBag.Locatieding = locatieitems;
+                    return View();
+                }
+                
+                return RedirectToAction("EventIndex");
+            }
+            catch
+            {
+                List<Locatie> locaties = locatierepo.GetAll();
+                List<SelectListItem> locatieitems = new List<SelectListItem>();
+
+                foreach (Locatie locatie in locaties)
+                {
+                    locatieitems.Add(new SelectListItem { Text = locatie.Naam, Value = Convert.ToString(locatie.Id) });
+                }
+
+                ViewBag.Locatieding = locatieitems;
                 return View();
             }
         }
@@ -245,27 +308,12 @@ namespace EventsApplication.Controllers
             }
         }
 
-        //  [HttpPost]
-        //  public ActionResult EventCreate(FormCollection collection)
-        // {
-        //    try
-        //    {
-
-        // TODO: Add insert logic here
-        //        Event evento = new Event(collection["Gebruikersnaam"], collection["Email"], Convert.ToString(accountrepo.newactivationhash()), false);
-        //        accountrepo.Insert(evento);
-        //        return RedirectToAction("AccountIndex");
-        //     }
-        //     catch
-        //     {
-        //         return View();
-        //      }
-        //  }
 
         // GET: Account/Edit/5
         public ActionResult AccountEdit(int id)
         {
             Account account = accountrepo.GetById(id);
+            Session["accountid"] = id;
             return View(account);
         }
 
@@ -276,7 +324,7 @@ namespace EventsApplication.Controllers
             try
             {
                 // TODO: Add update logic here
-                Account accounto = new Account(Convert.ToInt32(collection["Id"]),collection["GebruikersNaam"], collection["Email"], collection["Activatiehash"], true, collection["Wachtwoord"], collection["Telefoonnummer"]);
+                Account accounto = new Account(Convert.ToInt32(Session["accountid"]),collection["Gebruikersnaam"], collection["Email"], Convert.ToString(accountrepo.newactivationhash()), true, collection["Wachtwoord"], collection["Telefoonnummer"]);
                 accountrepo.Update(accounto);
                 return RedirectToAction("AccountIndex");
             }

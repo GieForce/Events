@@ -104,6 +104,27 @@ namespace EventsApplication.App_DAL.Interfaces
             }
         }
 
+        public void Insertpolsbandje(Polsbandje polsbandje)
+        {
+            try
+            {
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query = "INSERT INTO polsbandje (barcode, actief) VALUES (@barcode, 0)";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@barcode", polsbandje.Barcode);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
         public void Delete(Polsbandje polsbandje)
         {
             try

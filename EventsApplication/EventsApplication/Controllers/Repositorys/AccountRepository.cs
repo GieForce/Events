@@ -62,5 +62,10 @@ namespace EventsApplication.Controllers
             g = Guid.NewGuid();
             return g;
         }
+
+        public bool insertadmin(Account account)
+        {
+            return context.InsertAdmin(account);
+        }
     }
 }

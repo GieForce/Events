@@ -12,5 +12,6 @@ namespace EventsApplication.App_DAL.Interfaces
         Polsbandje GetById(Polsbandje polsbandje);
         void Insert(Polsbandje polsbandje, Reservering reservering, Account account);
         void Delete(Polsbandje polsbandje);
+        void Insertpolsbandje(Polsbandje polsbandje);
     }
 }
