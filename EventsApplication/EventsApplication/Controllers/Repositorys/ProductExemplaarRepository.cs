@@ -21,6 +21,11 @@ namespace EventsApplication.Controllers.Repositorys
             return context.GetProductExemplaars();
         }
 
+        public List<ProductExemplaar> GetProductsByReservation(int reserveringsID)
+        {
+            return context.GetProductsByReservation(reserveringsID);
+        }
+
         public void insert(ProductExemplaar productexemplaar)
         {
             context.Insert(productexemplaar);

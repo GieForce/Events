@@ -30,20 +30,20 @@
                 <ul>
                     <li>@Model.Account.Gebruikersnaam</li>
                     <li>@Model.Account.Telefoonnummer</li>
-                    <li>@Model.Account.Geactiveerd</li>
-                    <li>@Model.Account.Aanwezig</li>
-                    <li>@Model.Reservering.StartDatum</li>
-                    <li>@Model.Reservering.EindDatum</li>
-                    <li><b>@Model.Reservering.Betaalstatus</b></li>
+                    <li>geactiveerd: @Model.Account.Geactiveerd</li>
+                    <li>Aanwezig: @Model.Account.Aanwezig</li>
+                    <li>Begindatum: @Model.Reservering.StartDatum.ToShortDateString()</li>
+                    <li>Einddatum: @Model.Reservering.EindDatum.ToShortDateString()</li>
+                    <li><b>Betaald: @Model.Reservering.Betaalstatus</b></li>
                     <li>Standplaats: @Model.Reservering.Staanplaats.Plaatsnummer</li>
 
                     @if (@Model.Polsbandje.actief == 0)
                     {
-                        <li>Polsbanje is niet geactiveerd.</li>
+                        <li>Polsbandje is niet geactiveerd.</li>
                     }
                     else
                     {
-                        <li>Polsbanje is geactiveerd.</li>
+                        <li>Polsbandje is geactiveerd.</li>
                     }
                 </ul>
                 if (Model.Reservering.Betaalstatus == false)

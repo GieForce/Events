@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EventsApplication.App_DAL;
 
 namespace EventsApplication.Models
 {
     public class ProductExemplaar
     {
+        ProductRepository productRepository = new ProductRepository(new ProductContext());
+
         private int id;
         private int product_id;
         private int volgnummer;
         private string barcode;
+
+        private Product product;
 
         public int Id
         {
@@ -65,12 +70,21 @@ namespace EventsApplication.Models
             }
         }
 
+        public Product Product
+        {
+            get { return product; }
+            set { product = value; }
+        }
+
+
         public ProductExemplaar(int id, int product_id, int volgnummer, string barcode)
         {
             this.Id = id;
             this.Product_id = product_id;
             this.Volgnummer = volgnummer;
             this.Barcode = barcode;
+
+            product = productRepository.GetByID(id);
         }
 
         public ProductExemplaar(int product_id, int volgnummer, string barcode)

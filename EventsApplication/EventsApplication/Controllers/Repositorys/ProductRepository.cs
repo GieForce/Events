@@ -25,6 +25,11 @@ namespace EventsApplication
             return context.GetByProductCat(productCat);
         }
 
+        public Product GetByID(int ID)
+        {
+            return context.GetByID(ID);
+        }
+
         public void Delete(Product product)
         {
             context.Delete(product);
