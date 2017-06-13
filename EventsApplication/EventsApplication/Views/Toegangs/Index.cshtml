@@ -26,7 +26,7 @@
             <p>
             @if (Model != null)
             {
-                <h4>Geselecteerde gebruiker:</h4>
+                <h4>Bezoeker:</h4>
                 <ul>
                     <li>@Model.Account.Gebruikersnaam</li>
                     <li>@Model.Account.Telefoonnummer</li>
@@ -78,13 +78,21 @@
             }
         </div>
     <div class="div2">
-    @if (Model != null && Model.Polsbandje.Barcode == null)
+    @if (Model != null)
     {
-        @Html.ActionLink("Koppel RFID", "KoppelRFID", routeValues: null, htmlAttributes: new {accountID = Model.Account.Id})
+        @Html.ActionLink("Koppel RFID", "KoppelRFID")
+        if (Model.Polsbandje.Barcode == null)
+        {
+            @Html.ActionLink("Koppel RFID", "KoppelRFID")
+        }
+        else
+        {
+            <h4>Materialen:</h4>
+            @Html.ActionLink("Materiaal bij reservering", "Materialen")
+        }
     }
     else
     {
-        
     }
     </div>
     

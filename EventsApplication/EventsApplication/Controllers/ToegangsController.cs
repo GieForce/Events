@@ -115,22 +115,67 @@ namespace EventsApplication.Controllers
         }
 
         //Koppel RFID
-        public ActionResult KoppelRFID(int accountID)
+        public ActionResult KoppelRFID()
         {
-            rfidReader();
-            AccountViewModel acwm = ModelToViewModel.ConvertAccounttoViewModel(accountRepository.GetById(accountID));
-            return View(acwm);
+            if (!string.IsNullOrEmpty(Session["LoginToegangssysteem"] as string))
+            {
+                if (Session["LoginToegangssysteem"].ToString() != "true")
+                {
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    if (Session["account"] == null)
+                    {
+                        return View();
+                    }
+                    else
+                    {
+                        rfidReader();
+                        //AccountViewModel acwm = ModelToViewModel.ConvertAccounttoViewModel((Account)Session["account"]);
+                        return View();
+                    }
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
         }
 
         [HttpPost]
         public ActionResult KoppelRFID(int accountID, string RFID)
         {
-            Account account = accountRepository.GetById(accountID);
-            Polsbandje polsbandje = polsbandjeRepository.GetByAccountId(account);
-            polsbandjeRepository.ConnectAccountWithRFID(RFID, polsbandje, account);
-            return RedirectToAction("Index");
+            Session["RFID"] = RFID;
+            //Account account = accountRepository.GetById(accountID);
+            //Polsbandje polsbandje = polsbandjeRepository.GetByAccountId(account);
+            //polsbandjeRepository.ConnectAccountWithRFID(RFID, polsbandje, account);
+            //return RedirectToAction("Index");
+            return View();
         }
 
+        public ActionResult Materialen()
+        {
+            if (Session["LoginToegangssysteem"].ToString() != "true")
+            {
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                if (Session["account"] == null)
+                {
+                    return View();
+                }
+                else
+                {
+                    AccountViewModel acwm = ModelToViewModel.ConvertAccounttoViewModel((Account)Session["account"]);
+                    return View(acwm);
+                }
+            }
+
+        }
+
+        //RFID---------------
         public void rfidReader()
         {
             rfid = new RFID();
@@ -169,6 +214,7 @@ namespace EventsApplication.Controllers
             try
             {
                 tag = e.Tag;
+                Session["RFID"] = tag;
 
                 ViewBag.Error("Tag " + e.Tag + " scanned", e.Tag);
             }
@@ -176,14 +222,17 @@ namespace EventsApplication.Controllers
             {
                 ViewBag.Error("Kan tagnummer niet scannen.");
             }
-            try
+            if (!string.IsNullOrEmpty(Session["Account"] as string))
             {
-                Account account = accountRepository.GetCompleteAccountsByRRFID(tag);
-                Session["Account"] = account;
-            }
-            catch
-            {
-                ViewBag.Error("Onbekende RFID.");
+                try
+                {
+                    Account account = accountRepository.GetCompleteAccountsByRRFID(tag);
+                    Session["Account"] = account;
+                }
+                catch
+                {
+                    ViewBag.Error("Onbekende RFID.");
+                }
             }
         }
 
@@ -191,5 +240,6 @@ namespace EventsApplication.Controllers
         {
             RedirectToAction("Index");
         }
+        //END RFID-----------------
     }
 }

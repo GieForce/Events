@@ -14,7 +14,7 @@ namespace EventsApplication.Models
     {
         StandplaatsRepository standplaatsRepository = new StandplaatsRepository(new StandplaatsContext());
         AccountRepository accountRepository = new AccountRepository(new AccountContext());
-        ProductRepository productRepository = new ProductRepository(new ProductContext());
+        ProductExemplaarRepository productExemplaarRepository = new ProductExemplaarRepository(new ProductExemplaarContext());
 
         private int id;
         private string voornaam;
@@ -31,7 +31,7 @@ namespace EventsApplication.Models
 
         private Standplaats standplaats;
         private List<Account> accounts;
-        private List<Product> producten;
+        private List<ProductExemplaar> productExemplaar;
 
         public int Id
         {
@@ -105,10 +105,10 @@ namespace EventsApplication.Models
             set { accounts = value; }
         }
 
-        public List<Product> Producten
+        public List<ProductExemplaar> ProductExemplaar
         {
-            get { return producten; }
-            set { producten = value; }
+            get { return productExemplaar; }
+            set { productExemplaar = value; }
         }
 
         public Reservering(int id, string voornaam, string tussenvoegsel, string achternaam, string straat, int huisnummer, string woonplaats, int betaald, DateTime startDatum, DateTime eindDatum, int standplaatsId)
@@ -137,7 +137,7 @@ namespace EventsApplication.Models
 
             this.standplaats = standplaatsRepository.GetByReservation(id);
             this.accounts = accountRepository.GetAllAccountsByReservation(id);
-            this.producten = productRepository.
+            this.productExemplaar = productExemplaarRepository.GetProductsByReservation(id);
         }
 
         public Reservering(string voornaam, string tussenvoegsel, string achternaam, string straat, int huisnummer, string woonplaats, int betaald, DateTime startDatum, DateTime eindDatum, int standplaatsId)

@@ -5,6 +5,13 @@
     ViewBag.Title = "KoppelRFID";
 }
 
+<p>
+    @if (!string.IsNullOrEmpty(Session["RFID"] as string))
+         {
+             Session["RFID"]
+         }
+</p>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -39,10 +46,11 @@
             <br />
 
         </div>
-     }
-     else
-     {
-     }
+    }
+    else
+    {
+        <p>@Html.ActionLink("Terug", "Index")</p>
+    }
 
 
 }
