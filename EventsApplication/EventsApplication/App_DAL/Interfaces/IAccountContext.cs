@@ -17,6 +17,10 @@ namespace EventsApplication.App_DAL
 
         List<Account> GetAllAccountsByReservation(int reserveringsID);
 
+        Account GetCompleteAccountsByRRFID(string RFID);
+
+        Account GetCompleteAccountByEmailAndActivationhash(string email, string activatiehash);
+
         bool Insert(Account account);
 
         bool Delete(int id);

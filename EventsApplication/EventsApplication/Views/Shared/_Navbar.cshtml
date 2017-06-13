@@ -1,4 +1,5 @@
-﻿@using EventsApplication.Models
+﻿@using System.Web.UI.WebControls
+@using EventsApplication.Models
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,6 +51,7 @@
                     <li>@Html.ActionLink("Toegangscontrole", "Index", "Toegangs")</li>
                     <li>@Html.ActionLink("Hostingsysteem", "Index", "Hosting")</li>
                 </ul>
+                @Html.Partial("_LoginPartial");
             </div>
         </div>
     </div>

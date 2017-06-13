@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 
@@ -92,6 +93,27 @@ namespace EventsApplication.App_DAL.Interfaces
                     {
                         command.Parameters.AddWithValue("@reserveringId", reservering.Id);
                         command.Parameters.AddWithValue("@polsbandjeId", polsbandje.Id);
+                        command.Parameters.AddWithValue("@accountId", account.Id);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        public void ConnectAccountWithRFID(string RFID, Polsbandje polsbandje, Account account)
+        {
+            try
+            {
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string queryUpdatePolsbandje = "UPDATE POLSBANDJE SET barcode = '027393000146', actief = 1 WHERE ID IN (SELECT polsbandje_id FROM RESERVERING_POLSBANDJE WHERE account_id=@accountId";
+                    using (SqlCommand command = new SqlCommand(queryUpdatePolsbandje, connection))
+                    {
                         command.Parameters.AddWithValue("@accountId", account.Id);
 
                         command.ExecuteNonQuery();

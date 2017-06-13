@@ -28,26 +28,27 @@ namespace EventsApplication.ViewModels
             };
         }
 
-//Make a "Aanwezig account" view Model
-        public static AanwezigAccountViewModel ConvertBerichtToViewModel(Account account)
+//Make a "Account" view Model
+        public static AccountViewModel ConvertAccounttoViewModel(Account account)
         {
             // convert an result to a viewmodel
-            AanwezigAccountViewModel aanwezigAccountModel = new AanwezigAccountViewModel();
+            AccountViewModel accountViewModel = new AccountViewModel();
 
-            aanwezigAccountModel.Account = accountRepository.GetById(account.Id);
-            aanwezigAccountModel.Polsbandje = polsbandjeRepository.GetByAccountId(account);
-            aanwezigAccountModel.Reservering = reserveringRepository.GetById(aanwezigAccountModel.Polsbandje.ReserveringsId);
-            return aanwezigAccountModel;
+            accountViewModel.Account = accountRepository.GetById(account.Id);
+            accountViewModel.Polsbandje = polsbandjeRepository.GetByAccountId(account);
+            int id = accountViewModel.Polsbandje.ReserveringsId;
+            accountViewModel.Reservering = reserveringRepository.GetById(id);
+            return accountViewModel;
         }
 
-        public static List<AanwezigAccountViewModel> ConvertBerichtToViewModel(List<Account> accounts)
+        public static List<AccountViewModel> ConvertAccounttoViewModel(List<Account> accounts)
         {
             // convert a list of results to viewmodel results
-            List<AanwezigAccountViewModel> berichtenViewModelList = new List<AanwezigAccountViewModel>();
+            List<AccountViewModel> berichtenViewModelList = new List<AccountViewModel>();
 
             foreach (Account account in accounts)
             {
-                berichtenViewModelList.Add(ConvertBerichtToViewModel(account));
+                berichtenViewModelList.Add(ConvertAccounttoViewModel(account));
             }
 
             return berichtenViewModelList;

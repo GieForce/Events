@@ -15,6 +15,8 @@ namespace EventsApplication.Models
         private string wachtwoord;
         private string telefoonnummer;
         private bool aanwezig;
+        private string barcode;
+        private bool administrator;
 
         public int Id
         {
@@ -64,9 +66,20 @@ namespace EventsApplication.Models
             set { aanwezig = value; }
         }
 
+        public string Barcode
+        {
+            get { return barcode; }
+            set { barcode = value; }
+        }
+
+        public bool Administrator
+        {
+            get { return administrator; }
+        }
+
         public Account(int id, string gebruikersnaam, string email, string activatiehash, bool geactiveerd, string wachtwoord, string telefoonnummer)
         {
-            ID = id;
+            this.ID = id;
             this.gebruikersnaam = gebruikersnaam;
             this.email = email;
             this.activatiehash = activatiehash;
@@ -81,6 +94,49 @@ namespace EventsApplication.Models
             }
             this.wachtwoord = wachtwoord;
             this.telefoonnummer = telefoonnummer;
+        }
+
+        public Account(int id, string gebruikersnaam, string email, string activatiehash, bool geactiveerd, string wachtwoord, string telefoonnummer, bool status)
+        {
+            this.ID = id;
+            this.gebruikersnaam = gebruikersnaam;
+            this.email = email;
+            this.activatiehash = activatiehash;
+
+            if (geactiveerd == true)
+            {
+                this.geactiveerd = true;
+            }
+            else if (geactiveerd == false)
+            {
+                this.geactiveerd = false;
+            }
+            this.wachtwoord = wachtwoord;
+            this.telefoonnummer = telefoonnummer;
+
+            this.administrator = status;
+        }
+
+        public Account(int id, string gebruikersnaam, string email, string activatiehash, bool geactiveerd, string wachtwoord, string telefoonnummer, string barcode, bool status)
+        {
+            this.ID = id;
+            this.gebruikersnaam = gebruikersnaam;
+            this.email = email;
+            this.activatiehash = activatiehash;
+
+            if (geactiveerd == true)
+            {
+                this.geactiveerd = true;
+            }
+            else if (geactiveerd == false)
+            {
+                this.geactiveerd = false;
+            }
+            this.wachtwoord = wachtwoord;
+            this.telefoonnummer = telefoonnummer;
+            this.barcode = barcode;
+
+            this.administrator = status;
         }
 
         public Account(string gebruikersnaam, string email, string activatiehash, int geactiveerd, string wachtwoord, string telefoonnummer)
@@ -101,12 +157,13 @@ namespace EventsApplication.Models
             this.telefoonnummer = telefoonnummer;
         }
 
-        public Account(int id, string gebruikersnaam, string telefoonnummer, bool aanwezig)
+        public Account(int id, string gebruikersnaam, string telefoonnummer, bool aanwezig, bool status)
         {
             this.Id = id;
             this.gebruikersnaam = gebruikersnaam;
             this.telefoonnummer = telefoonnummer;
             this.aanwezig = aanwezig;
+            this.administrator = status;
         }
     }
 }

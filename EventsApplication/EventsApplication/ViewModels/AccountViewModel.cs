@@ -6,7 +6,7 @@ using System.Web;
 
 namespace EventsApplication.ViewModels
 {
-    public class AanwezigAccountViewModel
+    public class AccountViewModel
     {
         public Account Account { get; set; }
         public Polsbandje Polsbandje { get; set; }

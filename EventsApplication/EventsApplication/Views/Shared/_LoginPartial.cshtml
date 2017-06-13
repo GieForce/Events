@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Aanwezig";
+}
+@if (!string.IsNullOrEmpty(Session["LoginToegangssysteem"] as string))
+{
+    if (Session["LoginToegangssysteem"].ToString() == "true")
+    {
+        using (Html.BeginForm("LogOff", "Gebruiker", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    @Html.ActionLink("Aanwezige mensen", "Aanwezig", routeValues: null, htmlAttributes: new { id = "Aanwezige" })
+                </li>
+                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            </ul>
+        }
+    }
+    else
+    {
+
+    }
+}

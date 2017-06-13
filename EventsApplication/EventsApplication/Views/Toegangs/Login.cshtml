@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+<link rel="stylesheet" type="text/css" href="~/Content/InlogPagina.css" />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div id="login">
+        <h2>Inloggen</h2>
+        <div class="form-group">
+            <label for="Gebruikersnaam" class="sr-only">Gebruikersnaam</label>
+            <input type="text" name="gebruikersnaam" id="gebruikersnaam" class="form-control" placeholder="Gebruikersnaam">
+        </div>
+
+        <div class="form-group">
+            <label for="password" class="sr-only">Password</label>
+            <input type="password" name="wachtwoord" id="wachtwoord" class="form-control" placeholder="Wachtwoord">
+        </div>
+
+        <br>
+        <br>
+        <input type="submit" value="Login" class="btn btn-block" />
+    </div>
+}

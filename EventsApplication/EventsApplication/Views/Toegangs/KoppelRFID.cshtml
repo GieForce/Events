@@ -1,0 +1,48 @@
+﻿@using EventsApplication.ViewModels
+@using Microsoft.Ajax.Utilities
+@model EventsApplication.ViewModels.AccountViewModel
+@{
+    ViewBag.Title = "KoppelRFID";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <link rel="stylesheet" type="text/css" href="~/Content/Login.css">
+
+    if (Model != null)
+    {
+
+        <div class="form">
+            <div class="form-group">
+                <h4>Geselecteerde gebruiker:</h4>
+                <ul>
+                    <li>@Model.Account.Gebruikersnaam</li>
+                    <li>@Model.Account.Telefoonnummer</li>
+                    <li>@Model.Account.Geactiveerd</li>
+                    <li>@Model.Reservering.StartDatum</li>
+                    <li>@Model.Reservering.EindDatum</li>
+                    <li><b>@Model.Reservering.Betaalstatus</b></li>
+                </ul>
+            </div>
+
+            <div class="form-group">
+                <label for="form4">RFID</label>
+                <input type="text" id="form4" name="RFID" class="form-control">
+            </div>
+
+            <div class="text-xs-center">
+                <input type="submit" value="Koppel RFID" class="btn btn-default" />
+            </div>
+            <br />
+            <br />
+            <br />
+
+        </div>
+     }
+     else
+     {
+     }
+
+
+}

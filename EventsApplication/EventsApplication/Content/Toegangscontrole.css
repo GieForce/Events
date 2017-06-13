@@ -1,12 +1,33 @@
-﻿#left {
-    float: left; 
-    width: 25%;
+﻿div.box {
+        position: absolute;
+    margin-top: 5%;
+      background: #EEE;
+      height: 100%;
+      width: 600px;
+      left: 50%;
+      margin-left: -300px; /* margin is -0.5 * dimension */
+      position: relative;
+      position: center;
 }
-#middle {
-    float: left; 
-    width: 50%;
+
+div.div1 {
+  /*background: #999;*/
+  float: left;
+  height: 100%;
+  width: auto;
 }
-#right {
-    float: left;
-    width: 25%;
+
+div.div2 {
+  /*background: #666;*/
+  height: 100%;
+}
+
+div.clear {
+    background: black;
+  clear: both;
+  height: 1px;
+    width: 1px;
+  overflow: hidden;
+  font-size: 0pt;
+  margin-top: -1px;
 }
