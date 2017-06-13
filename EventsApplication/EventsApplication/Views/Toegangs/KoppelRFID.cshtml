@@ -7,9 +7,9 @@
 
 <p>
     @if (!string.IsNullOrEmpty(Session["RFID"] as string))
-         {
-             Session["RFID"]
-         }
+    {
+        Session["RFID"].ToString();
+    }
 </p>
 
 @using (Html.BeginForm())
