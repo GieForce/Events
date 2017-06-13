@@ -89,11 +89,11 @@ namespace EventsApplication.App_DAL
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    int ID = Convert.ToInt32(reader["P.ID"].ToString());
-                    int capaciteit = Convert.ToInt32(reader["P.capaciteit"].ToString());
-                    int nummer = Convert.ToInt32(reader["P.nummer"].ToString());
-                    decimal prijs = Convert.ToDecimal(reader["P.prijs"].ToString());
-                    string specificatie = reader["S.naam"].ToString();
+                    int ID = Convert.ToInt32(reader["P.ID"]);
+                    int capaciteit = Convert.ToInt32(reader["P.capaciteit"]);
+                    int nummer = Convert.ToInt32(reader["P.nummer"]);
+                    string specificatie = Convert.ToString(reader["S.naam"]);
+                    decimal prijs = Convert.ToDecimal(reader["P.prijs"]);
 
                     splts = new Standplaats(ID, nummer, capaciteit, prijs, specificatie);
                 }
