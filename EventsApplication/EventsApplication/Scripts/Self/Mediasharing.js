@@ -1,15 +1,14 @@
-﻿
-$(document).ready(function () {
+﻿$(document).ready(function () {
     var $loading = $("#loading").hide();
-    
+
     $("#ShowPosts").on("click",
         function () {
             $("#showPosts").html("");
             $loading.show();
             $.ajax({
-                url: "/Mediasharing/ShowPosts",
-                type: "GET"
-            })
+                    url: "/Mediasharing/ShowPosts",
+                    type: "GET"
+                })
                 .done(function (partialViewResult) {
                     $("#showPosts").html(partialViewResult);
                     $loading.hide();
@@ -20,9 +19,9 @@ $(document).ready(function () {
             $("#showPosts").html("");
             $loading.show();
             $.ajax({
-                url: "/Mediasharing/ShowPosts",
-                type: "GET"
-            })
+                    url: "/Mediasharing/ShowPosts",
+                    type: "GET"
+                })
                 .done(function (partialViewResult) {
                     $("#showPosts").html(partialViewResult);
                     $loading.hide();
@@ -34,9 +33,9 @@ $(document).ready(function () {
             $("#showPosts").html("");
             $loading.show();
             $.ajax({
-                url: "/Mediasharing/ShowBijdragesByUserID",
-                type: "GET"
-            })
+                    url: "/Mediasharing/ShowBijdragesByUserID",
+                    type: "GET"
+                })
                 .done(function (partialViewResult) {
                     $("#showPosts").html(partialViewResult);
                     $loading.hide();
@@ -47,9 +46,9 @@ $(document).ready(function () {
             $("#showPosts").html("");
             $loading.show();
             $.ajax({
-                url: "/Mediasharing/ShowAccountByID",
-                type: "GET"
-            })
+                    url: "/Mediasharing/ShowAccountByID",
+                    type: "GET"
+                })
                 .done(function (partialViewResult) {
                     $("#showPosts").html(partialViewResult);
                     $loading.hide();
@@ -68,75 +67,6 @@ $(document).ready(function () {
                     $loading.hide();
                 });
         });
-
-    $(".likePost").on("click",
-        function () {
-   //         $("#showPosts").html("");
-            //      $loading.show();
-            var $targetItem = $(this).attr("data-item");
-            $.ajax({
-                    url: "/Mediasharing/GiveALike/" + $targetItem,
-                    type: "POST"
-                })
-                .done(function (partialViewResult) {
-                    $("#showPosts").html(partialViewResult);
-                    $loading.hide();
-                });
-        });4
-    $(".delete").on("click",
-        function () {
-            //         $("#showPosts").html("");
-            //      $loading.show();
-            var $targetItem = $(this).attr("data-item");
-            $.ajax({
-                    url: "/Mediasharing/DeletePosts/" + $targetItem,
-                    type: "POST"
-                })
-                .done(function (partialViewResult) {
-                    $("#showPosts").html(partialViewResult);
-                    $loading.hide();
-                });
-        });
-
-
-    //$("#delete").on("click",
-    //    function () {
-    //        $("#ShowPosts").html("");
-    //        var $targetItem = $(this).attr("data-item");
-    //        $loading.show();
-    //        $.ajax({
-    //                data: { id: $targetItem },
-    //                url: "/Mediasharing/DeletePost/" + $targetItem,
-    //                type: "GET"
-    //            })
-    //            .done(function (partialViewResult) {
-    //                $("#showPosts").html(partialViewResult);
-    //                $loading.hide();
-    //            });
-    //    });
-//    $("#delete").on("click",
-//        function () {
-//            $("#showPosts").html("");
-//            var $targetItem = $(this).attr("data-item");
-//            $loading.show();
-//            $.ajax({
-//                    data: { 'id': $targetItem },
-//            url: "/Mediasharing/DeletePost",
-//    dataType: "json",
-//    type: "POST",
-//    contentType: 'application/json; charset=utf-8',
-//    async: true,
-//    processData: false,
-//    cache: false,
-  
-   
-//})
-//                .done(function (partialViewResult) {
-              
-//                    $("#ShowPosts").html(partialViewResult);
-//                    $loading.hide();
-//                });
-//        });
 
     $(".ShowCommentsById").on("click",
         function () {
@@ -166,20 +96,18 @@ $(document).ready(function () {
 
             $(".showComments-" + $classname).html("");
             $.ajax({
-                url: "/Mediasharing/CreateComment",
-                data: {
-                    'id': $targetItem,
-                    'text': $text
-                },
-                type: "POST"
+                    url: "/Mediasharing/CreateComment",
+                    data: {
+                        'id': $targetItem,
+                        'text': $text
+                    },
+                    type: "POST"
                 })
                 .done(function (partialViewResult) {
                     $(".showComments-" + $classname).html(partialViewResult);
                 });
         });
 
-    
-    
+
+
 }); 
-
-
