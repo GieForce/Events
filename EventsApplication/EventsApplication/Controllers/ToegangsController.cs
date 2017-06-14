@@ -16,6 +16,7 @@ namespace EventsApplication.Controllers
     {
         AccountRepository accountRepository = new AccountRepository(new AccountContext());
         PolsbandjeRepository polsbandjeRepository = new PolsbandjeRepository(new PolsbandjeContext());
+        ReserveringRepository reserveringRepository = new ReserveringRepository(new ReserveringContext());
         private RFID rfid;
 
         // GET: Toegangs
@@ -49,11 +50,25 @@ namespace EventsApplication.Controllers
         [HttpPost]
         public ActionResult Index(string email, string activatiehash)
         {
+            Event huidigEvent = (Event)Session["event"];
+            ModelToViewModel.EventToEventViewModel(huidigEvent);
+
             Account account = accountRepository.GetCompleteAccountByEmailAndActivationhash(email, activatiehash);
                 if (account != null)
                 {
-                    Session["account"] = account;
-                    return RedirectToAction("Index");
+                    Polsbandje polsbandje = polsbandjeRepository.GetByAccountId(account);
+                    Reservering reservering = reserveringRepository.GetById(polsbandje.ReserveringsId);
+
+                    //Check if account made a reservation for current event
+                    if (reservering.EvenementIDReservering.ID1 == huidigEvent.ID1)
+                    {
+                        Session["account"] = account;
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return View("Error");
+                    }
                 }
             else
             {
@@ -131,8 +146,7 @@ namespace EventsApplication.Controllers
                     }
                     else
                     {
-                        rfidReader();
-                        //AccountViewModel acwm = ModelToViewModel.ConvertAccounttoViewModel((Account)Session["account"]);
+                        AccountViewModel acwm = ModelToViewModel.ConvertAccounttoViewModel((Account)Session["account"]);
                         return View();
                     }
                 }

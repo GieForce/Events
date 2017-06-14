@@ -10,21 +10,6 @@
 <table class="table">
     <tr>
         <th>
-               Categorie
-        </th>
-        <th>
-            Merk
-        </th>
-        <th>
-            Serie
-        </th>
-        <th>
-            Typenummer
-        </th>
-        <th>
-            Prijs
-        </th>
-        <th>
             Product-id
         </th>
         <th>
@@ -37,21 +22,6 @@
 
 @foreach (ProductExemplaar productexemplaar in Model.Reservering.ProductExemplaar) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => productexemplaar.Product.Categorie.Naam)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => productexemplaar.Product.Merk)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => productexemplaar.Product.Serie)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => productexemplaar.Product.Typenummer)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => productexemplaar.Product.Prijs)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => productexemplaar.Product_id)
         </td>

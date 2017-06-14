@@ -15,6 +15,7 @@ namespace EventsApplication.ViewModels
         public static AccountRepository accountRepository = new AccountRepository(new AccountContext());
         public static PolsbandjeRepository polsbandjeRepository = new PolsbandjeRepository(new PolsbandjeContext());
         public static ReserveringRepository reserveringRepository = new ReserveringRepository(new ReserveringContext());
+        public static EventRepository eventRepository = new EventRepository(new EventContext());
 
         public static EventViewModel EventToEventViewModel(Event evenement)
         {
@@ -53,6 +54,35 @@ namespace EventsApplication.ViewModels
 
             return berichtenViewModelList;
         }
+
+//Make a "Reservering" view model
+        public static ReserveringViewModel ConvertReserveringtoViewModel(Reservering reservering)
+        {
+            // convert an result to a viewmodel
+            ReserveringViewModel reserveringViewModel = new ReserveringViewModel();
+
+            reserveringViewModel.Evenement = eventRepository.GetById(reservering.EvenementIDReservering.ID1);
+            reserveringViewModel.Id = reservering.Id;
+            reserveringViewModel.Voornaam = reservering.Voornaam;
+            reserveringViewModel.Tussenvoegsel = reservering.Tussenvoegsel;
+            reserveringViewModel.Achternaam = reservering.Achternaam;
+            reserveringViewModel.Straat = reservering.Straat;
+            reserveringViewModel.Huisnummer = reservering.Huisnummer;
+            reserveringViewModel.Woonplaats = reservering.Woonplaats;
+            reserveringViewModel.DatumStart = reservering.StartDatum;
+            reserveringViewModel.DatumEind = reservering.EindDatum;
+            reserveringViewModel.Betaalstatus = reservering.Betaalstatus;
+            reserveringViewModel.Staanplaatsen = reservering.Staanplaatsen;
+            reserveringViewModel.Accounts = ConvertAccounttoViewModel(reservering.Accounts);
+            //reserveringViewModel.Producten = reservering.;
+            reserveringViewModel.Exemplaren = reservering.ProductExemplaar;
+            reserveringViewModel.Dagen = Convert.ToInt32((reservering.EindDatum - reservering.StartDatum).TotalDays);
+            //reserveringViewModel.TotaalPrijs = 
+
+
+            return reserveringViewModel;
+        }
+
 
     }
 }

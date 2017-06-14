@@ -75,9 +75,9 @@ namespace EventsApplication.App_DAL
 
         }
 
-        public Standplaats GetByReservation(int reservationID)
+        public List<Standplaats> GetByReservation(int reservationID)
         {
-            Standplaats splts = null;
+            List<Standplaats> splts = null;
             SqlConnection conn = Connection.SQLconnection;
             try
             {
@@ -95,7 +95,7 @@ namespace EventsApplication.App_DAL
                     string specificatie = Convert.ToString(reader["naam"]);
                     decimal prijs = Convert.ToDecimal(reader["prijs"]);
 
-                    splts = new Standplaats(ID, nummer, capaciteit, prijs, specificatie);
+                    splts.Add(new Standplaats(ID, nummer, capaciteit, prijs, specificatie));
                 }
                 conn.Close();
 

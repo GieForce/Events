@@ -26,7 +26,7 @@ namespace EventsApplication.Controllers.Repositorys
             return istandplaatsContext.GetByLocatie(locatie);
         }
 
-        public Standplaats GetByReservation(int reservationID)
+        public List<Standplaats> GetByReservation(int reservationID)
         {
             return istandplaatsContext.GetByReservation(reservationID);
         }
