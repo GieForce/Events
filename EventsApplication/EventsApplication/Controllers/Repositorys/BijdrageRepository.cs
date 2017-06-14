@@ -56,5 +56,10 @@ namespace EventsApplication.Controllers
         {
             return context.InsertMediaBericht(categorieId, bestandlocatie, accountid);
         }
+
+        public bool InsertComment(int id, int accountid, string text)
+        {
+            return context.InsertComment(id, accountid, text);
+        }
     }
 }

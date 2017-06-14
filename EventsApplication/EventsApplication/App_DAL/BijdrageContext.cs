@@ -39,12 +39,13 @@ namespace EventsApplication.App_DAL
             using (SqlConnection connection = Connection.SQLconnection)
             {
                 string query =
-                    "SELECT * FROM BIJDRAGE b " +
+                    "SELECT c.bijdrage_id, c.naam, b.*, be.*, br.*, a.*, ab.* FROM BIJDRAGE b " +
                     "LEFT JOIN CATEGORIE c on b.ID = c.bijdrage_id " +
                     "LEFT JOIN BESTAND be on b.ID = be.bijdrage_id " +
                     "LEFT JOIN BERICHT br on b.ID = br.bijdrage_id " +
                     "LEFT JOIN ACCOUNT a on b.account_id = a.ID " +
                     "LEFT JOIN ACCOUNT_BIJDRAGE ab on b.ID = ab.bijdrage_id";
+                
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
@@ -157,9 +158,10 @@ namespace EventsApplication.App_DAL
                         command.Parameters.AddWithValue("@inhoud", "");
                         command.Parameters.AddWithValue("@categorieID", categorieId);
                         command.Parameters.AddWithValue("@bestandslocatie", bestandlocatie);
-                        command.Parameters.AddWithValue("@grootte", "");
+                        command.Parameters.AddWithValue("@grootte", 0);
                         command.Parameters.AddWithValue("@naam", "");
-                        command.ExecuteNonQuery();
+                        command.Parameters.AddWithValue("@id", 0);
+                    command.ExecuteNonQuery();
                 }
                 return true;
             }
@@ -169,7 +171,37 @@ namespace EventsApplication.App_DAL
             }
         }
 
+        public bool InsertComment(int id, int accountid, string text)
+        {
+            try
+            {
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query = "CreateNew";
+                    SqlCommand command = new SqlCommand(query, connection);
 
+                    command.CommandType = CommandType.StoredProcedure;
+
+
+                    command.Parameters.AddWithValue("@accountID", accountid);
+                    command.Parameters.AddWithValue("@datum", DateTime.Now);
+                    command.Parameters.AddWithValue("@soort", "bericht");
+                    command.Parameters.AddWithValue("@titel", "");
+                    command.Parameters.AddWithValue("@inhoud", text);
+                    command.Parameters.AddWithValue("@categorieID", 1);
+                    command.Parameters.AddWithValue("@bestandslocatie", "");
+                    command.Parameters.AddWithValue("@grootte", 0);
+                    command.Parameters.AddWithValue("@naam", "");
+                    command.Parameters.AddWithValue("@id", id);
+                    command.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
 
         private Bijdrage CreateBijdrageFromReader(SqlDataReader reader)
         {
@@ -189,7 +221,7 @@ namespace EventsApplication.App_DAL
                     accountBijdrage = new AccountBijdrage(0,0,0,0,0);
                 }
                  return new Categorie(
-                    Convert.ToInt32(reader["ID"]),
+                    Convert.ToInt32(reader["bijdrage_id"]),
                     account,
                     Convert.ToDateTime(reader["datum"]),
                     Convert.ToString(reader["soort"]),
@@ -277,6 +309,8 @@ namespace EventsApplication.App_DAL
                 Convert.ToString(reader["inhoud"])
             );
         }
+
+
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -128,7 +129,7 @@ namespace EventsApplication.Controllers
                     file.SaveAs(path);
                     Account account = (Account)(Session["user"]);
                     accountRepository.GetById(account.Id);
-                    repository.InsertMediaBericht(mvm.selectedCategorieId, mvm.bestandslocatie, account.Id);
+                    repository.InsertMediaBericht(mvm.selectedCategorieId, "", account.Id);
                 }
 
                 return RedirectToAction("Index", "MediaSharing");
@@ -137,6 +138,20 @@ namespace EventsApplication.Controllers
             {
                return View("Error");
             }
+        }
+
+        [HttpPost]
+        public ActionResult CreateComment(string id, string text)
+        {
+            
+
+            Account account = (Account)(Session["user"]);
+            accountRepository.GetById(account.Id);
+            repository.InsertComment(Convert.ToInt32(id), account.Id, text);
+            List<Bericht> berichtenList = repository.LoadBerichtenByPostId(Convert.ToInt32(id));
+            BerichtenViewModel bvm = new BerichtenViewModel { berichtenList = berichtenList, account = account };
+            return PartialView("Comments", bvm);
+
         }
     }
 }

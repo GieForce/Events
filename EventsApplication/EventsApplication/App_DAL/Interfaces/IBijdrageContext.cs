@@ -14,7 +14,7 @@ namespace EventsApplication.App_DAL
         bool Insert(Bericht bijdrage);
 
         bool InsertMediaBericht(int categorieId, string bestandlocatie, int accountid);
-        //bool Delete(int id);
+        bool InsertComment(int id, int accountid, string text);
         List<Bijdrage> GetAllBijdrages();
 
         List<Bijdrage> GetAllBijdragesByUserId(int userid);

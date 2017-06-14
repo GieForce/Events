@@ -105,5 +105,26 @@ $(document).ready(function () {
                     self.hide();
                 });
         });
+    $(".addPost").on("click",
+        function () {
+            var $targetItem = $(this).attr("data-item");
+            var $classname = $(".showComments" + "-" + $targetItem).attr("data-comment");
+            var $text = $(".postText").val();
+
+            $(".showComments-" + $classname).html("");
+            $.ajax({
+                url: "/Mediasharing/CreateComment",
+                data: {
+                    'id': $targetItem,
+                    'text': $text
+                },
+                type: "POST"
+                })
+                .done(function (partialViewResult) {
+                    $(".showComments-" + $classname).html(partialViewResult);
+                });
+        });
+    
 }); 
+
 
