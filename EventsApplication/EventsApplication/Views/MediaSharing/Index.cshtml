@@ -50,14 +50,15 @@
                 </button>
                 <br />
                 <div>
-                    <ul class="nav">
-                        <li>
-                            <h3># Posts</h3>
-                        </li>
-                        <li>
-                            <h3># Reacties</h3>
-                        </li>
-                    </ul>
+                    @if (Model.account.Id == 1)
+                    {
+                        <ul class="nav">
+                            <li>
+                                <h3>@Html.ActionLink("Verwijderen", "AdminDelete", "MediaSharing")</h3>
+                            </li>
+                        </ul>
+                    }
+                    
                 </div>
 
             </div>

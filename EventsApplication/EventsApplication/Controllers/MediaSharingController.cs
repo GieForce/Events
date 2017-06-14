@@ -128,7 +128,7 @@ namespace EventsApplication.Controllers
             }
         }
 
-        public ActionResult Admindelete(int id)
+        public ActionResult AdminDelete(int id)
         {
             BijdrageRepository bijdragerepo = new BijdrageRepository(new BijdrageContext());
 
