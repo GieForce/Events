@@ -284,8 +284,8 @@ namespace EventsApplication.App_DAL
 
                 try
                 {
-                    if (reader["abib"].ToString() != "")
-                    {
+                    //if (reader["abib"].ToString() != "")
+                    //{
                         string ab = reader["abib"].ToString();
                         string ab1 = reader["abaccountid"].ToString();
                         string ab2 = reader["abbijdrageid"].ToString();
@@ -295,11 +295,15 @@ namespace EventsApplication.App_DAL
                             Convert.ToInt32(ab2), Convert.ToInt32(ab3),
                             Convert.ToInt32(ab4));
                         accountBijdrage.Add(accountBijdrage1);
-                    }
+                    //}
+                    //else
+                    //{
+                    //    Console.WriteLine("Nothing found");
+                    //}
                 }
                 catch (Exception)
                 {
-
+                    Console.WriteLine("Nothing found");
                 }
 
                 return new Categorie(
@@ -320,8 +324,8 @@ namespace EventsApplication.App_DAL
 
                     try
                     {
-                        if (reader["abib"].ToString() != "")
-                        {
+                        //if (reader["abib"].ToString() != "")
+                        //{
                             string ab = reader["abib"].ToString();
                             string ab1 = reader["abaccountid"].ToString();
                             string ab2 = reader["abbijdrageid"].ToString();
@@ -331,11 +335,15 @@ namespace EventsApplication.App_DAL
                                 Convert.ToInt32(ab2), Convert.ToInt32(ab3),
                                 Convert.ToInt32(ab4));
                             accountBijdrage.Add(accountBijdrage1);
-                        }
+                        //}
+                        //else
+                        //{
+                        //    Console.WriteLine("Nothing found");
+                        //}
                     }
                     catch (Exception)
                     {
-
+                        Console.WriteLine("Nothing found");
                     }
 
                     return new Bestand(
@@ -359,8 +367,8 @@ namespace EventsApplication.App_DAL
 
                     try
                     {
-                        if (reader["abib"].ToString() != "")
-                        {
+                        //if (reader["abib"].ToString() != "")
+                        //{
                             string ab = reader["abib"].ToString();
                             string ab1 = reader["abaccountid"].ToString();
                             string ab2 = reader["abbijdrageid"].ToString();
@@ -370,12 +378,16 @@ namespace EventsApplication.App_DAL
                                 Convert.ToInt32(ab2), Convert.ToInt32(ab3),
                                 Convert.ToInt32(ab4));
                             accountBijdrage.Add(accountBijdrage1);
-                        }
+                        //}
+                        //else
+                        //{
+                        //    Console.WriteLine("Nothing found");
+                        //}
                        
                     }
                     catch (Exception)
                     {
-                        
+                        Console.WriteLine("Nothing found");
                     }
 
 
@@ -436,18 +448,5 @@ namespace EventsApplication.App_DAL
                 Convert.ToString(reader["inhoud"])
             );
         }
-
-        private AccountBijdrage CreateAccountBijdrageFromReader(SqlDataReader reader)
-        {
-            return new AccountBijdrage(
-                    Convert.ToInt32(reader["abib"]),
-                    Convert.ToInt32(reader["abaccountid"]),
-                    Convert.ToInt32(reader["abbijdrageid"]),
-                    Convert.ToInt32(reader["like"]),
-                    Convert.ToInt32("ongewenst"));
-        }
-
-
-
     }
 }

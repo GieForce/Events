@@ -108,6 +108,21 @@
                 });
         });
 
+    $(".delete").on("click",
+        function () {
+            //         $("#showPosts").html("");
+            //      $loading.show();
+            var $targetItem = $(this).attr("data-item");
+            $.ajax({
+                    url: "/Mediasharing/DeletePosts/" + $targetItem,
+                    type: "POST"
+                })
+                .done(function (partialViewResult) {
+                    $("#showPosts").html(partialViewResult);
+                    //$loading.hide();
+                });
+        });
+
 
 
 }); 
