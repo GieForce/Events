@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using EventsApplication.App_DAL;
 using EventsApplication.Controllers.Repositorys;
+using System.ComponentModel.DataAnnotations;
 
 namespace EventsApplication.Models
 {
@@ -50,7 +51,9 @@ namespace EventsApplication.Models
             get {return ID;}
             set {ID = value;}
         }
-
+        [RegularExpression(@"^.{5,}$", ErrorMessage = "Minimum 1 character required")]
+        [Required(ErrorMessage = "Dit veld mag niet leeg zijn")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "Dit veld mag niet leeg zijn")]
         public string Naam
         {
             get{ return naam;}
@@ -70,7 +73,9 @@ namespace EventsApplication.Models
 
             set {datumeind = value;}
         }
-
+        [RegularExpression(@"^.{5,}$", ErrorMessage = "Minimum 1 character required")]
+        [Required(ErrorMessage = "Dit veld mag niet leeg zijn")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "Dit veld mag niet leeg zijn")]
         public int Maxbezoekers
         {
             get { return maxbezoekers;}
