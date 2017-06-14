@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using EventsApplication.App_DAL;
@@ -124,11 +127,13 @@ namespace EventsApplication.Controllers
             {
                 if (file.ContentLength > 0)
                 {
-                    var path = Path.Combine(Server.MapPath("~/Content/Images"), mvm.selectedCategorieId + ".jpg");
+                    int latestbijdrage = repository.getLatestBijdrageID();
+                    string hash = CalculateMD5Hash(latestbijdrage.ToString());
+                    var path = Path.Combine(Server.MapPath("~/Content/Images"), hash + ".jpg");
                     file.SaveAs(path);
                     Account account = (Account)(Session["user"]);
                     accountRepository.GetById(account.Id);
-                    repository.InsertMediaBericht(mvm.selectedCategorieId, mvm.bestandslocatie, account.Id);
+                    repository.InsertMediaBericht(mvm.selectedCategorieId, hash, account.Id);
                 }
 
                 return RedirectToAction("Index", "MediaSharing");
@@ -138,5 +143,91 @@ namespace EventsApplication.Controllers
                return View("Error");
             }
         }
+
+        [HttpPost]
+        public ActionResult CreateComment(string id, string text)
+        {
+            Account account = (Account)(Session["user"]);
+            accountRepository.GetById(account.Id);
+            repository.InsertComment(Convert.ToInt32(id), account.Id, text);
+            List<Bericht> berichtenList = repository.LoadBerichtenByPostId(Convert.ToInt32(id));
+            BerichtenViewModel bvm = new BerichtenViewModel { berichtenList = berichtenList, account = account };
+            return PartialView("Comments", bvm);
+
+        }
+
+        public string CalculateMD5Hash(string input)
+
+        {
+            // step 1, calculate MD5 hash from input
+
+            MD5 md5 = System.Security.Cryptography.MD5.Create();
+
+            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+
+            byte[] hash = md5.ComputeHash(inputBytes);
+
+
+            // step 2, convert byte array to hex string
+
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < hash.Length; i++)
+
+            {
+
+                sb.Append(hash[i].ToString("X2"));
+
+            }
+
+            return sb.ToString();
+
+        }
+
+        [HttpPost]
+        public ActionResult GiveALike(int id)
+        {       
+            List<Bijdrage> bijdrages = repository.GetAllBijdrages();
+            Account account = (Account)(Session["user"]);
+            accountRepository.GetById(account.Id);
+            BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
+            try
+            {
+                repository.InsertLike(new AccountBijdrage(account.Id, id, 1, 0));
+
+           
+                return PartialView("Berichten", bvm);
+            }
+
+            catch
+            {
+                return RedirectToAction("Index", "MediaSharing");
+            }
+         
+        }
+
+
+        public ActionResult DeletePosts(int id)
+        {
+            List<Bijdrage> bijdrages = repository.GetAllBijdrages();
+            Account account = (Account)(Session["user"]);
+            accountRepository.GetById(account.Id);
+       //     BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
+            try
+            {
+
+                repository.DeletePost(id);
+
+                return RedirectToAction("Index", "MediaSharing");
+            }
+
+            catch
+            {
+                return RedirectToAction("Index", "MediaSharing");
+         
+            }
+
+        }
+       
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using EventsApplication.Models;
 
 namespace EventsApplication.ViewModels
@@ -42,7 +43,7 @@ namespace EventsApplication.ViewModels
     {
         public Account account { get; set; }
         public List<Categorie> categorieList { get; set; }
-        [Required(ErrorMessage = "Geen bestand geuploadt!")]
+        
         public string bestandslocatie { get; set; }
         public int selectedCategorieId { get; set; }
     }

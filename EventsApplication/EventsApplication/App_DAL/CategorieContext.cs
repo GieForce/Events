@@ -85,15 +85,15 @@ namespace EventsApplication.App_DAL
         {
             AccountRepository accountRepository = new AccountRepository(new AccountContext());
             Account account = accountRepository.GetById(Convert.ToInt32(reader["account_id"]));
-            AccountBijdrage accountBijdrage;
-            try
-            {
-                accountBijdrage = new AccountBijdrage(Convert.ToInt32(reader["account_id"]), Convert.ToInt32(reader["bijdrage_id"]), Convert.ToInt32(reader["like"]), Convert.ToInt32("ongewenst"));
-            }
-            catch (Exception)
-            {
-                accountBijdrage = new AccountBijdrage(0, 0, 0, 0, 0);
-            }
+            List<AccountBijdrage> accountBijdrage = new List<AccountBijdrage>();
+            //try
+            //{
+            //    accountBijdrage = new AccountBijdrage(Convert.ToInt32(reader["account_id"]), Convert.ToInt32(reader["bijdrage_id"]), Convert.ToInt32(reader["like"]), Convert.ToInt32("ongewenst"));
+            //}
+            //catch (Exception)
+            //{
+            //    accountBijdrage = new AccountBijdrage(0, 0, 0, 0, 0);
+            //}
             return new Categorie(
                 Convert.ToInt32(reader["ID"]),
                 account,

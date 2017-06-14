@@ -56,5 +56,25 @@ namespace EventsApplication.Controllers
         {
             return context.InsertMediaBericht(categorieId, bestandlocatie, accountid);
         }
+
+        public bool InsertComment(int id, int accountid, string text)
+        {
+            return context.InsertComment(id, accountid, text);
+        }
+
+        public int getLatestBijdrageID()
+        {
+            return context.getLatestBijdrageID();
+        }
+
+        public bool InsertLike(AccountBijdrage accountBijdrage)
+        {
+            return context.InsertLike(accountBijdrage);
+        }
+
+        public bool DeletePost(int id)
+        {
+            return context.DeletePost(id);
+        }
     }
 }
