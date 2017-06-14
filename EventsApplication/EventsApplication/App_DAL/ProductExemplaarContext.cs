@@ -40,8 +40,9 @@ namespace EventsApplication.App_DAL
             return result;
         }
 
-        public ProductExemplaar GetByProduct(int productId)
+        public List<ProductExemplaar> GetByProduct(int productId)
         {        
+            List<ProductExemplaar> rlist = new List<ProductExemplaar>();
                 using (SqlConnection connection = Connection.SQLconnection)
                 {
                     string query = "SELECT * FROM PRODUCTEXEMPLAAR WHERE product_id = @param1";
@@ -52,13 +53,13 @@ namespace EventsApplication.App_DAL
                         {
                             if (reader.Read())
                             {
-                                return CreateReserveringFromReader(reader);
+                                rlist.Add(CreateReserveringFromReader(reader));
                             }
                         }
                     }
                 }
 
-                return null;         
+                return rlist;         
         }
 
         public void Insert(ProductExemplaar productExemplaar)

@@ -1,0 +1,60 @@
+﻿@using EventsApplication.Models
+@model EventsApplication.ViewModels.ReserveringViewModel
+
+@{
+    ViewBag.Title = "Reserveren";
+}
+
+<h2>6. Afronden</h2>
+<hr />
+<h4>Datum</h4>
+<div class="container">
+    <div class="row">
+        Startdatum: @Model.DatumStart.ToString("dd/MM/yyyy")
+    </div>
+    <div class="row">
+        Einddatum: @Model.DatumEind.ToString("dd/MM/yyyy")
+    </div>
+</div>
+<hr />
+<h4>Gegevens</h4>
+<div class="container">
+    <div class="row">
+        Naam: @Model.Voornaam @Model.Tussenvoegsel @Model.Achternaam
+    </div>
+    <div class="row">
+        Adres: @Model.Straat @Model.Huisnummer @Model.Woonplaats
+    </div>
+    <div class="row">
+        Aantal personen: @Model.Accounts.Count
+    </div>
+</div>
+<hr />
+<h4>Prijs</h4>
+<div class="container">
+    @foreach (Standplaats plaats in @Model.Staanplaatsen)
+    {
+        <div class="row">
+            <div class="col-md-2">Plek @plaats.Plaatsnummer</div>
+            <div class="col-md-2">€@plaats.Prijs</div>
+            <div class="col-md-2">x @Model.Dagen</div>
+        </div>
+    }
+    @foreach (Product product in @Model.Producten)
+    {
+        <div class="row">
+            <div class="col-md-2">@product.Serie</div>
+            <div class="col-md-2">€@product.Prijs</div>
+        </div>
+    }
+    <br/>
+    <div class="row">
+        <div class="col-md-2">Totaal:</div>
+        <div class="col-md-2">€@Model.TotaalPrijs</div>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <span class="pull-left"><a href="/reserveer/accounts" class="btn btn-primary" role="button">Vorige</a></span>
+    <span class="pull-right"><a href="/reserveer/submit" class="btn btn-success" role="button">Afronden</a></span>
+</div>

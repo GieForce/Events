@@ -2,6 +2,8 @@
     overflow: hidden;
 }
 
+
+
 .page-bg {
     background: url('/content/pictures/background3.jpg');
     background-size: cover;
@@ -16,6 +18,11 @@
     left: 0;
     z-index: -1;
 
+}
+
+.padding-0 {
+    padding-right: 0;
+    padding-left: 0;
 }
 
 #titel{

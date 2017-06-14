@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    console.log('jsfile loaded');
     $('#firstDd').change(function () {
         var value = $(this).val();
         if (value) {

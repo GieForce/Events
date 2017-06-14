@@ -1,0 +1,101 @@
+﻿@using System.Collections
+@using EventsApplication.Models
+@using EventsApplication.ViewModels
+@model EventsApplication.ViewModels.ProductVerhuurViewModel
+
+@{
+    ViewBag.Title = "Reserveer";
+}
+<h2>5. Materiaal</h2>
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6"></div>
+        <div class="col-sm-3 padding-0">
+            <select id="categorie" class="selectpicker" title="Catergorie">
+                <option value="" activated>Geen</option>
+                @foreach (var productCatViewModel in Model.ProductCats)
+                {
+                    <option value="@productCatViewModel.Id">@productCatViewModel.Naam</option>
+                }
+            </select>
+        </div>
+        <div class="col-sm-3 padding-0">
+            <div class="input-group" id="textsearch">
+                <input type="text" class="form-control" placeholder="Zoekterm..." id="searchterm">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+<div class="container" id="products">
+    
+</div>
+<hr/>
+<div class="container"></div>
+@foreach (Product product in (IEnumerable) ViewData["producten"])
+{
+    <div class="row">
+        <div class="col-md-8"></div>
+        <div class="col-md-2">@product.Serie</div>
+        <div class="col-md-2">€@product.Prijs</div>
+    </div>
+}
+<br/>   
+<div class="row">
+    <div class="col-md-8"></div>
+    <div class="col-md-2">Totaalprijs</div>
+    <div class="col-md-2">€@ViewData["totaalprijs"]</div>
+</div>
+<hr/>
+<div class="row">
+    <span class="pull-left"><a href="/reserveer/accounts" class="btn btn-primary" role="button">Vorige</a></span>
+    <span class="pull-right"><a href="/reserveer/finish" class="btn btn-primary" role="button">Volgende</a></span>
+</div>
+<script>
+    loadProducts();
+    function loadProducts() {
+        $('#products').empty();
+        var products = new Array();
+        @foreach (var productViewModel in Model.AllProducts)
+        {
+            <text>
+        var product = {
+                    merk: "@productViewModel.Merk",
+                    serie: "@productViewModel.Serie",
+                    prijs: @productViewModel.Prijs,
+                    cat: "@productViewModel.Categorie.Id",
+                    id: "@productViewModel.Id"
+                };
+
+                products.push(product);
+            </text>
+        }
+                console.log($('#searchterm').val());
+        console.log($('#categorie').val());
+        for (var i = 0; i < products.length; i++) {
+            console.log(products[i]);
+            if ((products[i].merk.toLowerCase().indexOf($('#searchterm').val().toLowerCase()) > -1 || products[i].serie.toLowerCase().indexOf($('#searchterm').val().toLowerCase()) > -1) && (products[i].cat.toLowerCase() === $('#categorie').val().toLowerCase()) || $('#categorie').val().toLowerCase() === "") {
+                var toappend = '<div class="col-md-4"><a href="/reserveer/add?productid=' + products[i].id + '">' + products[i].merk + ' ' + products[i].serie + '</a></div>';
+                $('#products').append(toappend);
+            }
+
+        }
+    }
+
+    console.log('loaded');
+    $('#searchterm').change(function() {
+        loadProducts();
+    });
+
+    $('#categorie').change(function () {
+        loadProducts();
+    });
+
+
+</script>
+
+

@@ -36,7 +36,7 @@ namespace EventsApplication.Controllers.Repositorys
             return context.Delete(id);
         }
 
-        public ProductExemplaar GetByProduct(int productid)
+        public List<ProductExemplaar> GetByProduct(int productid)
         {
             return context.GetByProduct(productid);
         }

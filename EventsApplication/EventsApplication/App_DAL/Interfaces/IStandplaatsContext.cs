@@ -21,5 +21,7 @@ namespace EventsApplication.App_DAL.Interfaces
         bool Update(int ID, int capaciteit, int nummer, decimal prijs);
 
         int getLatestEventID();
+
+        Standplaats GetById(int id);
     }
 }

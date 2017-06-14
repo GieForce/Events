@@ -50,5 +50,10 @@ namespace EventsApplication.Controllers.Repositorys
         {
             return istandplaatsContext.getLatestEventID();
         }
+
+        public Standplaats GetById(int id)
+        {
+            return istandplaatsContext.GetById(id);
+        }
     }
 }

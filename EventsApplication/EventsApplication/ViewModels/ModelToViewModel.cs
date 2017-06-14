@@ -28,7 +28,7 @@ namespace EventsApplication.ViewModels
             };
         }
 
-//Make a "Aanwezig account" view Model
+        //Make a "Aanwezig account" view Model
         public static AanwezigAccountViewModel ConvertBerichtToViewModel(Account account)
         {
             // convert an result to a viewmodel
@@ -53,5 +53,37 @@ namespace EventsApplication.ViewModels
             return berichtenViewModelList;
         }
 
+        public static ProductCatViewModel ConvertProductCatToViewModel(ProductCat cat, IEnumerable<Product> products)
+        {
+            return new ProductCatViewModel()
+            {
+                Id = cat.Id,
+                Naam = cat.Naam,
+                Products = ConvertProductToViewModelList(products)
+            };
+        }
+
+        public static ProductViewModel ConvertProductToViewModel(Product product)
+        {
+            return new ProductViewModel()
+            {
+                Id = product.Id,
+                Categorie = product.Categorie,
+                Merk = product.Merk,
+                Prijs = product.Prijs,
+                Serie = product.Serie,
+                Typenummer = product.Typenummer
+            };
+        }
+
+        public static List<ProductViewModel> ConvertProductToViewModelList(IEnumerable<Product> products)
+        {
+            List<ProductViewModel> rlist = new List<ProductViewModel>();
+            foreach (var product in products)
+            {
+                rlist.Add(ConvertProductToViewModel(product));
+            }
+            return rlist;
+        }
     }
 }

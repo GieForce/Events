@@ -17,7 +17,7 @@ namespace EventsApplication.App_DAL
             try
             {
                 string query =
-                    "SELECT DISTINCT a.ID, a.capaciteit, a.nummer, a.prijs, S.naam FROM PLEK a FULL OUTER JOIN PLEK_RESERVERING b on b.plek_id = a.ID LEFT JOIN RESERVERING c on c.ID = b.reservering_id LEFT JOIN PLEK_SPECIFICATIE PS on a.ID = PS.plek_id LEFT JOIN SPECIFICATIE S on PS.specificatie_id = S.ID WHERE a.locatie_id = @locatieid AND S.naam != 'coordinaat x' AND S.naam != 'coordinaat y' AND PS.waarde = 'ja' ORDER BY a.prijs; ";
+                    "SELECT * FROM (SELECT a.ID, a.capaciteit, a.nummer, a.prijs, S.naam, ROW_NUMBER() OVER (PARTITION BY a.id ORDER BY a.ID) AS RowNumber FROM PLEK a FULL OUTER JOIN PLEK_RESERVERING b on b.plek_id = a.ID LEFT JOIN RESERVERING c on c.ID = b.reservering_id LEFT JOIN PLEK_SPECIFICATIE PS on a.ID = PS.plek_id LEFT JOIN SPECIFICATIE S on PS.specificatie_id = S.ID  WHERE a.locatie_id = 1 AND S.naam != 'coordinaat x' AND S.naam != 'coordinaat y' AND PS.waarde = 'ja' AND (('06/12/2017' NOT BETWEEN c.datumStart AND c.datumEinde AND '06/14/2017' NOT BETWEEN c.datumStart AND c.datumEinde) OR (c.datumStart is null AND c.datumEinde is null))) AS a WHERE a.rownumber = 1";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@locatieid", locatie.Id);
                 cmd.Parameters.AddWithValue("@begindatum", startdatum);
@@ -26,11 +26,11 @@ namespace EventsApplication.App_DAL
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    int ID = Convert.ToInt32(reader["a.ID"].ToString());
-                    int capaciteit = Convert.ToInt32(reader["a.capaciteit"].ToString());
-                    int nummer = Convert.ToInt32(reader["a.nummer"].ToString());
-                    decimal prijs = Convert.ToDecimal(reader["a.prijs"].ToString());
-                    string specificatie = reader["S.naam"].ToString();
+                    int ID = Convert.ToInt32(reader["ID"]);
+                    int capaciteit = Convert.ToInt32(reader["capaciteit"]);
+                    int nummer = Convert.ToInt32(reader["nummer"]);
+                    decimal prijs = Convert.ToDecimal(reader["prijs"]);
+                    string specificatie = reader["naam"].ToString();
 
                     staanplaatsen.Add(new Standplaats(ID, nummer, capaciteit,prijs, specificatie));
                 }
@@ -179,6 +179,38 @@ namespace EventsApplication.App_DAL
                 Int32 locatieID = (int)cmd.ExecuteScalar();
                 return locatieID;
             }
+        }
+
+        public Standplaats GetById(int id)
+        {
+            Standplaats splts = null;
+            SqlConnection conn = Connection.SQLconnection;
+            try
+            {
+                string query =
+                    "SELECT P.ID, P.capaciteit, P.nummer, S.naam, P.prijs FROM PLEK P INNER JOIN PLEK_SPECIFICATIE PS ON P.ID = PS.plek_id INNER JOIN SPECIFICATIE S ON PS.specificatie_id = S.ID WHERE S.naam != 'coordinaat x' AND S.naam != 'coordinaat y' AND PS.waarde = 'ja' AND p.id = @id";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@id", id);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    int ID = Convert.ToInt32(reader["ID"].ToString());
+                    int capaciteit = Convert.ToInt32(reader["capaciteit"].ToString());
+                    int nummer = Convert.ToInt32(reader["nummer"].ToString());
+                    decimal prijs = Convert.ToDecimal(reader["prijs"].ToString());
+                    string specificatie = reader["naam"].ToString();
+
+                    splts = new Standplaats(ID, nummer, capaciteit, prijs, specificatie);
+                }
+                conn.Close();
+
+            }
+            catch
+            {
+
+            }
+            return splts;
         }
     }
 }

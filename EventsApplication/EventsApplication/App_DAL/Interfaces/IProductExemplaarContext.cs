@@ -17,6 +17,6 @@ namespace EventsApplication.App_DAL.Interfaces
 
         bool Delete(int id);
 
-        ProductExemplaar GetByProduct(int productId);
+        List<ProductExemplaar> GetByProduct(int productId);
     }
 }

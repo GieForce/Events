@@ -232,8 +232,6 @@ namespace EventsApplication.Controllers
                     }
 
                     }
-
-
                     return RedirectToAction("LocatieIndex");
                 }
                 ViewBag.Error = "Please Upload Files in .csv format";

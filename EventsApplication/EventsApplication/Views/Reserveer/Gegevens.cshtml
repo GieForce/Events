@@ -17,7 +17,7 @@
     <div class="row">
         <h4 class="pull-left">3. Gegevens</h4>
     </div>
-    @using (@Html.BeginForm())
+    @using (@Html.BeginForm("Gegevens", "Reserveer", FormMethod.Post))
     {
         <div class="row">
             <div class="col-md-3">
@@ -59,12 +59,38 @@
                 @Html.EditorFor(x => Model.Huisnummer, new { htmlAttributes = new { @class = "form-control textboks" } })
             </div>
         </div>
-        @Html.DisplayNameFor(x => Model.Woonplaats)
-        @Html.EditorFor(x => Model.Woonplaats, new { htmlAttributes = new { @class = "form-control textboks" } })
+
+        <div class="row">
+            <div class="col-md-3">
+                @Html.DisplayNameFor(x => Model.Woonplaats)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                @Html.EditorFor(x => Model.Woonplaats, new { htmlAttributes = new { @class = "form-control textboks" } })
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-3">
+                @Html.DisplayName("Aantal personen")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <select id="firstDd" class="selectpicker" title="personen" name="personen">
+                    @for (int i = 1; i <= (int)ViewData["maxpersonen"]; i++)
+                    {
+                        <option value="@i" activated>@i personen</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <hr />
+        <div class="row">
+            <span class="pull-left"><a href="/reserveer/plaats" class="btn btn-primary" role="button">Vorige</a></span>
+            <span class="pull-right"><input type="submit" name="submitbutton" value="Volgende" class="btn btn-primary" /></span>
+        </div>
     }
-    <hr/>
-    <div class="row">
-        <span class="pull-left"><a href="/reserveer/plaats" class="btn btn-primary" role="button">Vorige</a></span>
-        <span class="pull-right"><a href="/reserveer/accounts" class="btn btn-primary" role="button">Volgende</a></span>
-    </div>
 </div>

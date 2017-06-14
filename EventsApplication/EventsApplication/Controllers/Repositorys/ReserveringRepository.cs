@@ -35,5 +35,13 @@ namespace EventsApplication.Controllers.Repositorys
         {
             reserveringDao.Delete(reservering);
         }
+
+        public void PlaatsReservering(string voornaam, string tussenvoegsel, string achternaam, string straat,
+            int huisnr, string woonplaats, DateTime start, DateTime eind, int evenementid, List<int> plekids,
+            List<Account> accounts, List<Product> producten)
+        {
+            reserveringDao.PlaatsReservering(voornaam, tussenvoegsel, achternaam, straat, huisnr, woonplaats, start,
+                eind, evenementid, plekids, accounts, producten);
+        }
     }
 }

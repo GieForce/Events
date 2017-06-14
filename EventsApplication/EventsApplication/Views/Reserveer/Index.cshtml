@@ -3,11 +3,11 @@
 @model EventsApplication.ViewModels.ReserveringViewModel
 @{
     ViewBag.Title = "Reserveer";
-    Event evenement = (Event)Session["event"];
-    string start = evenement.Datumstart.ToString();
-    string eind = evenement.Datumeind.ToString();
+    string start = Model.Evenement.Datumstart.ToString();
+    string eind = Model.Evenement.Datumeind.ToString();
 }
 @Styles.Render("/content/home.css")
+@Scripts.Render("~/Scripts/Self/Reseerveer.js")
 <head>
     <link href="~/Content/DateTime/bootstrap-datepicker3.min.css" rel="stylesheet" />
 </head>
@@ -17,25 +17,27 @@
     <div class="row">
         <h4 class="pull-left">1. Datum</h4>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div id="datetime-container" class="container">
-                <div class="input-daterange input-group" id="datepicker">
-                    <input type="text" class="input-sm form-control" name="start"/>
-                    <span class="input-group-addon">tot</span>
-                    <input type="text" class="input-sm form-control" name="end"/>
+    @using (Html.BeginForm("Index", "Reserveer", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="col-md-6">
+                <div id="datetime-container" class="container">
+                    <div class="input-daterange input-group" id="datepicker">
+                        <input type="text" class="input-sm form-control" name="start"/>
+                        <span class="input-group-addon">tot</span>
+                        <input type="text" class="input-sm form-control" name="end"/>
+                    </div>
+                </div>
+                <div id="locatie-container" class="container">
+
                 </div>
             </div>
-            <div id="locatie-container" class="container">
-
-            </div>
         </div>
-    </div>
-    <hr/>
-    <div class="row">
-        <span class="pull-right"><a href="/reserveer/plaats" class="btn btn-primary" role="button">Volgende</a></span>
-    </div>
-
+        <hr/>
+        <div class="row">
+            <span class="pull-right"><input type="submit" name="submitbutton" value="Volgende" class="btn btn-primary" /></span>
+        </div>
+    }
 </div>
 
  

@@ -3,9 +3,6 @@
 @model EventsApplication.ViewModels.ReserveringViewModel
 @{
     ViewBag.Title = "Reserveer";
-    Event evenement = (Event)Session["event"];
-    string start = evenement.Datumstart.ToString();
-    string eind = evenement.Datumeind.ToString();
 }
 @Styles.Render("/content/home.css")
 <head>
@@ -14,30 +11,45 @@
 <h2>Reserveren</h2>
 <hr />  
 <div class="container">
-    <div class="row">
-        <h4 class="pull-left">2. Staanplaats</h4>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <select id="firstDb" class="selectpicker" title="Kenmerken">
-                <option value="" activated>Geen</option>
-                <option value="comfort">Comfortplek</option>
-                <option value="kraan">Kraan beschikbaar</option>
-                <option value="handicap">Handicap geschikt</option>
-            </select>
-
-            <select id="secondDb" multiple class="selectpicker" title="Plaatsen">
-                <option value="plek1" data-display-on="1,comfort">Plek 1</option>
-                <option value="plek2" data-display-on="1,kraan">Plek 2</option>
-                <option value="plek3" data-display-on="3,kraan">Plek 3</option>
-                <option value="plek4" data-display-on="2,comfort">Plek 4</option>
-            </select>
+    @using (Html.BeginForm("Plaats", "Reserveer", FormMethod.Post))
+    {
+        <div class="row">
+            <h4 class="pull-left">2. Staanplaats</h4>
         </div>
-    </div>
-    <hr/>
-    <div class="row">
-        <span class="pull-left"><a href="/reserveer" class="btn btn-primary" role="button">Vorige</a></span>
-        <span class="pull-right"><a href="/reserveer/gegevens" class="btn btn-primary" role="button">Volgende</a></span>
-    </div>
-</div>
+        <div class="row">
+            <div class="col-md-6">
+                <select id="firstDd" class="selectpicker" title="Kenmerken">
+                    <option value="" activated>Geen</option>
+                    <option value="comfort">Comfortplek</option>
+                    <option value="kraan">Kraan beschikbaar</option>
+                    <option value="handicap">Handicap geschikt</option>
+                </select>
 
+                <select id="secondDd" name="Plaatsen" multiple class="selectpicker" title="Plaatsen">
+                    @foreach (Standplaats plaats in ViewData["plaatsen"] as IEnumerable<Standplaats>)
+                    {
+                        string displayon = "";
+                        if (plaats.Comfortplek)
+                        {
+                            displayon = "comfort";
+                        }
+                        if (plaats.Handicapbeschikbaar)
+                        {
+                            displayon = "handicap";
+                        }
+                        if (plaats.Kraanbeschikbaar)
+                        {
+                            displayon = "kraan";
+                        }
+                        <option value="@plaats.Id" data-display-on="@displayon">Plek @plaats.Plaatsnummer | €@plaats.Prijs | @plaats.Capaciteit Pers</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <span class="pull-left"><a href="/reserveer" class="btn btn-primary" role="button">Vorige</a></span>
+            <span class="pull-right"><input type="submit" name="submitbutton" value="Volgende" class="btn btn-primary" /></span>
+        </div>
+    }
+</div>
