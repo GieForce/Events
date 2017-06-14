@@ -77,7 +77,7 @@ namespace EventsApplication.App_DAL
                     {
                         while (reader.Read())
                         {
-                            Bericht bericht = CreateBerichtFromReader(reader, connection);
+                            Bericht bericht = CreateBerichtFromReader(reader);
                             berichtenList.Add(bericht);
                         }
                     }
