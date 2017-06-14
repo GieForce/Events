@@ -175,7 +175,7 @@ namespace EventsApplication.Controllers
         //Koppel RFID
         public ActionResult KoppelRFID()
         {
-            if (Session["adminLogin"] != null || Session["adminLogin"].ToString() == "true")
+            if (Session["adminLogin"] != null && Session["adminLogin"].ToString() == "true")
             {
                 if (Session["account"] == null)
                 {
