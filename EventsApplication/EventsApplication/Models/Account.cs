@@ -131,7 +131,7 @@ namespace EventsApplication.Models
             this.wachtwoord = wachtwoord;
             this.telefoonnummer = telefoonnummer;
 
-            this.administrator = status;
+            this.status = status;
         }
 
         public Account(int id, string gebruikersnaam, string email, string activatiehash, bool geactiveerd, string wachtwoord, string telefoonnummer, string barcode, bool status)
@@ -153,7 +153,7 @@ namespace EventsApplication.Models
             this.telefoonnummer = telefoonnummer;
             this.barcode = barcode;
 
-            this.administrator = status;
+            this.status = status;
         }
 
         public Account(string gebruikersnaam, string email, string activatiehash, int geactiveerd, string wachtwoord, string telefoonnummer)
@@ -193,24 +193,13 @@ namespace EventsApplication.Models
             this.status = status;
         }
 
-        public Account(int id, string gebruikersnaam, string email, string activatiehash, bool geactiveerd, string wachtwoord, string telefoonnummer, bool status)
-        {
-            this.ID = id;
-            this.gebruikersnaam = gebruikersnaam;
-            this.email = email;
-            this.activatiehash = activatiehash;
-            this.geactiveerd = geactiveerd;
-            this.telefoonnummer = telefoonnummer;
-            this.status = status;
-        }
-
         public Account(int id, string gebruikersnaam, string telefoonnummer, bool aanwezig)
         {
             this.Id = id;
             this.gebruikersnaam = gebruikersnaam;
             this.telefoonnummer = telefoonnummer;
             this.aanwezig = aanwezig;
-            this.administrator = status;
+            this.status = status;
         }
     }
 }
