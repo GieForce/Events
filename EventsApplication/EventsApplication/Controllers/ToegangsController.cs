@@ -51,7 +51,7 @@ namespace EventsApplication.Controllers
         {
             if (Session["event"] != null)
             {
-                if (Session["LoginToegangssysteem"] == null || Session["LoginToegangssysteem"].ToString() != "true")
+                if (Session["LoginToegangssysteem"] != null || Session["LoginToegangssysteem"].ToString() == "true")
                 {
                     Event huidigEvent = (Event)Session["event"];
                     ModelToViewModel.EventToEventViewModel(huidigEvent);
