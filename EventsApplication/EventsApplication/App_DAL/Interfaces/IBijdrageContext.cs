@@ -14,10 +14,14 @@ namespace EventsApplication.App_DAL
         bool Insert(Bericht bijdrage);
 
         bool InsertMediaBericht(int categorieId, string bestandlocatie, int accountid);
+        bool InsertLike(AccountBijdrage accountBijdrage);
+
+        bool DeletePost(int id);
         //bool Delete(int id);
         List<Bijdrage> GetAllBijdrages();
 
         List<Bijdrage> GetAllBijdragesByUserId(int userid);
         List<Bericht> LoadBerichtenByPostId(int id);
+    
     }
 }

@@ -56,5 +56,15 @@ namespace EventsApplication.Controllers
         {
             return context.InsertMediaBericht(categorieId, bestandlocatie, accountid);
         }
+
+        public bool InsertLike(AccountBijdrage accountBijdrage)
+        {
+            return context.InsertLike(accountBijdrage);
+        }
+
+        public bool DeletePost(int id)
+        {
+            return context.DeletePost(id);
+        }
     }
 }

@@ -113,6 +113,35 @@ namespace EventsApplication.App_DAL
             return bijdrageList;
         }
 
+        public bool InsertLike(AccountBijdrage accountBijdrage)
+        {
+
+            try
+            {
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query = "insertLike";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@accountID", accountBijdrage.AccountID);
+                        command.Parameters.AddWithValue("@bijdrageID", accountBijdrage.BijdrageID);
+                        command.Parameters.AddWithValue("@like", accountBijdrage.Like);
+                        command.Parameters.AddWithValue("@ongewenst", accountBijdrage.Ongenwenst);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public bool Insert(Bericht bericht)
         {
             try
@@ -252,6 +281,30 @@ namespace EventsApplication.App_DAL
             {
                 return null;
             }
+        }
+
+        public bool DeletePost(int id)
+        {
+            try
+            {
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query = "deletePost";
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    command.CommandType = CommandType.StoredProcedure;
+
+
+                    command.Parameters.AddWithValue("@id", id);
+                 
+                    command.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+         }
         }
 
         private Bericht CreateBerichtFromReader(SqlDataReader reader)
