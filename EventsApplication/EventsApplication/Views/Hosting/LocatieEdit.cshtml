@@ -1,48 +1,21 @@
 ﻿@model EventsApplication.Models.Locatie
-@using System.Data;
-
-  
 
 @{
-    ViewBag.Title = "LocatieCreate";
+    ViewBag.Title = "LocatieEdit";
 }
 
-<h2>LocatieCreate</h2>
+<h2>LocatieEdit</h2>
 
-<style type="text/css">
-
-
-
-  /* Generic Styling, for Desktops/Laptops */
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-/* Zebra striping */
-tr:nth-of-type(odd) {
-  background: #eee;
-}
-th {
-  background: #333;
-  color: white;
-  font-weight: bold;
-}
-td, th {
-  padding: 6px;
-  border: 1px solid #ccc;
-  text-align: left;
-}
-</style>
-
-@using (Html.BeginForm("LocatieCreate", "Hosting", FormMethod.Post, new { enctype = "multipart/form-data" }))
-
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
+    
     <div class="form-horizontal">
         <h4>Locatie</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
         <div class="form-group">
             @Html.LabelFor(model => model.Naam, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -84,93 +57,13 @@ td, th {
             </div>
         </div>
 
-    
-
-    <table>
-        <tr><td>Excel file</td><td><input type="file" id="FileUpload1" name="FileUpload1" /></td></tr>
-        <tr><td></td><td><input type="submit" id="Submit" name="Submit" value="Submit" /></td></tr>
-    </table>
-
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
         </div>
+    </div>
 }
-
-
-
-
-<div>
-    <table id="">
-
-        @if (ViewBag.Data != null)
-        {
-            <thead>
-
-                @foreach (DataColumn column in (ViewBag.Data as System.Data.DataTable).Columns)
-                {
-                <th>@column.ColumnName.ToUpper()</th>
-
-
-                }
-                </thead>
-            if ((ViewBag.Data as System.Data.DataTable).Rows.Count > 0)
-            {
-                foreach (DataRow dr in (ViewBag.Data as System.Data.DataTable).Rows)
-                {
-
-                    <tr>
-
-                        @foreach (DataColumn column in (ViewBag.Data as System.Data.DataTable).Columns)
-                        {
-                            <td data-title='@column.ColumnName'>
-
-                                @dr[column].ToString()
-                            </td>
-                        }
-
-
-
-
-                    </tr>
-
-                }
-
-            }
-            else
-            {
-                int count = (ViewBag.Data as System.Data.DataTable).Columns.Count;
-                <tr>
-
-                    <td colspan='@count' style="color:red;">
-
-                        No Data Found.
-                    </td>
-
-
-
-                </tr>
-
-            }
-
-        }
-        else
-        {
-            if (ViewBag.Error != null)
-            {
-                <tr>
-                    <td style="color:red;">
-
-                        @(ViewBag.Error != null ? ViewBag.Error.ToString() : "")
-                    </td>
-
-
-
-                </tr>
-            }
-        }
-    </table>
-</div>
-
-
-
 
 <div>
     @Html.ActionLink("Back to List", "Index")

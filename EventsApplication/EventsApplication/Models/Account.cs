@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -15,6 +16,7 @@ namespace EventsApplication.Models
         private string wachtwoord;
         private string telefoonnummer;
         private bool aanwezig;
+        private bool status;
         private string barcode;
         private bool administrator;
 
@@ -24,12 +26,23 @@ namespace EventsApplication.Models
             set { ID = value; }
         }
 
+        public bool Status
+        {
+            get { return status; }
+            set { status = value; }
+        }
+        [RegularExpression(@"^.{5,}$", ErrorMessage = "Minimum 1 character required")]
+        [Required(ErrorMessage = "Dit veld mag niet leeg zijn")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "Dit veld mag niet leeg zijn")]
         public string Gebruikersnaam
         {
             get { return gebruikersnaam; }
             set { gebruikersnaam = value; }
         }
 
+        [Display(Name = "Email address")]
+        [Required(ErrorMessage = "The email address is required")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email
         {
             get { return email; }
@@ -47,13 +60,17 @@ namespace EventsApplication.Models
             get { return geactiveerd; }
             set { geactiveerd = value; }
         }
-        
+        [RegularExpression(@"^.{5,}$", ErrorMessage = "Minimum 1 character required")]
+        [Required(ErrorMessage = "Dit veld mag niet leeg zijn")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "Dit veld mag niet leeg zijn")]
         public string Wachtwoord
         {
             get { return wachtwoord; }
             set { wachtwoord = value; }
         }
-
+        [RegularExpression(@"^.{5,}$", ErrorMessage = "Minimum 1 character required")]
+        [Required(ErrorMessage = "Dit veld mag niet leeg zijn")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "Dit veld mag niet leeg zijn")]
         public string Telefoonnummer
         {
             get { return telefoonnummer; }
@@ -157,7 +174,37 @@ namespace EventsApplication.Models
             this.telefoonnummer = telefoonnummer;
         }
 
-        public Account(int id, string gebruikersnaam, string telefoonnummer, bool aanwezig, bool status)
+        public Account(string gebruikersnaam, string email, string activatiehash, int geactiveerd, string wachtwoord, string telefoonnummer, bool status)
+        {
+            this.gebruikersnaam = gebruikersnaam;
+            this.email = email;
+            this.activatiehash = activatiehash;
+
+            if (geactiveerd == 1)
+            {
+                this.geactiveerd = true;
+            }
+            else if (geactiveerd == 0)
+            {
+                this.geactiveerd = false;
+            }
+            this.wachtwoord = wachtwoord;
+            this.telefoonnummer = telefoonnummer;
+            this.status = status;
+        }
+
+        public Account(int id, string gebruikersnaam, string email, string activatiehash, bool geactiveerd, string wachtwoord, string telefoonnummer, bool status)
+        {
+            this.ID = id;
+            this.gebruikersnaam = gebruikersnaam;
+            this.email = email;
+            this.activatiehash = activatiehash;
+            this.geactiveerd = geactiveerd;
+            this.telefoonnummer = telefoonnummer;
+            this.status = status;
+        }
+
+        public Account(int id, string gebruikersnaam, string telefoonnummer, bool aanwezig)
         {
             this.Id = id;
             this.gebruikersnaam = gebruikersnaam;

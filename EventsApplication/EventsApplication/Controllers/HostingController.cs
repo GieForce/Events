@@ -9,6 +9,7 @@ using EventsApplication.Controllers.Repositorys;
 using EventsApplication.App_DAL;
 using EventsApplication.Models;
 using System.IO;
+using EventsApplication.App_DAL.Interfaces;
 
 namespace EventsApplication.Controllers
 {
@@ -21,6 +22,7 @@ namespace EventsApplication.Controllers
         ProductRepository productrepo = new ProductRepository(new ProductContext());
         ProductCatRepository productcatrepo = new ProductCatRepository(new ProductCatContext());
         ProductExemplaarRepository productexemplaarrepo = new ProductExemplaarRepository(new ProductExemplaarContext());
+        PolsbandjeRepository polsbandjerepo = new PolsbandjeRepository(new PolsbandjeContext());
         
 
         // GET: Hosting
@@ -31,21 +33,31 @@ namespace EventsApplication.Controllers
 
         public ActionResult EventIndex()
         {
-            List<Event> events = eventrepo.GetAllEvents();
-            return View(events);
+            try {
+                List<Event> events = eventrepo.GetAllEvents();
+                return View(events);
+            }
+            catch { return View("Error"); }
         }
 
         public ActionResult ProductIndex()
         {
-            List<Product> products = productrepo.GetAll();
-            List<ProductCat> productcats = new List<ProductCat>();
-            foreach (Product product in products)
-            {
-                ProductCat productcat = productcatrepo.GetByProduct(product);
-                productcats.Add(productcat);
+            try {
+                List<Product> products = productrepo.GetAll();
+                List<ProductCat> productcats = new List<ProductCat>();
+                foreach (Product product in products)
+                {
+                    ProductCat productcat = productcatrepo.GetByProduct(product);
+                    productcats.Add(productcat);
+                }
+                ViewBag.productcategorie = productcats;
+                return View(products);
             }
-            ViewBag.productcategorie = productcats;
-            return View(products);
+            catch(Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+             return View("Error");
+            }
         }
 
         public ActionResult ProductCreate()
@@ -53,24 +65,60 @@ namespace EventsApplication.Controllers
             return View();
         }
 
+
         public ActionResult AccountIndex()
         {
-            List<Account> accounts = accountrepo.GetAllAccounts();
-            return View(accounts);
+            try {
+                List<Account> accounts = accountrepo.GetAllAccounts();
+                return View(accounts);
+            }
+            catch (Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+                return View("Error");
+            }
         }
 
         public ActionResult LocatieIndex()
         {
-            List<Locatie> locaties = locatierepo.GetAll();
-            return View(locaties);
+            try {
+                List<Locatie> locaties = locatierepo.GetAll();
+                return View(locaties);
+            }
+            catch (Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+                return View("Error");
+            }
         }
 
         
         public ActionResult EventDetails(int id)
         {
-            Event evento = eventrepo.GetById(id);
-            Session["activeevent"] = evento;
-            return View(evento);
+            try {
+                Event evento = eventrepo.GetById(id);
+                Session["activeevent"] = evento;
+                return View(evento);
+            }
+            catch (Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+                return View("Error");
+            }
+        }
+
+        public ActionResult ProductDetails(int id)
+        {
+            try
+            {
+                Product product = productrepo.getproductbyid(id);
+                return View(product);
+            }
+            catch (Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+                return View("Error");
+            }
         }
 
 
@@ -81,7 +129,23 @@ namespace EventsApplication.Controllers
 
         public ActionResult EventCreate()
         {
-            return View();
+            try {
+                List<Locatie> locaties = locatierepo.GetAll();
+                List<SelectListItem> locatieitems = new List<SelectListItem>();
+
+                foreach (Locatie locatie in locaties)
+                {
+                    locatieitems.Add(new SelectListItem { Text = locatie.Naam, Value = Convert.ToString(locatie.Id) });
+                }
+
+                ViewBag.Locatieding = locatieitems;
+                return View();
+            }
+            catch (Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+                return View("Error");
+            }
         }
 
         public ActionResult StandplaatsCreate()
@@ -101,12 +165,65 @@ namespace EventsApplication.Controllers
             {
 
                 // TODO: Add insert logic here
-                Account account = new Account(collection["Gebruikersnaam"], collection["Email"], Convert.ToString(accountrepo.newactivationhash()), 0, collection["Wachtwoord"], collection["Telefoonnummer"]);
-                accountrepo.Insert(account);
+                Account account = new Account(collection["Gebruikersnaam"], collection["Email"], Convert.ToString(accountrepo.newactivationhash()), 0, collection["Wachtwoord"], collection["Telefoonnummer"], true);
+                accountrepo.insertadmin(account);
                 return RedirectToAction("AccountIndex");
+            }
+            catch (Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+                return View("Error");
+            }
+        }
+
+
+        [HttpPost]
+        public ActionResult EventCreate(FormCollection collection)
+        {
+            try
+            {
+                int maxbezoekers = Convert.ToInt32(collection["Maxbezoekers"]);
+                DateTime start = Convert.ToDateTime(collection["Datumstart"]);
+                DateTime eind = Convert.ToDateTime(collection["Datumeind"]);
+                if (maxbezoekers != 0 && start < eind)
+                {
+                    Locatie locatie = locatierepo.getbyid(Convert.ToInt32(collection["Locatieding"]));
+                    Event evento = new Event(collection["Naam"], start, eind, maxbezoekers, locatie);
+                    eventrepo.Insert(evento);
+                    for (int i = 0; i < maxbezoekers; i++)
+                    {
+                        polsbandjerepo.Insertpolsbandje(new Polsbandje(evento.Naam + Convert.ToString(i), 0));
+
+                    }
+                }
+
+                else
+                {
+                    List<Locatie> locaties = locatierepo.GetAll();
+                    List<SelectListItem> locatieitems = new List<SelectListItem>();
+
+                    foreach (Locatie locatie in locaties)
+                    {
+                        locatieitems.Add(new SelectListItem { Text = locatie.Naam, Value = Convert.ToString(locatie.Id) });
+                    }
+
+                    ViewBag.Locatieding = locatieitems;
+                    return View();
+                }
+                
+                return RedirectToAction("EventIndex");
             }
             catch
             {
+                List<Locatie> locaties = locatierepo.GetAll();
+                List<SelectListItem> locatieitems = new List<SelectListItem>();
+
+                foreach (Locatie locatie in locaties)
+                {
+                    locatieitems.Add(new SelectListItem { Text = locatie.Naam, Value = Convert.ToString(locatie.Id) });
+                }
+
+                ViewBag.Locatieding = locatieitems;
                 return View();
             }
         }
@@ -237,33 +354,19 @@ namespace EventsApplication.Controllers
                 ViewBag.Error = "Please Upload Files in .csv format";
                 return View();
             }
-            catch
+            catch (Exception e)
             {
-               return View();
+                ViewBag.Fout = e.ToString();
+                return View("Error");
             }
         }
 
-        //  [HttpPost]
-        //  public ActionResult EventCreate(FormCollection collection)
-        // {
-        //    try
-        //    {
-
-        // TODO: Add insert logic here
-        //        Event evento = new Event(collection["Gebruikersnaam"], collection["Email"], Convert.ToString(accountrepo.newactivationhash()), false);
-        //        accountrepo.Insert(evento);
-        //        return RedirectToAction("AccountIndex");
-        //     }
-        //     catch
-        //     {
-        //         return View();
-        //      }
-        //  }
 
         // GET: Account/Edit/5
         public ActionResult AccountEdit(int id)
         {
             Account account = accountrepo.GetById(id);
+            Session["accountid"] = id;
             return View(account);
         }
 
@@ -274,14 +377,105 @@ namespace EventsApplication.Controllers
             try
             {
                 // TODO: Add update logic here
-                Account accounto = new Account(Convert.ToInt32(collection["Id"]),collection["GebruikersNaam"], collection["Email"], collection["Activatiehash"], true, collection["Wachtwoord"], collection["Telefoonnummer"]);
+                Account accounto = new Account(Convert.ToInt32(Session["accountid"]),collection["Gebruikersnaam"], collection["Email"], Convert.ToString(accountrepo.newactivationhash()), true, collection["Wachtwoord"], collection["Telefoonnummer"]);
                 accountrepo.Update(accounto);
                 return RedirectToAction("AccountIndex");
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                ViewBag.Fout = e.ToString();
+                return View("Error");
             }
         }
+
+        public ActionResult EventEdit(int id)
+        {
+            Event evento = eventrepo.GetById(id);
+            Session["eventid"] = id;
+            return View(evento);
+        }
+
+        // POST: Account/Edit/5
+        [HttpPost]
+        public ActionResult EventEdit(FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add update logic here
+                Account accounto = new Account(Convert.ToInt32(Session["eventid"]), collection["Gebruikersnaam"], collection["Email"], Convert.ToString(accountrepo.newactivationhash()), true, collection["Wachtwoord"], collection["Telefoonnummer"]);
+                accountrepo.Update(accounto);
+                return RedirectToAction("AccountIndex");
+            }
+            catch (Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+                return View("Error");
+            }
+        }
+
+        public ActionResult LocatieEdit(int id)
+        {
+            Locatie locatie = locatierepo.getbyid(id);
+            Session["locatie"] = locatie;
+            return View(locatie);
+        }
+
+        // POST: Account/Edit/5
+        [HttpPost]
+        public ActionResult LocatieEdit(FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add update logic here
+                Locatie locatie = new Locatie(collection["Naam"], collection["Straat"], Convert.ToInt32(collection["Nr"]), collection["Postcode"], collection["Plaats"]);
+                locatierepo.Update(locatie);
+                return RedirectToAction("LocatieIndex");
+            }
+            catch (Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+                return View("Error");
+            }
+        }
+
+        public ActionResult EventDelete(int id)
+        {
+            try {
+                eventrepo.Delete(id);
+                return RedirectToAction("EventIndex");
+            }
+            catch (Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+                return View("Error");
+            }
+        }
+
+        public ActionResult LocatieDelete(int id)
+        {
+            try {
+                locatierepo.Delete(locatierepo.getbyid(id));
+                return RedirectToAction("LocatieIndex");
+            }
+            catch (Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+                return View("Error");
+            }
+        }
+
+        public ActionResult AccountDelete(int id)
+        {
+            try {
+                accountrepo.Delete(id);
+                return RedirectToAction("AccountIndex");
+            }
+            catch (Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+                return View("Error");
+            }
+        }
+
     }
 }

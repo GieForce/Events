@@ -45,5 +45,9 @@ namespace EventsApplication
             return context.getlatestproduct();
         }
 
+        public Product getproductbyid(int id)
+        {
+            return context.GetProductByID(id);
+        }
     }
 }

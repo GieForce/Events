@@ -83,6 +83,34 @@ namespace EventsApplication.App_DAL
             }
         }
 
+        public bool InsertAdmin(Account account)
+        {
+            try
+            {
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query =
+                        "INSERT INTO Account (gebruikersnaam, email, activatiehash, geactiveerd, wachtwoord, telefoonnummer, status) VALUES (@gebruikersnaam, @email, @activatiehash, @geactiveerd, @wachtwoord, @telefoonnummer, @status)";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@gebruikersnaam", account.Gebruikersnaam);
+                        command.Parameters.AddWithValue("@email", account.Email);
+                        command.Parameters.AddWithValue("@activatiehash", account.Activatiehash);
+                        command.Parameters.AddWithValue("@geactiveerd", account.Geactiveerd);
+                        command.Parameters.AddWithValue("@wachtwoord", account.Wachtwoord);
+                        command.Parameters.AddWithValue("@telefoonnummer", account.Telefoonnummer);
+                        command.Parameters.AddWithValue("@status", account.Status);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// Delete an account from the database
         /// </summary>

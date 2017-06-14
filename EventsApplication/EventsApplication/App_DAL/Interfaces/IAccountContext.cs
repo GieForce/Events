@@ -29,6 +29,8 @@ namespace EventsApplication.App_DAL
 
         bool Update(Account account);
 
+        bool InsertAdmin(Account account);
+
         void Activeer(string hash);
     }
 }

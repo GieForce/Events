@@ -373,7 +373,6 @@
     <Content Include="Views\Reservering\Index.cshtml" />
     <Content Include="Views\Hosting\AccountIndex.cshtml" />
     <Content Include="Views\Hosting\AccountCreate.cshtml" />
-    <Content Include="Views\Hosting\EventIndex.cshtml" />
     <Content Include="Views\Hosting\AccountEdit.cshtml" />
     <Content Include="Views\Bijdrage\Create.cshtml" />
     <Content Include="Views\Reserveer\Index.cshtml" />
@@ -408,6 +407,12 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Toegangs\Login.cshtml" />
     <Content Include="Views\Toegangs\KoppelRFID.cshtml" />
+    <Content Include="Views\Hosting\EventCreate.cshtml" />
+    <Content Include="Views\Account\AdminLogin.cshtml" />
+    <Content Include="Views\Hosting\EventEdit.cshtml" />
+    <Content Include="Views\Hosting\EventIndex.cshtml" />
+    <Content Include="Views\Hosting\LocatieEdit.cshtml" />
+    <Content Include="Views\Hosting\ProductDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

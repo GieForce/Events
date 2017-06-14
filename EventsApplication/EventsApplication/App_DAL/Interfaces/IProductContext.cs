@@ -20,5 +20,7 @@ namespace EventsApplication
         void Insert(Product product);
 
         Product getlatestproduct();
+
+        Product GetProductByID(int id);
     }
 }

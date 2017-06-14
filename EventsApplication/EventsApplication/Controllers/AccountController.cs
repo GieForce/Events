@@ -103,6 +103,28 @@ namespace EventsApplication.Controllers
             return View();  
         }
 
+        public ActionResult AdminLogin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AdminLogin(string gebruikersnaam, string wachtwoord)
+        {
+            AccountRepository db = new AccountRepository(new AccountContext());
+
+            Account userLoggedIn = db.Login(wachtwoord, gebruikersnaam);
+
+            if (userLoggedIn != null && userLoggedIn.Status == true)
+            {
+                return RedirectToAction("HostingHome", "Hosting");
+            }
+            else
+            {
+                return View("Error");
+            }
+        }
+
         [HttpPost]
         public ActionResult Login(string gebruikersnaam, string wachtwoord)
         {

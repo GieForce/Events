@@ -7,13 +7,10 @@
 <h2>EventIndex</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "EventCreate")
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ID1)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.Naam)
         </th>
@@ -26,17 +23,11 @@
         <th>
             @Html.DisplayNameFor(model => model.Maxbezoekers)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Locatieid)
-        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ID1)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Naam)
         </td>
@@ -50,12 +41,8 @@
             @Html.DisplayFor(modelItem => item.Maxbezoekers)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Locatieid)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
             @Html.ActionLink("Details", "EventDetails", new { id = item.ID1 }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Delete", "EventDelete", new { id = item.ID1 })
         </td>
     </tr>
 }

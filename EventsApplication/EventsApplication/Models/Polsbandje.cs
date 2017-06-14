@@ -84,5 +84,11 @@ namespace EventsApplication.Models
             this.aanwezig = false;
         }
 
+        public Polsbandje(string barcode, int actief)
+        {
+            this.barcode = barcode;
+            this.actief = actief;
+        }
+
     }
 }

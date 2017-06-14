@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using EventsApplication.App_DAL;
+using System.ComponentModel.DataAnnotations;
 
 namespace EventsApplication.Models
 {
@@ -15,10 +16,20 @@ namespace EventsApplication.Models
         private int typenummer;
         private decimal prijs;
 
+
         public int Id => id;
         public ProductCat Categorie => categorie;
+        [RegularExpression(@"^.{5,}$", ErrorMessage = "Minimum 1 character required")]
+        [Required(ErrorMessage = "Dit veld mag niet leeg zijn")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "Dit veld mag niet leeg zijn")]
         public string Merk => merk;
+        [RegularExpression(@"^.{5,}$", ErrorMessage = "Minimum 1 character required")]
+        [Required(ErrorMessage = "Dit veld mag niet leeg zijn")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "Dit veld mag niet leeg zijn")]
         public string Serie => serie;
+        [RegularExpression(@"^.{5,}$", ErrorMessage = "Minimum 1 character required")]
+        [Required(ErrorMessage = "Dit veld mag niet leeg zijn")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "Dit veld mag niet leeg zijn")]
         public int Typenummer => typenummer;
         public decimal Prijs => prijs;
 

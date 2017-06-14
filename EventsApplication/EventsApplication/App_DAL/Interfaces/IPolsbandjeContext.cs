@@ -13,5 +13,6 @@ namespace EventsApplication.App_DAL.Interfaces
         void Insert(Polsbandje polsbandje, Reservering reservering, Account account);
         void ConnectAccountWithRFID(string RFID, Polsbandje polsbandje, Account account);
         void Delete(Polsbandje polsbandje);
+        void Insertpolsbandje(Polsbandje polsbandje);
     }
 }

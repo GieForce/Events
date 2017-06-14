@@ -179,6 +179,38 @@ namespace EventsApplication.App_DAL
             }
         }
 
+        public Product GetProductByID(int id)
+        {
+            Product products = null;
+            try
+            {
+
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query = "SELECT * FROM PRODUCT WHERE ID = @id";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("id", id);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                 products = ProductFromReader(reader);
+
+                            }
+
+                        }
+                    }
+                }
+                return products;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         private Product ProductFromReader(SqlDataReader reader)
         {
             return new Product(
