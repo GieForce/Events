@@ -66,5 +66,15 @@ namespace EventsApplication.Controllers
         {
             return context.getLatestBijdrageID();
         }
+
+        public List<Bijdrage> GetallreportedBijdrages()
+        {
+            return context.GetAllReportedBijdrages();
+        }
+
+        public bool Delete(int id)
+        {
+            return context.Delete(id);
+        }
     }
 }

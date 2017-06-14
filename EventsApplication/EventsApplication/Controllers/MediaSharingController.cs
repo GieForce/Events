@@ -111,6 +111,32 @@ namespace EventsApplication.Controllers
             
         }
 
+        public ActionResult Adminpanel()
+        {
+            try
+            {
+                BijdrageRepository bijdragerepo = new BijdrageRepository(new BijdrageContext());
+
+                List<Bijdrage> bijdrages = bijdragerepo.GetallreportedBijdrages();
+
+                return PartialView("Adminpanel");
+            }
+            catch (Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+                return View("Error");
+            }
+        }
+
+        public ActionResult Admindelete(int id)
+        {
+            BijdrageRepository bijdragerepo = new BijdrageRepository(new BijdrageContext());
+
+            bijdragerepo.Delete(id);
+
+            return PartialView("Adminpanel");
+        }
+
         public ActionResult CreateNewMediaBericht()
         {
             List<Categorie> categorieList = categorieRepository.CategorieList();

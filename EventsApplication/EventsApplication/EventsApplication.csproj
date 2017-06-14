@@ -384,6 +384,7 @@
     <Content Include="Views\MediaSharing\NoComments.cshtml" />
     <Content Include="Views\MediaSharing\CreateBericht.cshtml" />
     <Content Include="Views\MediaSharing\CreateMediaBericht.cshtml" />
+    <Content Include="Views\MediaSharing\Adminpanel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -329,6 +329,30 @@ namespace EventsApplication.App_DAL
             }
         }
 
+        public List<Bijdrage> GetAllReportedBijdrages()
+        {
+            List<Bijdrage> bijdrageList = new List<Bijdrage>();
+
+            using (SqlConnection connection = Connection.SQLconnection)
+            {
+                string query = "SELECT * FROM BIJDRAGE B LEFT JOIN ACCOUNT_BIJDRAGE ab ON ab.bijdrage_id = B.ID WHERE ongewenst >= 1";
+
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Bijdrage bijdrage = CreateBijdrageFromReader(reader, connection);
+                            bijdrageList.Add(bijdrage);
+                        }
+                    }
+                }
+            }
+            return bijdrageList;
+        }
+
         private Bijdrage CreateBijdrageFromReader(SqlDataReader reader, SqlConnection connection)
         {
             AccountRepository accountRepository = new AccountRepository(new AccountContext());
@@ -453,6 +477,8 @@ namespace EventsApplication.App_DAL
             }
         }
 
+
+
         private Bericht CreateBerichtFromReader(SqlDataReader reader, SqlConnection connection)
         {
             AccountRepository accountRepository = new AccountRepository(new AccountContext());
@@ -478,6 +504,28 @@ namespace EventsApplication.App_DAL
                     Convert.ToInt32(reader["abbijdrageid"]),
                     Convert.ToInt32(reader["like"]),
                     Convert.ToInt32("ongewenst"));
+        }
+
+        public bool Delete(int id)
+        {
+            try
+            {
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query =
+                        "DELETE FROM BIJDRAGE WHERE ID = @id";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", id);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
 
