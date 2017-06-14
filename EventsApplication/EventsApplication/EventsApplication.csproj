@@ -222,8 +222,6 @@
     <Compile Include="Controllers\BerichtController.cs" />
     <Compile Include="Controllers\Repositorys\BerichtRepository.cs" />
     <Compile Include="Models\Categorie.cs" />
-    <Compile Include="ViewModels\AanwezigAccountViewModel.cs" />
-    <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\ModelToViewModel.cs" />

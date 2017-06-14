@@ -70,7 +70,7 @@ namespace EventsApplication.App_DAL
             return result;
         }
 
-        public ProductExemplaar GetByProduct(int productId)
+        public List<ProductExemplaar> GetByProduct(int productId)
         {        
             List<ProductExemplaar> rlist = new List<ProductExemplaar>();
                 using (SqlConnection connection = Connection.SQLconnection)
