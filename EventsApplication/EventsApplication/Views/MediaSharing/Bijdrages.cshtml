@@ -74,13 +74,15 @@
                 <div class="post-description">
                     <div class="col-md-12">
                         <div class="thumbnail">
+                            
                             @{ string filelocation = "~/Content/Images/" + item.Bestandlocatie + ".jpg";}
-                            <img src="@Url.Content(filelocation)" />
+                            <img src="@Url.Content(filelocation)"/>
                         </div>
                     </div>
                     <div class="stats">
                         <a href="#" class="btn btn-default stat-item">
-                            <i class="fa fa-thumbs-up icon"></i>@item.AccountBijdrage.Count
+                            @{ int likes = item.AccountBijdrage.Count(x => x.Like == 1); }
+                            <i class="fa fa-thumbs-up icon"></i>@likes
                         </a>
                         <a href="#" class="btn btn-default stat-item">
                             <i class="fa fa-tag icon"></i>
@@ -89,6 +91,10 @@
                                 @categorie.Naam
                             }
 
+                        </a>
+                        
+                        <a href="#" class="btn btn-default stat-item">
+                            <i class="fa fa-ban icon"></i>Rapporteren
                         </a>
                     </div>
                 </div>
