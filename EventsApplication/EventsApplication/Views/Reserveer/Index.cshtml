@@ -1,52 +1,41 @@
 ﻿@using System.Collections
 @using EventsApplication.Models
+@model EventsApplication.ViewModels.ReserveringViewModel
 @{
     ViewBag.Title = "Reserveer";
     Event evenement = (Event)Session["event"];
     string start = evenement.Datumstart.ToString();
     string eind = evenement.Datumeind.ToString();
 }
+@Styles.Render("/content/home.css")
 <head>
-
     <link href="~/Content/DateTime/bootstrap-datepicker3.min.css" rel="stylesheet" />
 </head>
-
 <h2>Reserveren</h2>
-<hr />
-
+<hr />  
 <div class="container">
-    <div class="col-md-6">
-        <div id="datetime-container" class="container">
-            <h4>1. Datum</h4>
-            <div class="input-daterange input-group" id="datepicker">
-                <input type="text" class="input-sm form-control" name="start"/>
-                <span class="input-group-addon">tot</span>
-                <input type="text" class="input-sm form-control" name="end"/>
+    <div class="row">
+        <h4 class="pull-left">1. Datum</h4>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="datetime-container" class="container">
+                <div class="input-daterange input-group" id="datepicker">
+                    <input type="text" class="input-sm form-control" name="start"/>
+                    <span class="input-group-addon">tot</span>
+                    <input type="text" class="input-sm form-control" name="end"/>
+                </div>
+            </div>
+            <div id="locatie-container" class="container">
+
             </div>
         </div>
-        <div id="locatie-container" class="container">
-            
-        </div>
     </div>
-    <div class="col-md-6">
-        <h4>2. Staanplaats</h4>
-        <select id="firstDd" multiple class="selectpicker" title="Kenmerken">
-            <option value="comfort">Comfortplek</option>
-            <option value="kraan">Kraan beschikbaar</option>
-            <option value="handicap">Handicap geschikt</option>
-        </select >
+    <hr/>
+    <div class="row">
+        <span class="pull-right"><a href="/reserveer/plaats" class="btn btn-primary" role="button">Volgende</a></span>
+    </div>
 
-        <select id="secondDd" multiple class="selectpicker" title="Plaatsen">>
-            <option value="plek1" data-display-on="comfort,kraan">Plek 1</option>
-            <option value="plek2" data-display-on="kraan">Plek 2</option>
-            <option value="plek3" data-display-on="kraan">Plek 3</option>
-            <option value="plek4" data-display-on="comfort">Plek 4</option>
-            @foreach (Standplaats s in (List<Standplaats>)ViewData["standplaatsen"])
-            {
-                <option value="s." data-display-on="comfort">Plek 4</option>
-            }
-        </select >
-    </div>
 </div>
 
  
@@ -65,7 +54,4 @@
         startDate: jstart,
         endDate: jeind
     });
-
-
-
 </script>

@@ -18,6 +18,10 @@ namespace EventsApplication.Controllers
         EventRepository eventrepo = new EventRepository(new EventContext());
         LocatieRepository locatierepo = new LocatieRepository(new LocatieContext());
         StandplaatsRepository standplaatsrepo = new StandplaatsRepository(new StandplaatsContext());
+        ProductRepository productrepo = new ProductRepository(new ProductContext());
+        ProductCatRepository productcatrepo = new ProductCatRepository(new ProductCatContext());
+        ProductExemplaarRepository productexemplaarrepo = new ProductExemplaarRepository(new ProductExemplaarContext());
+        
 
         // GET: Hosting
         public ActionResult HostingHome()
@@ -29,6 +33,24 @@ namespace EventsApplication.Controllers
         {
             List<Event> events = eventrepo.GetAllEvents();
             return View(events);
+        }
+
+        public ActionResult ProductIndex()
+        {
+            List<Product> products = productrepo.GetAll();
+            List<ProductCat> productcats = new List<ProductCat>();
+            foreach (Product product in products)
+            {
+                ProductCat productcat = productcatrepo.GetByProduct(product);
+                productcats.Add(productcat);
+            }
+            ViewBag.productcategorie = productcats;
+            return View(products);
+        }
+
+        public ActionResult ProductCreate()
+        {
+            return View();
         }
 
         public ActionResult AccountIndex()
@@ -79,7 +101,7 @@ namespace EventsApplication.Controllers
             {
 
                 // TODO: Add insert logic here
-                Account account = new Account(collection["Gebruikersnaam"], collection["Email"], Convert.ToString(accountrepo.newactivationhash()), false, collection["Wachtwoord"], collection["Telefoonnummer"]);
+                Account account = new Account(collection["Gebruikersnaam"], collection["Email"], Convert.ToString(accountrepo.newactivationhash()), 0, collection["Wachtwoord"], collection["Telefoonnummer"]);
                 accountrepo.Insert(account);
                 return RedirectToAction("AccountIndex");
             }
@@ -90,10 +112,44 @@ namespace EventsApplication.Controllers
         }
 
         [HttpPost]
+        public ActionResult ProductCreate(FormCollection collection)
+        {
+            int x = Convert.ToInt32(collection["Hoeveelheid"]); 
+
+            try
+            {
+                if( x == 0)
+                {
+                    ViewBag.Error = "Voer een getal in";
+                    return View();
+                }
+
+                ProductCat categorie = new ProductCat(collection["Categorie"]);
+                productcatrepo.Insert(categorie);
+                categorie = productcatrepo.getlastcategorie();
+                Product product = new Product(categorie, collection["Merk"], collection["Serie"], Convert.ToInt32(collection["Typenummer"]), Convert.ToDecimal(collection["Prijs"]));
+                productrepo.Insert(product);
+
+                for (int i = 0; i < x; i++)
+                {
+                    Product product2 = productrepo.getlatestproduct();
+                    ProductExemplaar productexemplaar = new ProductExemplaar(product2.Id, i, Convert.ToString(i) + Convert.ToString(product2.Typenummer));
+                    productexemplaarrepo.insert(productexemplaar);
+                }
+
+                return RedirectToAction("ProductIndex");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
         public ActionResult LocatieCreate(FormCollection collection, HttpPostedFileBase postedFile)
         {
-          //  try
-          //  {
+            try
+            {
 
                 // TODO: Add insert logic here
                 Locatie locatie = new Locatie(collection["Naam"], collection["Straat"], Convert.ToInt32(collection["Nr"]), collection["Postcode"], collection["Plaats"]);
@@ -182,11 +238,11 @@ namespace EventsApplication.Controllers
                 }
                 ViewBag.Error = "Please Upload Files in .csv format";
                 return View();
-          //  }
-          //  catch
-         //   {
-          //      return View();
-          //  }
+            }
+            catch
+            {
+               return View();
+            }
         }
 
         //  [HttpPost]

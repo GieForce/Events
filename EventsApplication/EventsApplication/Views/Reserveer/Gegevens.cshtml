@@ -1,0 +1,70 @@
+﻿@using System.Collections
+@using EventsApplication.Models
+@model EventsApplication.ViewModels.ReserveringViewModel
+@{
+    ViewBag.Title = "Reserveer";
+    Event evenement = (Event)Session["event"];
+    string start = evenement.Datumstart.ToString();
+    string eind = evenement.Datumeind.ToString();
+}
+@Styles.Render("/content/home.css")
+<head>
+    <link href="~/Content/DateTime/bootstrap-datepicker3.min.css" rel="stylesheet" />
+</head>
+<h2>Reserveren</h2>
+<hr />
+<div class="container">
+    <div class="row">
+        <h4 class="pull-left">3. Gegevens</h4>
+    </div>
+    @using (@Html.BeginForm())
+    {
+        <div class="row">
+            <div class="col-md-3">
+                @Html.DisplayNameFor(x => Model.Voornaam)
+            </div>
+            <div class="col-md-2">
+                @Html.DisplayNameFor(x => Model.Tussenvoegsel)
+            </div>
+            <div class="col-md-6">
+                @Html.DisplayNameFor(x => Model.Achternaam)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                @Html.EditorFor(x => Model.Voornaam, new { htmlAttributes = new { @class = "form-control textboks" } })
+            </div>
+            <div class="col-md-2">
+                @Html.EditorFor(x => Model.Tussenvoegsel, new { htmlAttributes = new { @class = "form-control textboks" } })
+            </div>
+            <div class="col-md-7">
+                @Html.EditorFor(x => Model.Achternaam, new { htmlAttributes = new { @class = "form-control textboks" } })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                @Html.DisplayNameFor(x => Model.Straat)
+            </div>
+            <div class="col-md-2">
+                @Html.DisplayNameFor(x => Model.Huisnummer)
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                @Html.EditorFor(x => Model.Straat, new { htmlAttributes = new { @class = "form-control textboks" } })
+            </div>
+            <div class="col-md-1">
+                @Html.EditorFor(x => Model.Huisnummer, new { htmlAttributes = new { @class = "form-control textboks" } })
+            </div>
+        </div>
+        @Html.DisplayNameFor(x => Model.Woonplaats)
+        @Html.EditorFor(x => Model.Woonplaats, new { htmlAttributes = new { @class = "form-control textboks" } })
+    }
+    <hr/>
+    <div class="row">
+        <span class="pull-left"><a href="/reserveer/plaats" class="btn btn-primary" role="button">Vorige</a></span>
+        <span class="pull-right"><a href="/reserveer/accounts" class="btn btn-primary" role="button">Volgende</a></span>
+    </div>
+</div>

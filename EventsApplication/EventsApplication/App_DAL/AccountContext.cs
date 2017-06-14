@@ -181,13 +181,36 @@ namespace EventsApplication.App_DAL
             return accountlist;
         }
 
+        public List<Account> GetAllAccountsByReservation(int reserveringsID)
+        {
+            List<Account> accountlist = new List<Account>();
+
+            using (SqlConnection connection = Connection.SQLconnection)
+            {
+                string query = "SELECT ACCOUNT.ID, ACCOUNT.gebruikersnaam, ACCOUNT.email, ACCOUNT.activatiehash, ACCOUNT.geactiveerd, ACCOUNT.wachtwoord, ACCOUNT.telefoonnummer FROM ACCOUNT INNER JOIN RESERVERING_POLSBANDJE ON (ACCOUNT.ID=RESERVERING_POLSBANDJE.account_id) INNER JOIN RESERVERING ON (RESERVERING_POLSBANDJE.reservering_id=RESERVERING.ID) WHERE RESERVERING.ID = @reserveringsID";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@reserveringsID", reserveringsID);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            accountlist.Add(ReaderToAccount(reader));
+                        }
+                    }
+                }
+            }
+            return accountlist;
+        }
+
         public List<Account> GetAllAccountsPresent()
         {
             List<Account> accountlist = new List<Account>();
 
             using (SqlConnection connection = Connection.SQLconnection)
             {
-                string query = "SELECT DISTINCT account.gebruikersnaam, account.telefoonnummer, reservering_polsbandje.aanwezig FROM account JOIN reservering_polsbandje ON (reservering_polsbandje.account_id=account.ID) WHERE reservering_polsbandje.aanwezig = 1;";
+                string query = "SELECT DISTINCT account.ID, account.gebruikersnaam, account.email, ACCOUNT.activatiehash, ACCOUNT.geactiveerd, account.wachtwoord, ACCOUNT.telefoonnummer, reservering_polsbandje.aanwezig FROM account JOIN reservering_polsbandje ON (reservering_polsbandje.account_id=account.ID) WHERE reservering_polsbandje.aanwezig = 1;";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     using (SqlDataReader reader = command.ExecuteReader())

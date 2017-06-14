@@ -34,5 +34,11 @@ namespace EventsApplication
         {
             context.Insert(product);
         }
+
+        public Product getlatestproduct()
+        {
+            return context.getlatestproduct();
+        }
+
     }
 }

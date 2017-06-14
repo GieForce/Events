@@ -16,24 +16,24 @@ namespace EventsApplication.Controllers.Repositorys
             this.reserveringDao = reserveringDao;
         }
 
-        public Reservering Insert(Reservering reservering, Evenement evenement)
+        public List<Reservering> GetAllReserveringen()
         {
-
-            return reserveringDao.Insert(reservering, evenement);
-
+            return reserveringDao.GetAllReserveringen();
         }
 
-
-        public bool Update(Reservering reservering)
+        public Reservering GetById(int id)
         {
-
-            return reserveringDao.Update(reservering);
-
+            return reserveringDao.GetById(id);
         }
 
-        public bool Delete(int id)
+        public void Insert(Reservering reservering)
         {
-            return reserveringDao.Delete(id);
+            reserveringDao.Insert(reservering);
+        }
+
+        public void Delete(Reservering reservering)
+        {
+            reserveringDao.Delete(reservering);
         }
     }
 }

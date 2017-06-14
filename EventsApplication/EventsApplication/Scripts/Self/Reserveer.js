@@ -13,7 +13,5 @@
         }
         $($secondDd).val(null);
     })
-
-    $('#firstDd').change()
-
+    $('#firstDd').change(); 
 });

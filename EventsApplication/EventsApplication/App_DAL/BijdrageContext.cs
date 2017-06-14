@@ -58,68 +58,6 @@ namespace EventsApplication.App_DAL
                         }
                     }
                 }
-                //try
-                //{
-                //    foreach (var item in bijdrageList)
-                //    {
-                //        if (item is Bestand)
-                //        {
-                //            string query2 = "select * from account_bijdrage where bijdrage_id = @id";
-                //            using (SqlCommand command = new SqlCommand(query2, connection))
-                //            {
-                //                command.Parameters.AddWithValue("@id", item.Id);
-                //                using (SqlDataReader reader = command.ExecuteReader())
-                //                {
-                //                    while (reader.Read())
-                //                    {
-                //                        AccountBijdrage accountbijdage = new AccountBijdrage(Convert.ToInt32(reader["account_id"]), Convert.ToInt32(reader["bijdrage_id"]), Convert.ToInt32(reader["like"]), Convert.ToInt32("ongewenst"));
-                //                        item.AccountBijdrage.Add(accountbijdage);
-                //                    }
-                //                }
-                //            }
-                //        }
-
-                //        if (item is Bericht)
-                //        {
-                //            string query2 = "select * from account_bijdrage where bijdrage_id = @id";
-                //            using (SqlCommand command = new SqlCommand(query2, connection))
-                //            {
-                //                command.Parameters.AddWithValue("@id", item.Id);
-                //                using (SqlDataReader reader = command.ExecuteReader())
-                //                {
-                //                    while (reader.Read())
-                //                    {
-                //                        AccountBijdrage accountbijdage = new AccountBijdrage(Convert.ToInt32(reader["account_id"]), Convert.ToInt32(reader["bijdrage_id"]), Convert.ToInt32(reader["like"]), Convert.ToInt32("ongewenst"));
-                //                        item.AccountBijdrage.Add(accountbijdage);
-                //                    }
-                //                }
-                //            }
-                //        }
-
-                //        if (item is Categorie)
-                //        {
-                //            string query2 = "select * from account_bijdrage where bijdrage_id = @id";
-                //            using (SqlCommand command = new SqlCommand(query2, connection))
-                //            {
-                //                command.Parameters.AddWithValue("@id", item.Id);
-                //                using (SqlDataReader reader2 = command.ExecuteReader())
-                //                {
-                //                    while (reader2.Read())
-                //                    {
-                //                        AccountBijdrage accountbijdage = new AccountBijdrage(Convert.ToInt32(reader2["account_id"]), Convert.ToInt32(reader2["bijdrage_id"]), Convert.ToInt32(reader2["like"]), Convert.ToInt32("ongewenst"));
-                //                        item..Add(accountbijdage);
-                //                    }
-                //                }
-                //            }
-                //        }
-                        
-                //    }
-                //}
-                //catch (Exception)
-                //{
-                    
-                //}
-                
             }
             return bijdrageList;
         }
@@ -190,32 +128,37 @@ namespace EventsApplication.App_DAL
                         }
                     }
                 }
-                //try
-                //{
-                //    foreach (Bijdrage item in bijdrageList)
-                //    {
-                //        string query2 = "select * from account_bijdrage where bijdrage_id = @id";
-                //        using (SqlCommand command = new SqlCommand(query2, connection))
-                //        {
-                //            command.Parameters.AddWithValue("@id", item.Id);
-                //            using (SqlDataReader reader = command.ExecuteReader())
-                //            {
-                //                while (reader.Read())
-                //                {
-                //                    AccountBijdrage accountbijdage = new AccountBijdrage(Convert.ToInt32(reader["account_id"]), Convert.ToInt32(reader["bijdrage_id"]), Convert.ToInt32(reader["like"]), Convert.ToInt32("ongewenst"));
-                //                    item.AccountBijdrage.Add(accountbijdage);
-                //                }
-                //            }
-                //        }
-                //    }
-                //}
-                //catch (Exception)
-                //{
-                    
-                //}
-                
             }
             return bijdrageList;
+        }
+
+        public bool InsertLike(AccountBijdrage accountBijdrage)
+        {
+
+            try
+            {
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query = "insertLike";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@accountID", accountBijdrage.AccountID);
+                        command.Parameters.AddWithValue("@bijdrageID", accountBijdrage.BijdrageID);
+                        command.Parameters.AddWithValue("@like", accountBijdrage.Like);
+                        command.Parameters.AddWithValue("@ongewenst", accountBijdrage.Ongenwenst);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool Insert(Bericht bericht)
@@ -453,7 +396,31 @@ namespace EventsApplication.App_DAL
             }
         }
 
-        private Bericht CreateBerichtFromReader(SqlDataReader reader, SqlConnection connection)
+        public bool DeletePost(int id)
+        {
+            try
+            {
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query = "deletePost";
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    command.CommandType = CommandType.StoredProcedure;
+
+
+                    command.Parameters.AddWithValue("@id", id);
+                 
+                    command.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+         }
+        }
+
+        private Bericht CreateBerichtFromReader(SqlDataReader reader)
         {
             AccountRepository accountRepository = new AccountRepository(new AccountContext());
             Account account = accountRepository.GetById(Convert.ToInt32(reader["account_id"]));

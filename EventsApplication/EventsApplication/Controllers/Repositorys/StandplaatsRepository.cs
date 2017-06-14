@@ -26,6 +26,11 @@ namespace EventsApplication.Controllers.Repositorys
             return istandplaatsContext.GetByLocatie(locatie);
         }
 
+        public Standplaats GetByReservation(int reservationID)
+        {
+            return istandplaatsContext.GetByReservation(reservationID);
+        }
+
         public bool Insert(Locatie locatie, decimal prijs, int capaciteit, int nummer, string specificatie)
         {
             return istandplaatsContext.Insert(locatie, prijs, capaciteit, nummer, specificatie);

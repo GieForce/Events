@@ -56,6 +56,18 @@
                         </div>
                         <h6 class="text-muted time"><span> @item.Datum.DayOfWeek - @item.Datum.Day @item.Datum.ToString("MMMM", CultureInfo.InvariantCulture)</span></h6>
                     </div>
+                    <div class="dropdown pull-right">
+                        <span class="dropdown-toggle" type="button" data-toggle="dropdown">
+                            <span class="[ glyphicon glyphicon-chevron-down ]"></span>
+                        </span>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                            <li role="presentation" class="divider"></li>
+                            @*<li role="presentation"><a role="menuitem" tabindex="-1" href="#" id ="delete">Delete</a></li>*@
+                            <li><a href="#" id="@item.Id"  class="delete" data-item="@item.Id" >Delete</a></li> 
+                        </ul>
                     @if (item.Account.Id == account.Id)
                     {
                         <div class="dropdown pull-right">
@@ -84,6 +96,10 @@
                             @{ int likes = item.AccountBijdrage.Count(x => x.Like == 1); }
                             <i class="fa fa-thumbs-up icon"></i>@likes
                         </a>
+                        @*<a href="#" class="btn btn-default stat-item">*@
+                        @*<button type="submit" name="id" value=@item.AccountBijdrage.Id><i class="fa fa-thumbs-up icon"></i></button>@item.AccountBijdrage.Like*@
+                            <button class="btn btn-default  likePost" data-item="@item.Id">@item.AccountBijdrage.Like<i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                        @*</a>*@
                         <a href="#" class="btn btn-default stat-item">
                             <i class="fa fa-tag icon"></i>
                             @if (categorie != null)

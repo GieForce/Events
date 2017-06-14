@@ -1,0 +1,26 @@
+﻿@using System.Collections
+@using EventsApplication.Models
+@model EventsApplication.ViewModels.ReserveringViewModel
+@{
+    ViewBag.Title = "Reserveer";
+    Event evenement = (Event)Session["event"];
+    string start = evenement.Datumstart.ToString();
+    string eind = evenement.Datumeind.ToString();
+}
+@Styles.Render("/content/home.css")
+<head>
+    <link href="~/Content/DateTime/bootstrap-datepicker3.min.css" rel="stylesheet" />
+</head>
+<h2>Reserveren</h2>
+<hr />
+<div class="container">
+    <div class="row">
+        <h4 class="pull-left">4. Accounts</h4>
+    </div>
+        
+    <hr />
+    <div class="row">
+        <span class="pull-left"><a href="/reserveer/Gegevens" class="btn btn-primary" role="button">Vorige</a></span>
+        <span class="pull-right"><a href="/reserveer/Materialen" class="btn btn-primary" role="button">Volgende</a></span>
+    </div>
+</div>

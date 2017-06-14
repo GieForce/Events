@@ -49,5 +49,10 @@ namespace EventsApplication
         {
             context.Delete(productCat);
         }
+
+        public ProductCat getlastcategorie()
+        {
+            return context.getlatestcategorie();
+        }
     }
 }

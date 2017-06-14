@@ -66,5 +66,15 @@ namespace EventsApplication.Controllers
         {
             return context.getLatestBijdrageID();
         }
+
+        public bool InsertLike(AccountBijdrage accountBijdrage)
+        {
+            return context.InsertLike(accountBijdrage);
+        }
+
+        public bool DeletePost(int id)
+        {
+            return context.DeletePost(id);
+        }
     }
 }

@@ -183,5 +183,51 @@ namespace EventsApplication.Controllers
             return sb.ToString();
 
         }
+
+        [HttpPost]
+        public ActionResult GiveALike(int id)
+        {       
+            List<Bijdrage> bijdrages = repository.GetAllBijdrages();
+            Account account = (Account)(Session["user"]);
+            accountRepository.GetById(account.Id);
+            BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
+            try
+            {
+                repository.InsertLike(new AccountBijdrage(account.Id, id, 1, 0));
+
+           
+                return PartialView("Berichten", bvm);
+            }
+
+            catch
+            {
+                return RedirectToAction("Index", "MediaSharing");
+            }
+         
+        }
+
+
+        public ActionResult DeletePosts(int id)
+        {
+            List<Bijdrage> bijdrages = repository.GetAllBijdrages();
+            Account account = (Account)(Session["user"]);
+            accountRepository.GetById(account.Id);
+       //     BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
+            try
+            {
+
+                repository.DeletePost(id);
+
+                return RedirectToAction("Index", "MediaSharing");
+            }
+
+            catch
+            {
+                return RedirectToAction("Index", "MediaSharing");
+         
+            }
+
+        }
+       
     }
 }
