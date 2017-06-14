@@ -4,7 +4,10 @@
 @{
     ViewBag.Title = "Reserveren";
 }
-
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+</head>
 <h2>6. Afronden</h2>
 <hr />
 <h4>Datum</h4>
@@ -56,5 +59,50 @@
 <hr />
 <div class="row">
     <span class="pull-left"><a href="/reserveer/materiaal" class="btn btn-primary" role="button">Vorige</a></span>
-    <span class="pull-right"><a href="/reserveer/submit" class="btn btn-success" role="button">Afronden</a></span>
+    <span class="pull-right"><div id="paypal-button"></div></span>
 </div>
+
+<script>
+    paypal.Button.render({
+
+        env: 'sandbox',
+
+        client: {
+            sandbox: 'AZdJ3oXIWBxjEMEKmzGzwf4BQR0YvnClfZGREQwgjLBHTsWEUywAE-UmeQi0zvoAQyqcbN_HinZRvVyw',
+            production: 'AdmgGpd44CShJ4Ktj6afJng9OfLE5O4pxfX1YvqNgsjeRL21_9or6VPUmqf-l2qBhGNWVKLtONhqzeQZ'
+        },
+
+        commit: true, // Show a 'Pay Now' button
+
+        style: {
+            size: 'small',
+            color: 'blue',
+            shape: 'pill',
+            label: 'checkout'
+        },
+
+        payment: function (data, actions) {
+            return actions.payment.create({
+                transactions: [
+                    {
+                        amount: { total: '@Model.TotaalPrijs', currency: 'EUR' }
+                    }
+                ]
+            });
+        },
+
+        onAuthorize: function (data, actions) {
+            return actions.payment.execute().then(function (payment) {
+                jQuery.ajax({
+                    type: 'GET',
+                    url: '/reserveer/submit',
+                    success: function (response) {
+                        console.log(response);
+                        window.location.href = response.Url;
+                    }
+                });
+            });
+        }
+
+    }, '#paypal-button');
+</script>

@@ -9,27 +9,56 @@
 
 <head>
     <link href="https://fonts.googleapis.com/css?family=Poiret+One|Quicksand" rel="stylesheet">
-    <script src="~/Scripts/jquery-1.10.2.js" ></script>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Advent+Pro|Julius+Sans+One|Syncopate" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Wire+One" rel="stylesheet">
 </head>
 @Styles.Render("~/Content/Home.css")
-<div class="vertical-center">
-    <div class="container">
-        <div class="row animated zoomInDown">
-            <h2 id="titel">EYECT4EVENTS</h2>
-            <div class="list-group-item active">
-                <h4 class="list-group-item-heading">Kies een evenement</h4>
-            </div>
-            <ul class="list-group">
-                @foreach (Event e in Model)
-                {
-                    <form action="/home/index" method="post">
-                        <button type="submit" name="eventid" value="@e.ID1" class="btn">@e.Naam<span class="glyphicon glyphicon-menu-right"></span></button>
-                    </form>
-                }
-            </ul>
-        </div>
+<div class="container datetime">
+    <div class="row" id="naam">
+        <h1>EVENEMENTEN</h1>
+    </div>
+    <div class="col-sm-4 col-sm-offset-4">
+        <input type="text" class="form-control" placeholder="Zoek naar evenement..." id="searchquery">
+    </div>
+</div>
+<div class="col-md-8 col-md-offset-2">
+    <div id="events">
     </div>
 </div>
 <div class="page-bg">
 </div>
+<script>
+    var loadEvent = function () {
+        $('#events').empty();
+        $('#events').append('<br/>');
+        var events = new Array();
+        @foreach (Event e in Model)
+        {
+            <text>
+                var event = {
+                    naam: '@e.Naam' ,
+                    id: @e.ID1
+                };
+                events.push(event);
+            </text>
+        }
+                for (var i = 0; i < events.length; i++) {
+                    if (events[i].naam.toLowerCase().indexOf($('#searchquery').val().toLowerCase()) >= 0) {
+                        var toappend = '<form action="/home/index" method="post"><button type="submit" name="eventid" value="' + events[i].id + '" class="btnevent">' + events[i].naam + '</button></form><div class="row"><div class="col-sm-2 col-sm-offset-5"><hr/></div></div>';
+                        $('#events').append(toappend);
+                    }
+                }
+        }
+
+    $('#searchquery').on('input', function () {
+        loadEvent();
+    });
+
+    loadEvent();
+</script>

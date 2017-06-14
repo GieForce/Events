@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using EventsApplication.App_DAL;
@@ -49,7 +52,7 @@ namespace EventsApplication.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            ReserveringViewModel reservering = (ReserveringViewModel) Session["reservering"];
+            ReserveringViewModel reservering = (ReserveringViewModel)Session["reservering"];
             StandplaatsRepository repo = new StandplaatsRepository(new StandplaatsContext());
             ViewData["plaatsen"] = repo.GetFreeStaanplaatsenByLocatie(reservering.Evenement.Locatie,
                 reservering.DatumStart, reservering.DatumEind);
@@ -74,12 +77,12 @@ namespace EventsApplication.Controllers
         // GET: Reserveer/Gegevens
         public ActionResult Gegevens()
         {
-            ReserveringViewModel reservering = (ReserveringViewModel)Session["reservering"];
-            ViewData["MaxPersonen"] = reservering.Staanplaatsen.Sum(x => x.Capaciteit);
             if (Session["event"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
+            ReserveringViewModel reservering = (ReserveringViewModel)Session["reservering"];
+            ViewData["MaxPersonen"] = reservering.Staanplaatsen.Sum(x => x.Capaciteit);
             return View(reservering);
         }
 
@@ -88,7 +91,14 @@ namespace EventsApplication.Controllers
         {
             ReserveringViewModel reservering = (ReserveringViewModel)Session["reservering"];
             reservering.Voornaam = model.Voornaam;
-            reservering.Tussenvoegsel = model.Tussenvoegsel;
+            if (String.IsNullOrEmpty(model.Tussenvoegsel))
+            {
+                reservering.Tussenvoegsel = " ";
+            }
+            else
+            {
+                reservering.Tussenvoegsel = model.Tussenvoegsel;
+            }
             reservering.Achternaam = model.Achternaam;
             reservering.Straat = model.Straat;
             reservering.Huisnummer = model.Huisnummer;
@@ -103,7 +113,7 @@ namespace EventsApplication.Controllers
 
         public ActionResult Accounts()
         {
-            ReserveringViewModel reservering = (ReserveringViewModel) Session["reservering"];
+            ReserveringViewModel reservering = (ReserveringViewModel)Session["reservering"];
             List<AccountViewModel> accounts = reservering.Accounts;
             if (Session["event"] == null)
             {
@@ -163,7 +173,7 @@ namespace EventsApplication.Controllers
 
         public ActionResult Add(int productid)
         {
-            ReserveringViewModel reservering = (ReserveringViewModel) Session["reservering"];
+            ReserveringViewModel reservering = (ReserveringViewModel)Session["reservering"];
             if (reservering.Producten == null)
             {
                 reservering.Producten = new List<Product>();
@@ -199,21 +209,75 @@ namespace EventsApplication.Controllers
                                       reservering.Staanplaatsen.Sum(x => x.Prijs * reservering.Dagen));
             return View(reservering);
         }
-
+        
+        [AjaxOnly]
         public ActionResult Submit()
         {
             if (Session["event"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-            ReserveringViewModel reservering = (ReserveringViewModel) Session["reservering"];
+            ReserveringViewModel reservering = (ReserveringViewModel)Session["reservering"];
             ReserveringRepository repo = new ReserveringRepository(new ReserveringContext());
+            AccountRepository arepo = new AccountRepository(new AccountContext());
             List<int> plekids = reservering.Staanplaatsen.Select(x => x.Id).ToList();
             repo.PlaatsReservering(reservering.Voornaam, reservering.Tussenvoegsel, reservering.Achternaam,
                 reservering.Straat, reservering.Huisnummer, reservering.Woonplaats, reservering.DatumStart,
                 reservering.DatumEind, reservering.Evenement.ID1, plekids, reservering.Accounts,
                 reservering.Exemplaren);
+
+            // Email
+            foreach (AccountViewModel account in reservering.Accounts)
+            {
+                string message = "Beste " + account.Gebruikersnaam + "," +
+                    Environment.NewLine +
+                    Environment.NewLine +
+                    "Bedankt voor het reserveren bij " + reservering.Evenement.Naam + Environment.NewLine +
+                    "Om uw account te activeren gaat u naar deze link: 192.168.20.22/reserveer/activeer?activatiehash=" + arepo.GetAllAccounts().First(x => x.Gebruikersnaam == account.Gebruikersnaam).Activatiehash + " " + Environment.NewLine + Environment.NewLine +
+                    "Groeten," + Environment.NewLine + Environment.NewLine + "Het EyeCT4Events Team"
+                    ;
+                SendMail(account.Email, message);
+            }
+            
             return View("Succes");
+        }
+
+        public ActionResult Activeer(string activatiehash)
+        {
+            AccountRepository repo = new AccountRepository(new AccountContext());
+            repo.Activeer(activatiehash);
+            return View();
+        }
+
+        private void SendMail(string emailaddres, string tekst)
+        {
+            new SmtpClient
+                {
+                    Host = "Smtp.Gmail.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    Timeout = 10000,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential("eyect4eventsc@gmail.com", "dbi364892")
+                }
+                .Send(new MailMessage
+                {
+                    From = new MailAddress("eyect4eventsc@gmail.com", ""),
+                    To = { emailaddres },
+                    CC = { "eyect4eventsc@gmail.com" },
+                    Subject = "...",
+                    Body = tekst,
+                    BodyEncoding = Encoding.UTF8
+                });
+        }
+    }
+
+    public class AjaxOnlyAttribute : ActionMethodSelectorAttribute
+    {
+        public override bool IsValidForRequest(ControllerContext controllerContext, System.Reflection.MethodInfo methodInfo)
+        {
+            return controllerContext.RequestContext.HttpContext.Request.IsAjaxRequest();
         }
     }
 }

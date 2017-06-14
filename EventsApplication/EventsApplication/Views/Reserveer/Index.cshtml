@@ -6,8 +6,6 @@
     string start = Model.Evenement.Datumstart.ToString();
     string eind = Model.Evenement.Datumeind.ToString();
 }
-@Styles.Render("/content/home.css")
-@Scripts.Render("~/Scripts/Self/Reseerveer.js")
 <head>
     <link href="~/Content/DateTime/bootstrap-datepicker3.min.css" rel="stylesheet" />
 </head>
@@ -23,19 +21,22 @@
             <div class="col-md-6">
                 <div id="datetime-container" class="container">
                     <div class="input-daterange input-group" id="datepicker">
-                        <input type="text" class="input-sm form-control" name="start"/>
+                        <input type="text" class="input-sm form-control" name="start" id="start"/>
                         <span class="input-group-addon">tot</span>
-                        <input type="text" class="input-sm form-control" name="end"/>
+                        <input type="text" class="input-sm form-control" name="end" id="end"/>
                     </div>
                 </div>
                 <div id="locatie-container" class="container">
 
                 </div>
             </div>
+        <div class="col-md-6">
+            <p id="popup" class="hidden">Datum mag niet leeg zijn</p>
+        </div>
         </div>
         <hr/>
         <div class="row">
-            <span class="pull-right"><input type="submit" name="submitbutton" value="Volgende" class="btn btn-primary" /></span>
+            <span class="pull-right"><input type="submit" name="submitbutton" value="Volgende" class="btn btn-primary" id="nextbutton" /></span>
         </div>
     }
 </div>
@@ -54,6 +55,15 @@
         autoclose: true,
         todayHighlight: true,
         startDate: jstart,
-        endDate: jeind
+        endDate: jeind,
     });
+
+    $('#nextbutton').click(function (event) {
+        if ($('#start').val() === "" || $('#end').val() === "") {
+            event.preventDefault();
+            $('#popup').removeClass('hidden');
+        }
+    });
+
+    
 </script>

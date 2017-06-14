@@ -4,7 +4,6 @@
 @{
     ViewBag.Title = "Reserveer";
 }
-@Styles.Render("/content/home.css")
 <head>
     <link href="~/Content/DateTime/bootstrap-datepicker3.min.css" rel="stylesheet" />
 </head>
@@ -17,9 +16,9 @@
             <h4 class="pull-left">2. Staanplaats</h4>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <select id="firstDd" class="selectpicker" title="Kenmerken">
-                    <option value="" activated>Geen</option>
+                    <option activated value="" data-display-on="">Geen</option>
                     <option value="comfort">Comfortplek</option>
                     <option value="kraan">Kraan beschikbaar</option>
                     <option value="handicap">Handicap geschikt</option>
@@ -45,11 +44,25 @@
                     }
                 </select>
             </div>
+            <div class="col-md-7">
+                <p id="popup" class="hidden">Plaats mag niet leeg zijn</p>
+            </div>
         </div>
         <hr/>
         <div class="row">
             <span class="pull-left"><a href="/reserveer" class="btn btn-primary" role="button">Vorige</a></span>
-            <span class="pull-right"><input type="submit" name="submitbutton" value="Volgende" class="btn btn-primary" /></span>
+            <span class="pull-right"><input type="submit" name="submitbutton" value="Volgende" class="btn btn-primary" id="nextbutton" /></span>
         </div>
     }
 </div>
+
+<script>
+    $('#nextbutton').click(function (event) {
+        if (!$('#secondDd').val()) {
+            event.preventDefault();
+            $('#popup').removeClass('hidden');
+        }
+    });
+
+
+</script>

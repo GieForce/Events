@@ -137,6 +137,28 @@ namespace EventsApplication.App_DAL
             }
         }
 
+        public void Activeer(string hash)
+        {
+            try
+            {
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query =
+                        "UPDATE ACCOUNT SET geactiveerd = 1 WHERE activatiehash = @hash";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@hash", hash);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public Account Login(string wachtwoord, string gebruikersnaam)
         {
             using (SqlConnection connection = Connection.SQLconnection)

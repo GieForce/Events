@@ -400,6 +400,7 @@
     <Content Include="Views\Reserveer\Materiaal.cshtml" />
     <Content Include="Views\Reserveer\Finish.cshtml" />
     <Content Include="Views\Reserveer\Succes.cshtml" />
+    <Content Include="Views\Reserveer\Activeer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

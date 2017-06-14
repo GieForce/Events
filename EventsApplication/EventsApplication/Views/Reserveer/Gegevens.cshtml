@@ -7,7 +7,6 @@
     string start = evenement.Datumstart.ToString();
     string eind = evenement.Datumeind.ToString();
 }
-@Styles.Render("/content/home.css")
 <head>
     <link href="~/Content/DateTime/bootstrap-datepicker3.min.css" rel="stylesheet" />
 </head>
@@ -37,7 +36,7 @@
             <div class="col-md-2">
                 @Html.EditorFor(x => Model.Tussenvoegsel, new { htmlAttributes = new { @class = "form-control textboks" } })
             </div>
-            <div class="col-md-7">
+            <div class="col-md-3">
                 @Html.EditorFor(x => Model.Achternaam, new { htmlAttributes = new { @class = "form-control textboks" } })
             </div>
         </div>
@@ -85,12 +84,24 @@
                     }
                 </select>
             </div>
+            <div class="col-md-9">
+                <p id="popup" class="hidden">Aantal personen mag niet 0 zijn</p>
+            </div>
         </div>
 
         <hr />
         <div class="row">
             <span class="pull-left"><a href="/reserveer/plaats" class="btn btn-primary" role="button">Vorige</a></span>
-            <span class="pull-right"><input type="submit" name="submitbutton" value="Volgende" class="btn btn-primary" /></span>
+            <span class="pull-right"><input type="submit" name="submitbutton" value="Volgende" class="btn btn-primary" id="nextbutton"/></span>
         </div>
     }
 </div>
+
+<script>
+    $('#nextbutton').click(function (event) {
+        if (!$('#firstDd').val()) {
+            event.preventDefault();
+            $('#popup').removeClass('hidden');
+        }
+    });
+</script>

@@ -56,6 +56,11 @@ namespace EventsApplication.Controllers
             return context.Login(wachtwoord, gebruikersnaam);
         }
 
+        public void Activeer(string hash)
+        {
+            context.Activeer(hash);
+        }
+
         public Guid newactivationhash()
         {
             Guid g;
