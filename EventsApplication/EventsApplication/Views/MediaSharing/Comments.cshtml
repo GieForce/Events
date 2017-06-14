@@ -15,8 +15,28 @@
                 <div class="comment-body">
                     <div class="comment-heading">
                         <h4 class="user">@item.Account.Gebruikersnaam</h4>
-                        <h5 class="time">5 minutes ago</h5>
-                    </div>
+                        @{
+                            DateTime dt = (DateTime) item.Datum;
+                            TimeSpan timeSince = DateTime.Now - dt;
+                            if (timeSince > TimeSpan.FromDays(1))
+                            {
+                                <h5 class="time">@dt.ToString("M")</h5>
+                            }
+                            else if (timeSince >= TimeSpan.FromHours(1))
+                            {
+                                <h5 class="time">@String.Format("{0:%h} uur geleden", timeSince)</h5>
+                            }
+                            else if (timeSince >= TimeSpan.FromMinutes(1))
+                            {
+                                <h5 class="time">@String.Format("{0:%m} minuten geleden", timeSince)</h5>
+                            }
+                            else
+                            {
+                                <h5 class="time">@String.Format("{0:%s} seconden geleden", timeSince)</h5>
+                            }
+                        }
+
+</div>
                     <p>@item.Inhoud</p>
                 </div>
             </li>

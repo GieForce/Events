@@ -29,22 +29,6 @@ $(document).ready(function () {
                 });
         });
 
-
-    $("#CreatePost").on("click",
-        function () {
-            $("#CreatePost").html("");
-            $loading.show();
-            $.ajax({
-                url: "/Mediasharing/CreatePost",
-                    type: "GET"
-                })
-                .done(function (partialViewResult) {
-                    $("#CreatePost").html(partialViewResult);
-                    $loading.hide();
-                });
-        });
-
-
     $("#ShowBijdragesByUserID").on("click",
         function () {
             $("#showPosts").html("");
@@ -109,7 +93,7 @@ $(document).ready(function () {
         function () {
             var $targetItem = $(this).attr("data-item");
             var $classname = $(".showComments" + "-" + $targetItem).attr("data-comment");
-            var $text = $(".postText").val();
+            var $text = $(".postText" + "-" + $targetItem).val();
 
             $(".showComments-" + $classname).html("");
             $.ajax({
@@ -124,6 +108,8 @@ $(document).ready(function () {
                     $(".showComments-" + $classname).html(partialViewResult);
                 });
         });
+
+    
     
 }); 
 

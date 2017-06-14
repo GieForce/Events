@@ -61,5 +61,10 @@ namespace EventsApplication.Controllers
         {
             return context.InsertComment(id, accountid, text);
         }
+
+        public int getLatestBijdrageID()
+        {
+            return context.getLatestBijdrageID();
+        }
     }
 }

@@ -10,6 +10,7 @@
     List<Categorie> categorieList = new List<Categorie>();
     List<Bestand> bestandList = new List<Bestand>();
     List<Bericht> berichtList = new List<Bericht>();
+    Account account = (Account)(Session["user"]);
 }
 <div class="col-md-8 col-md-offset-4">
     @foreach (var item in Model.bijdrageList)
@@ -55,28 +56,31 @@
                         </div>
                         <h6 class="text-muted time"><span> @item.Datum.DayOfWeek - @item.Datum.Day @item.Datum.ToString("MMMM", CultureInfo.InvariantCulture)</span></h6>
                     </div>
-                    <div class="dropdown pull-right">
-                        <span class="dropdown-toggle" type="button" data-toggle="dropdown">
-                            <span class="[ glyphicon glyphicon-chevron-down ]"></span>
-                        </span>
-                        <ul class="dropdown-menu" role="menu">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-                            <li role="presentation" class="divider"></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-                        </ul>
+                    @if (item.Account.Id == account.Id)
+                    {
+                        <div class="dropdown pull-right">
+                            <span class="dropdown-toggle" type="button" data-toggle="dropdown">
+                                <span class="[ glyphicon glyphicon-chevron-down ]"></span>
+                            </span>
 
-                    </div>
+                            <ul class="dropdown-menu" role="menu">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Delete</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Edit</a></li>
+                            </ul>
+
+                        </div>
+                    }
                 </div>
                 <div class="post-description">
-                    <p>@item.Bestandlocatie</p>
+                    <div class="col-md-12">
+                        <div class="thumbnail">
+                            @{ string filelocation = "~/Content/Images/" + item.Bestandlocatie + ".jpg";}
+                            <img src="@Url.Content(filelocation)" />
+                        </div>
+                    </div>
                     <div class="stats">
                         <a href="#" class="btn btn-default stat-item">
-                            <i class="fa fa-thumbs-up icon"></i>@item.AccountBijdrage.Like
-                        </a>
-                        <a href="#" class="btn btn-default stat-item">
-                            <i class="fa fa-share icon"></i>
+                            <i class="fa fa-thumbs-up icon"></i>@item.AccountBijdrage.Count
                         </a>
                         <a href="#" class="btn btn-default stat-item">
                             <i class="fa fa-tag icon"></i>
@@ -84,13 +88,13 @@
                             {
                                 @categorie.Naam
                             }
-                          
+
                         </a>
                     </div>
                 </div>
                 <div class="post-footer">
                     <div class="input-group addPostForm">
-                        <input class="form-control postText" placeholder="Add a comment" type="text">
+                        <input class="form-control postText-@item.Id" placeholder="Add a comment" type="text">
                         <span class="input-group-addon">
                             <a href="" class="addPost" data-item="@item.Id"><i class="fa fa-edit"></i></a>
                         </span>
@@ -106,8 +110,5 @@
                 </div>
             </div>
         </div>
-    }
+                                }
 </div>
-
-
-

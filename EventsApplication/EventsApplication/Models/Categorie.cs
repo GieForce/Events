@@ -23,13 +23,13 @@ namespace EventsApplication.Models
             set { naam = value; }
         }
 
-        public Categorie(int id, Account account, DateTime datum, string soort, AccountBijdrage accountBijdrage, int categorieId, string naam) : base(id, account, datum, soort, accountBijdrage)
+        public Categorie(int id, Account account, DateTime datum, string soort, List<AccountBijdrage> accountBijdrage, int categorieId, string naam) : base(id, account, datum, soort, accountBijdrage)
         {
             this.categorieId = categorieId;
             this.naam = naam;
         }
 
-        public Categorie(Account account, DateTime datum, string soort, AccountBijdrage accountBijdrage, int categorieId, string naam) : base(account, datum, soort, accountBijdrage)
+        public Categorie(Account account, DateTime datum, string soort, List<AccountBijdrage> accountBijdrage, int categorieId, string naam) : base(account, datum, soort, accountBijdrage)
         {
             this.categorieId = categorieId;
             this.naam = naam;

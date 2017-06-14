@@ -23,13 +23,13 @@ namespace EventsApplication.Models
             set { inhoud = value; }
         }
 
-        public Bericht(int id, Account account, DateTime datum, string soort, AccountBijdrage accountBijdrage, string titel, string inhoud) : base(id, account, datum, soort, accountBijdrage)
+        public Bericht(int id, Account account, DateTime datum, string soort, List<AccountBijdrage> accountBijdrage, string titel, string inhoud) : base(id, account, datum, soort, accountBijdrage)
         {
             this.titel = titel;
             this.inhoud = inhoud;
         }
 
-        public Bericht(Account account, DateTime datum, string soort, AccountBijdrage accountBijdrage, string titel, string inhoud) : base(account, datum, soort, accountBijdrage)
+        public Bericht(Account account, DateTime datum, string soort, List<AccountBijdrage> accountBijdrage, string titel, string inhoud) : base(account, datum, soort, accountBijdrage)
         {
             this.titel = titel;
             this.inhoud = inhoud;
