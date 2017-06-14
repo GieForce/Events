@@ -277,6 +277,29 @@ namespace EventsApplication.App_DAL
             return accountlist;
         }
 
+        public List<Account> GetAllAccountsPresentAtFestival(Event evenement)
+        {
+            List<Account> accountlist = new List<Account>();
+
+            using (SqlConnection connection = Connection.SQLconnection)
+            {
+                string query = "SELECT DISTINCT account.ID, account.gebruikersnaam, account.email, ACCOUNT.activatiehash, ACCOUNT.geactiveerd, account.wachtwoord, ACCOUNT.telefoonnummer, reservering_polsbandje.aanwezig, POLSBANDJE.barcode, ACCOUNT.status FROM account JOIN reservering_polsbandje ON (reservering_polsbandje.account_id=account.ID) INNER JOIN POLSBANDJE ON (RESERVERING_POLSBANDJE.polsbandje_id=POLSBANDJE.ID) INNER JOIN RESERVERING ON (RESERVERING_POLSBANDJE.reservering_id=RESERVERING.ID) WHERE RESERVERING.eventID=@eventID AND RESERVERING_POLSBANDJE.aanwezig=1;";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@eventID", evenement.ID1);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            accountlist.Add(ReaderToAccountBARCODE(reader));
+                        }
+                    }
+                }
+            }
+            return accountlist;
+        }
+
         public Account GetCompleteAccountsByRRFID(string RFID)
         {
             Account account = null;

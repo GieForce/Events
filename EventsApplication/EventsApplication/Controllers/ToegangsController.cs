@@ -23,7 +23,7 @@ namespace EventsApplication.Controllers
         {
             if (Session["event"] != null)
             {
-                if (!string.IsNullOrEmpty(Session["LoginToegangssysteem"] as string) && Session["LoginToegangssysteem"].ToString() == "true")
+                if (!string.IsNullOrEmpty(Session["adminLogin"] as string) && Session["adminLogin"].ToString() == "true")
                 {
                     if (Session["account"] == null)
                     {
@@ -51,7 +51,7 @@ namespace EventsApplication.Controllers
         {
             if (Session["event"] != null)
             {
-                if (Session["LoginToegangssysteem"] != null || Session["LoginToegangssysteem"].ToString() == "true")
+                if (Session["adminLogin"] != null || Session["adminLogin"].ToString() == "true")
                 {
                     Event huidigEvent = (Event)Session["event"];
                     ModelToViewModel.EventToEventViewModel(huidigEvent);
@@ -100,7 +100,7 @@ namespace EventsApplication.Controllers
         // GET: Account present at festival
         public ActionResult Aanwezig()
         {
-            List<Account> accountsPresent = accountRepository.GetAllAccountsPresent();
+            List<Account> accountsPresent = accountRepository.GetAllAccountsPresentAtFestival((Event)Session["event"]);
             return View("Aanwezig", accountsPresent);
         }
 
@@ -121,7 +121,7 @@ namespace EventsApplication.Controllers
         [HttpPost]
         public ActionResult Login(string gebruikersnaam, string wachtwoord)
         {
-            Session["LoginToegangssysteem"] = "false";
+            Session["adminLogin"] = "false";
 
             AccountRepository db = new AccountRepository(new AccountContext());
 
@@ -129,7 +129,7 @@ namespace EventsApplication.Controllers
 
             if (userLoggedIn != null && userLoggedIn.Administrator == true)
             {
-                Session["LoginToegangssysteem"] = "true";
+                Session["adminLogin"] = "true";
                 return RedirectToAction("Index");
             }
             else
@@ -141,7 +141,7 @@ namespace EventsApplication.Controllers
         //Uitloggen
         public ActionResult LogOff()
         {
-            Session["LoginToegangssysteem"] = "false";
+            Session["adminLogin"] = "false";
             Session["RFID"] = null;
             return RedirectToAction("Index", "Home");
         }
@@ -149,7 +149,7 @@ namespace EventsApplication.Controllers
         //Koppel RFID
         public ActionResult KoppelRFID()
         {
-            if (Session["LoginToegangssysteem"] == null || Session["LoginToegangssysteem"].ToString() != "true")
+            if (Session["adminLogin"] == null || Session["adminLogin"].ToString() != "true")
             {
                 if (Session["account"] == null)
                 {
@@ -179,7 +179,7 @@ namespace EventsApplication.Controllers
 
         public ActionResult Materialen()
         {
-            if (Session["LoginToegangssysteem"].ToString() != "true")
+            if (Session["adminLogin"].ToString() != "true")
             {
                 return RedirectToAction("Login");
             }

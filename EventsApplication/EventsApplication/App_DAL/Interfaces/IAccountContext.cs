@@ -15,7 +15,10 @@ namespace EventsApplication.App_DAL
 
         List<Account> GetAllAccountsPresent();
 
+        List<Account> GetAllAccountsPresentAtFestival(Event evenement);
+
         List<Account> GetAllAccountsByReservation(int reserveringsID);
+
 
         Account GetCompleteAccountsByRRFID(string RFID);
 

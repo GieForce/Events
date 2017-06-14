@@ -1,17 +1,17 @@
 ﻿@{
     ViewBag.Title = "Aanwezig";
 }
-@if (Session["LoginToegangssysteem"] != null)
+@if (Session["adminLogin"] != null)
 {
-    if (Session["LoginToegangssysteem"].ToString() == "true")
+    if (Session["adminLogin"].ToString() == "true")
     {
-        using (Html.BeginForm("LogOff", "Gebruiker", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        using (Html.BeginForm("LogOff", "Toegangs", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
         {
             @Html.AntiForgeryToken()
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    @Html.ActionLink("Aanwezige mensen", "Aanwezig", routeValues: null, htmlAttributes: new { id = "Aanwezige" })
+                    @Html.ActionLink("Aanwezige mensen", "Aanwezig", "Toegangs", routeValues: null, htmlAttributes: new { id = "Aanwezige" })
                 </li>
                 <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
             </ul>
