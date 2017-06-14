@@ -78,7 +78,7 @@
         console.log($('#categorie').val());
         for (var i = 0; i < products.length; i++) {
             console.log(products[i]);
-            if ((products[i].merk.toLowerCase().indexOf($('#searchterm').val().toLowerCase()) > -1 || products[i].serie.toLowerCase().indexOf($('#searchterm').val().toLowerCase()) > -1) && (products[i].cat.toLowerCase() === $('#categorie').val().toLowerCase()) || $('#categorie').val().toLowerCase() === "") {
+            if ((products[i].merk.toLowerCase().indexOf($('#searchterm').val().toLowerCase()) >= 0 || products[i].serie.toLowerCase().indexOf($('#searchterm').val().toLowerCase()) >= 0) && ((products[i].cat.toLowerCase() === $('#categorie').val().toLowerCase()) || $('#categorie').val().toLowerCase() === "")) {
                 var toappend = '<div class="col-md-4"><a href="/reserveer/add?productid=' + products[i].id + '">' + products[i].merk + ' ' + products[i].serie + '</a></div>';
                 $('#products').append(toappend);
             }

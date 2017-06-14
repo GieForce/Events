@@ -3,6 +3,7 @@ using EventsApplication.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using EventsApplication.ViewModels;
 
 namespace EventsApplication.App_DAL
 {
@@ -68,7 +69,7 @@ namespace EventsApplication.App_DAL
             {
                 //Insert into table PERSOON
                 string queryPERSOON = "INSERT INTO PERSOON (voornaam, tussenvoegsel, achternaam, straat, huisnr, woonplaats, banknr) VALUES (@voornaam, @tussenvoegsel, @achternaam, @straat, @huisnr, @woonplaats, n.v.t.)";
-                
+
                 using (SqlCommand command = new SqlCommand(queryPERSOON, connection))
                 {
                     command.Parameters.AddWithValue("@voornaam", reservering.Voornaam);
@@ -84,8 +85,6 @@ namespace EventsApplication.App_DAL
                     }
                     catch (SqlException)
                     {
-                        //System.Windows.Forms.MessageBox.Show(e.Message);
-
                         throw;
                     }
 
@@ -116,8 +115,6 @@ namespace EventsApplication.App_DAL
                     }
                     catch (SqlException)
                     {
-                        //System.Windows.Forms.MessageBox.Show(e.Message);
-
                         throw;
                     }
 
@@ -141,8 +138,6 @@ namespace EventsApplication.App_DAL
                     }
                     catch (SqlException)
                     {
-                        //System.Windows.Forms.MessageBox.Show(e.Message);
-
                         throw;
                     }
 
@@ -211,7 +206,189 @@ namespace EventsApplication.App_DAL
             }
         }
 
-    private Reservering CreateReserveringFromReader(SqlDataReader reader)
+        public void PlaatsReservering(string voornaam, string tussenvoegsel, string achternaam, string straat, int huisnr,
+            string woonplaats, DateTime start, DateTime eind, int evenementid, List<int> plekids, List<AccountViewModel> accounts, List<ProductExemplaar> producten)
+        {
+            int persoonID = 0;
+            int hoofdAccountId = 0;
+
+            using (SqlConnection connection = Connection.SQLconnection)
+            {
+                //Insert into table PERSOON
+                string queryPERSOON = "INSERT INTO PERSOON (voornaam, tussenvoegsel, achternaam, straat, huisnr, woonplaats, banknr) VALUES (@voornaam, @tussenvoegsel, @achternaam, @straat, @huisnr, @woonplaats, 'n.v.t.');";
+
+                using (SqlCommand command = new SqlCommand(queryPERSOON, connection))
+                {
+                    command.Parameters.AddWithValue("@voornaam", voornaam);
+                    command.Parameters.AddWithValue("@tussenvoegsel", tussenvoegsel);
+                    command.Parameters.AddWithValue("@achternaam", achternaam);
+                    command.Parameters.AddWithValue("@straat", straat);
+                    command.Parameters.AddWithValue("@huisnr", huisnr);
+                    command.Parameters.AddWithValue("@woonplaats", woonplaats);
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (SqlException)
+                    {
+                        throw;
+                    }
+
+                }
+                //End table PERSOON
+
+                //Get id from PERSOON
+                string queryPERSOONID = "SELECT MAX(ID) as id FROM PERSOON";
+
+                using (SqlCommand command = new SqlCommand(queryPERSOONID, connection))
+                {
+                    try
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                persoonID = Convert.ToInt32(reader["id"]);
+                            }
+                        }
+                    }
+                    catch (SqlException)
+                    {
+                        throw;
+                    }
+
+                }
+                //End get PersonID
+
+                //Insert into table RESERVERING
+                string queryRESERVERING = "INSERT INTO RESERVERING (persoon_id, datumStart, datumEinde, betaald, eventID) VALUES (@persoon_id, @datumStart, @datumEind, @betaald, @eventID)";
+
+                using (SqlCommand command = new SqlCommand(queryRESERVERING, connection))
+                {
+                    command.Parameters.AddWithValue("@persoon_id", persoonID);
+                    command.Parameters.AddWithValue("@datumStart", start);
+                    command.Parameters.AddWithValue("@datumEind", eind);
+                    command.Parameters.AddWithValue("@betaald", true);
+                    command.Parameters.AddWithValue("@eventID", evenementid);
+
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (SqlException)
+                    {
+                        throw;
+                    }
+
+                }
+                //End insert into table RESERVERING
+
+                //Insert into plek_reservering
+                string queryPLEKRESERVERING = "INSERT INTO PLEK_RESERVERING (plek_id, reservering_id) VALUES (@plekID, (SELECT MAX(id) FROM RESERVERING))";
+
+                foreach (int plekid in plekids)
+                {
+                    using (SqlCommand command = new SqlCommand(queryPLEKRESERVERING, connection))
+                    {
+                        command.Parameters.AddWithValue("@plekID", plekid);
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                        catch (SqlException)
+                        {
+                            throw;
+                        }
+                    }
+
+                }
+                //End insert into plek_reservering
+
+                foreach (AccountViewModel account in accounts)
+                {
+                    try
+                    {
+                        string query =
+                            "INSERT INTO Account (gebruikersnaam, email, activatiehash, geactiveerd, wachtwoord, telefoonnummer, status) VALUES (@gebruikersnaam, @email, @activatiehash, @geactiveerd, @wachtwoord, @telefoonnummer, 0)";
+                        using (SqlCommand command = new SqlCommand(query, connection))
+                        {
+                            command.Parameters.AddWithValue("@gebruikersnaam", account.Gebruikersnaam);
+                            command.Parameters.AddWithValue("@email", account.Email);
+                            command.Parameters.AddWithValue("@activatiehash", Guid.NewGuid());
+                            command.Parameters.AddWithValue("@geactiveerd", false);
+                            command.Parameters.AddWithValue("@wachtwoord", account.Wachtwoord);
+                            command.Parameters.AddWithValue("@telefoonnummer", account.Telefoonnummer);
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+
+                    string idQuery =
+                        "INSERT INTO RESERVERING_POLSBANDJE (reservering_id, polsbandje_id, account_id, aanwezig) VALUES ((SELECT MAX(id) FROM RESERVERING), 1, (SELECT MAX(id) FROM ACCOUNT), 0)";
+                    using (SqlCommand command = new SqlCommand(idQuery, connection))
+                    {
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                        catch (SqlException)
+                        {
+                            throw;
+                        }
+                    }
+
+                    if (hoofdAccountId == 0)
+                    {
+                        string hoofdQuery =
+                            "SELECT MAX(id) as id FROM RESERVERING_POLSBANDJE";
+                        using (SqlCommand command = new SqlCommand(hoofdQuery, connection))
+                        {
+                            try
+                            {
+                                using (SqlDataReader reader = command.ExecuteReader())
+                                {
+                                    while (reader.Read())
+                                    {
+                                        hoofdAccountId = Convert.ToInt32(reader["id"]);
+                                    }
+                                }
+                            }
+                            catch (SqlException)
+                            {
+                                throw;
+                            }
+                        }
+                    }
+                }
+
+                foreach (ProductExemplaar product in producten)
+                {
+                    Verhuur v = new Verhuur(product.Id, hoofdAccountId, eind, start, 0, true);
+                    string queryProduct = "INSERT INTO VERHUUR VALUES (@exemplaarid, @reserveringid, @datumin, @datumuit, 0, 1)";
+
+                    using (SqlCommand command = new SqlCommand(queryProduct, connection))
+                    {
+                        command.Parameters.AddWithValue("@exemplaarid", product.Id);
+                        command.Parameters.AddWithValue("@reserveringid", hoofdAccountId);
+                        command.Parameters.AddWithValue("@datumin", eind);
+                        command.Parameters.AddWithValue("@datumuit", start);
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                        catch (SqlException)
+                        {
+                            throw;
+                        }
+                    }
+                }
+            }
+        }
+
+        private Reservering CreateReserveringFromReader(SqlDataReader reader)
         {
             return new Reservering(
             Convert.ToInt32(reader["id"]),

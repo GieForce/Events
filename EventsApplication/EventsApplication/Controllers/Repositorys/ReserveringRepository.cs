@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using EventsApplication.App_DAL.Interfaces;
+using EventsApplication.ViewModels;
 
 namespace EventsApplication.Controllers.Repositorys
 {
@@ -38,7 +39,7 @@ namespace EventsApplication.Controllers.Repositorys
 
         public void PlaatsReservering(string voornaam, string tussenvoegsel, string achternaam, string straat,
             int huisnr, string woonplaats, DateTime start, DateTime eind, int evenementid, List<int> plekids,
-            List<Account> accounts, List<Product> producten)
+            List<AccountViewModel> accounts, List<ProductExemplaar> producten)
         {
             reserveringDao.PlaatsReservering(voornaam, tussenvoegsel, achternaam, straat, huisnr, woonplaats, start,
                 eind, evenementid, plekids, accounts, producten);

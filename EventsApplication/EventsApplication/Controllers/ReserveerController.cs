@@ -208,7 +208,12 @@ namespace EventsApplication.Controllers
             }
             ReserveringViewModel reservering = (ReserveringViewModel) Session["reservering"];
             ReserveringRepository repo = new ReserveringRepository(new ReserveringContext());
-            repo.PlaatsReservering(
+            List<int> plekids = reservering.Staanplaatsen.Select(x => x.Id).ToList();
+            repo.PlaatsReservering(reservering.Voornaam, reservering.Tussenvoegsel, reservering.Achternaam,
+                reservering.Straat, reservering.Huisnummer, reservering.Woonplaats, reservering.DatumStart,
+                reservering.DatumEind, reservering.Evenement.ID1, plekids, reservering.Accounts,
+                reservering.Exemplaren);
+            return View("Succes");
         }
     }
 }
