@@ -123,6 +123,20 @@
                 });
         });
 
+    $(".likePost").on("click",
+        function () {
+            //         $("#showPosts").html("");
+            //      $loading.show();
+            var $targetItem = $(this).attr("data-item");
+            $.ajax({
+                    url: "/Mediasharing/GiveALike/" + $targetItem,
+                    type: "POST"
+                })
+                .done(function (partialViewResult) {
+                    $("#showPosts").html(partialViewResult);
+                    $loading.hide();
+                });
+        });
 
 
 }); 

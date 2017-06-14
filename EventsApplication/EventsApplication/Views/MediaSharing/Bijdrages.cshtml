@@ -80,7 +80,7 @@
                         </div>
                     </div>
                     <div class="stats">
-                        <a href="#" class="btn btn-default stat-item">
+                        <a href="#" class="btn btn-default stat-item likePost" data-item="@item.Id">
                             @{ int likes = item.AccountBijdrage.Count(x => x.Like == 1); }
                             <i class="fa fa-thumbs-up icon"></i>@likes
                         </a>
