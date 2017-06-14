@@ -1,0 +1,36 @@
+﻿.box {
+        position: absolute;
+    margin-top: 5%;
+      background-color:rgba(0, 0, 0, 0.7);
+      height: 150%;
+      width: 500px;
+      left: 50%;
+      margin-left: -250px; /* margin is -0.5 * dimension */
+      position: relative;
+      position: center;
+    opacity: 1;
+}
+
+.formgroup {
+        position: absolute;
+    margin-top: 5%;
+      height: 150%;
+      width: 300px;
+      left: 50%;
+      margin-left: -150px; /* margin is -0.5 * dimension */
+      position: relative;
+      position: center;
+}
+
+input {
+    width: 100px;
+}
+
+submit {
+      position: relative;
+      position: center;
+}
+
+h4, ul, label {
+    color: white;
+}

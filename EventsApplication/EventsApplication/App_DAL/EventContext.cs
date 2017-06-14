@@ -46,6 +46,7 @@ namespace EventsApplication.App_DAL
                 return null;
             }
         }
+
         public bool Insert(Event eventi)
         {
             try

@@ -13,6 +13,8 @@ namespace EventsApplication
 
         List<Product> GetByProductCat(ProductCat productCat);
 
+        Product GetByID(int ID);
+
         void Delete(Product product);
 
         void Insert(Product product);

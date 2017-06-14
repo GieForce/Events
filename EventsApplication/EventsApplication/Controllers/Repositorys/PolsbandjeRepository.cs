@@ -31,6 +31,11 @@ namespace EventsApplication.Controllers.Repositorys
             context.Insert(polsbandje, reservering, account);
         }
 
+        public void ConnectAccountWithRFID(string RFID, Polsbandje polsbandje, Account account)
+        {
+            context.ConnectAccountWithRFID(RFID, polsbandje, account);
+        }
+
         public void Delete(Polsbandje polsbandje)
         {
             context.Delete(polsbandje);

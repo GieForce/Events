@@ -11,6 +11,8 @@ namespace EventsApplication.App_DAL.Interfaces
     {
         List<ProductExemplaar> GetProductExemplaars();
 
+        List<ProductExemplaar> GetProductsByReservation(int reserveringsID);
+
         void Insert(ProductExemplaar productExemplaar);
 
         bool Update(ProductExemplaar productExemplaar);

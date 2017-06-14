@@ -1,0 +1,58 @@
+﻿@using EventsApplication.ViewModels
+@using Microsoft.Ajax.Utilities
+@model EventsApplication.ViewModels.AccountViewModel
+@{
+    ViewBag.Title = "KoppelRFID";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <link rel="stylesheet" type="text/css" href="~/Content/Login.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/RFID.css">
+
+    if (Model != null)
+    {
+
+        <div class="box">
+            <div class="row">
+                <div class="formgroup col-md-10 col-md-offset-1">
+                    <h4>Geselecteerde gebruiker:</h4>
+                    <ul>
+                        <li>@Model.Account.Gebruikersnaam</li>
+                        <li>@Model.Account.Telefoonnummer</li>
+                        <li>Geactiveerd: @Model.Account.Geactiveerd</li>
+                        <li>Begindatum: @Model.Reservering.StartDatum.ToShortDateString()</li>
+                        <li>Einddatum: @Model.Reservering.EindDatum.ToShortDateString()</li>
+                        <li><b>Betaald: @Model.Reservering.Betaalstatus</b></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="formgroup col-md-10 col-md-offset-1">
+                    <label for="form4">RFID</label>
+                    <input type="text" width="250" id="RFID" name="RFID" class="form-control" autofocus />
+                </div>
+
+            </div>
+            <br/>
+            <br/>
+            <br/>
+            <div class="row">
+                <div class="formgroup col-md-10 col-md-offset-1">
+                    <input type="submit" value="Koppel RFID" class="btn btn-default" />
+                </div>
+            </div>
+            <br/>
+            <br/>
+
+        </div>
+    }
+    else
+    {
+        <p>@Html.ActionLink("Terug", "Index")</p>
+    }
+
+
+}

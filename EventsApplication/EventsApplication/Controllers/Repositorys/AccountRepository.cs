@@ -36,6 +36,16 @@ namespace EventsApplication.Controllers
             return context.GetAllAccountsByReservation(reserveringsID);
         }
 
+        public Account GetCompleteAccountsByRRFID(string RFID)
+        {
+            return context.GetCompleteAccountsByRRFID(RFID);
+        }
+
+        public Account GetCompleteAccountByEmailAndActivationhash(string email, string activatiehash)
+        {
+            return context.GetCompleteAccountByEmailAndActivationhash(email, activatiehash);
+        }
+
         public bool Insert(Account account)
         {
             return context.Insert(account);

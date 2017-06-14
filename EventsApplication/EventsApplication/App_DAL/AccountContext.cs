@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using EventsApplication.Models;
@@ -39,7 +40,8 @@ namespace EventsApplication.App_DAL
                                 bool geactiveerd = Convert.ToBoolean(reader["geactiveerd"]);
                                 string wachtwoord = (string)reader["wachtwoord"];
                                 string telefoonnummer = (string)reader["telefoonnummer"];
-                                Account account = new Account(userid, gebruikersnaam, email, activatiehash, geactiveerd, wachtwoord, telefoonnummer);
+                                bool status = (bool)reader["status"];
+                                Account account = new Account(userid, gebruikersnaam, email, activatiehash, geactiveerd, wachtwoord, telefoonnummer, status);
                                 return account;
                             }
                             return null;
@@ -209,7 +211,7 @@ namespace EventsApplication.App_DAL
 
             using (SqlConnection connection = Connection.SQLconnection)
             {
-                string query = "SELECT ACCOUNT.ID, ACCOUNT.gebruikersnaam, ACCOUNT.email, ACCOUNT.activatiehash, ACCOUNT.geactiveerd, ACCOUNT.wachtwoord, ACCOUNT.telefoonnummer FROM ACCOUNT INNER JOIN RESERVERING_POLSBANDJE ON (ACCOUNT.ID=RESERVERING_POLSBANDJE.account_id) INNER JOIN RESERVERING ON (RESERVERING_POLSBANDJE.reservering_id=RESERVERING.ID) WHERE RESERVERING.ID = @reserveringsID";
+                string query = "SELECT ACCOUNT.ID, ACCOUNT.gebruikersnaam, ACCOUNT.email, ACCOUNT.activatiehash, ACCOUNT.geactiveerd, ACCOUNT.wachtwoord, ACCOUNT.telefoonnummer, POLSBANDJE.barcode, ACCOUNT.status FROM ACCOUNT INNER JOIN RESERVERING_POLSBANDJE ON (ACCOUNT.ID=RESERVERING_POLSBANDJE.account_id) INNER JOIN RESERVERING ON (RESERVERING_POLSBANDJE.reservering_id=RESERVERING.ID) INNER JOIN POLSBANDJE ON (RESERVERING_POLSBANDJE.polsbandje_id=POLSBANDJE.ID) WHERE RESERVERING.ID = @reserveringsID";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@reserveringsID", reserveringsID);
@@ -218,7 +220,7 @@ namespace EventsApplication.App_DAL
                     {
                         while (reader.Read())
                         {
-                            accountlist.Add(ReaderToAccount(reader));
+                            accountlist.Add(ReaderToAccountBARCODE(reader));
                         }
                     }
                 }
@@ -232,19 +234,66 @@ namespace EventsApplication.App_DAL
 
             using (SqlConnection connection = Connection.SQLconnection)
             {
-                string query = "SELECT DISTINCT account.ID, account.gebruikersnaam, account.email, ACCOUNT.activatiehash, ACCOUNT.geactiveerd, account.wachtwoord, ACCOUNT.telefoonnummer, reservering_polsbandje.aanwezig FROM account JOIN reservering_polsbandje ON (reservering_polsbandje.account_id=account.ID) WHERE reservering_polsbandje.aanwezig = 1;";
+                string query = "SELECT DISTINCT account.ID, account.gebruikersnaam, account.email, ACCOUNT.activatiehash, ACCOUNT.geactiveerd, account.wachtwoord, ACCOUNT.telefoonnummer, reservering_polsbandje.aanwezig, POLSBANDJE.barcode, ACCOUNT.status FROM account JOIN reservering_polsbandje ON (reservering_polsbandje.account_id=account.ID) INNER JOIN POLSBANDJE ON (RESERVERING_POLSBANDJE.polsbandje_id=POLSBANDJE.ID) WHERE reservering_polsbandje.aanwezig = 1;";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            accountlist.Add(ReaderToAccount(reader));
+                            accountlist.Add(ReaderToAccountBARCODE(reader));
                         }
                     }
                 }
             }
             return accountlist;
+        }
+
+        public Account GetCompleteAccountsByRRFID(string RFID)
+        {
+            Account account = null;
+
+            using (SqlConnection connection = Connection.SQLconnection)
+            {
+                string query = "SELECT ACCOUNT.ID, ACCOUNT.gebruikersnaam, ACCOUNT.email, ACCOUNT.activatiehash, ACCOUNT.geactiveerd, ACCOUNT.wachtwoord, ACCOUNT.telefoonnummer, POLSBANDJE.barcode FROM ACCOUNT INNER JOIN RESERVERING_POLSBANDJE ON (ACCOUNT.ID=RESERVERING_POLSBANDJE.account_id) INNER JOIN RESERVERING ON (RESERVERING_POLSBANDJE.reservering_id=RESERVERING.ID) INNER JOIN POLSBANDJE ON (RESERVERING_POLSBANDJE.polsbandje_id=POLSBANDJE.ID) WHERE POLSBANDJE.barcode=@RFID";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@RFID", RFID);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            account = ReaderToAccountBARCODE(reader);
+                        }
+                    }
+                }
+            }
+            return account;
+        }
+
+        public Account GetCompleteAccountByEmailAndActivationhash(string email, string activatiehash)
+        {
+            Account account = null;
+
+            using (SqlConnection connection = Connection.SQLconnection)
+            {
+                string query = "SELECT ACCOUNT.ID, ACCOUNT.gebruikersnaam, ACCOUNT.email, ACCOUNT.activatiehash, ACCOUNT.geactiveerd, ACCOUNT.wachtwoord, ACCOUNT.telefoonnummer, POLSBANDJE.barcode, ACCOUNT.status FROM ACCOUNT INNER JOIN RESERVERING_POLSBANDJE ON (ACCOUNT.ID=RESERVERING_POLSBANDJE.account_id) INNER JOIN RESERVERING ON (RESERVERING_POLSBANDJE.reservering_id=RESERVERING.ID) INNER JOIN POLSBANDJE ON (RESERVERING_POLSBANDJE.polsbandje_id=POLSBANDJE.ID) WHERE ACCOUNT.email=@email AND ACCOUNT.activatiehash=@activationHash;";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@email", email);
+                    command.Parameters.AddWithValue("@activationHash", activatiehash);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            account = ReaderToAccountBARCODE(reader);
+                        }
+                    }
+                }
+            }
+            return account;
         }
 
 
@@ -257,7 +306,25 @@ namespace EventsApplication.App_DAL
                 Convert.ToString(reader["activatiehash"]),
                 Convert.ToBoolean(reader["geactiveerd"]),
                 Convert.ToString(reader["wachtwoord"]),
-                Convert.ToString(reader["telefoonnummer"])
+                Convert.ToString(reader["telefoonnummer"]),
+                Convert.ToBoolean(reader["status"])
+            );
+
+        }
+
+        //Account whit barcode
+        private Account ReaderToAccountBARCODE(SqlDataReader reader)
+        {
+            return new Account(
+                Convert.ToInt32(reader["ID"]),
+                Convert.ToString(reader["gebruikersnaam"]),
+                Convert.ToString(reader["email"]),
+                Convert.ToString(reader["activatiehash"]),
+                Convert.ToBoolean(reader["geactiveerd"]),
+                Convert.ToString(reader["wachtwoord"]),
+                Convert.ToString(reader["telefoonnummer"]),
+                Convert.ToString(reader["barcode"]),
+                Convert.ToBoolean(reader["status"])
             );
 
         }

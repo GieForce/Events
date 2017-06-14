@@ -14,6 +14,8 @@ namespace EventsApplication.Models
     {
         StandplaatsRepository standplaatsRepository = new StandplaatsRepository(new StandplaatsContext());
         AccountRepository accountRepository = new AccountRepository(new AccountContext());
+        ProductExemplaarRepository productExemplaarRepository = new ProductExemplaarRepository(new ProductExemplaarContext());
+        EventRepository eventRepository = new EventRepository(new EventContext());
 
         private int id;
         private string voornaam;
@@ -28,8 +30,11 @@ namespace EventsApplication.Models
         private DateTime eindDatum;
         private int standplaatsID;
 
-        private Standplaats standplaats;
+        private Event evenementIDReservering;
+
+        private List<Standplaats> staanplaatsen;
         private List<Account> accounts;
+        private List<ProductExemplaar> productExemplaar;
 
         public int Id
         {
@@ -91,10 +96,10 @@ namespace EventsApplication.Models
             get { return standplaatsID; }
         }
 
-        public Standplaats Staanplaats
+        public List<Standplaats> Staanplaatsen
         {
-            get { return standplaats; }
-            set { standplaats = value; }
+            get { return staanplaatsen; }
+            set { staanplaatsen = value; }
         }
 
         public List<Account> Accounts
@@ -103,7 +108,19 @@ namespace EventsApplication.Models
             set { accounts = value; }
         }
 
-        public Reservering(int id, string voornaam, string tussenvoegsel, string achternaam, string straat, int huisnummer, string woonplaats, int betaald, DateTime startDatum, DateTime eindDatum, int standplaatsId)
+        public List<ProductExemplaar> ProductExemplaar
+        {
+            get { return productExemplaar; }
+            set { productExemplaar = value; }
+        }
+
+        public Event EvenementIDReservering
+        {
+            get { return evenementIDReservering; }
+            set { evenementIDReservering = value; }
+        }
+
+        public Reservering(int id, string voornaam, string tussenvoegsel, string achternaam, string straat, int huisnummer, string woonplaats, int betaald, DateTime startDatum, DateTime eindDatum, int standplaatsId, int eventID)
         {
             this.id = id;
             this.voornaam = voornaam;
@@ -127,11 +144,13 @@ namespace EventsApplication.Models
             this.eindDatum = eindDatum;
             this.standplaatsID = standplaatsId;
 
-            this.standplaats = standplaatsRepository.GetByReservation(id);
-            accounts = accountRepository.GetAllAccountsByReservation(id);
+            this.evenementIDReservering = eventRepository.GetById(eventID);
+            this.staanplaatsen = standplaatsRepository.GetByReservation(id);
+            this.accounts = accountRepository.GetAllAccountsByReservation(id);
+            this.productExemplaar = productExemplaarRepository.GetProductsByReservation(id);
         }
 
-        public Reservering(string voornaam, string tussenvoegsel, string achternaam, string straat, int huisnummer, string woonplaats, int betaald, DateTime startDatum, DateTime eindDatum, int standplaatsId)
+        public Reservering(string voornaam, string tussenvoegsel, string achternaam, string straat, int huisnummer, string woonplaats, int betaald, DateTime startDatum, DateTime eindDatum, int standplaatsId, int eventID)
         {
             this.voornaam = voornaam;
             this.tussenvoegsel = tussenvoegsel;
@@ -150,6 +169,7 @@ namespace EventsApplication.Models
                 betaalstatus = false;
             }
 
+            this.evenementIDReservering = eventRepository.GetById(eventID);
             this.startDatum = startDatum;
             this.eindDatum = eindDatum;
             this.standplaatsID = standplaatsId;

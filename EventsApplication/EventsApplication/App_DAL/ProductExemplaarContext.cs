@@ -40,7 +40,37 @@ namespace EventsApplication.App_DAL
             return result;
         }
 
-        public List<ProductExemplaar> GetByProduct(int productId)
+        public List<ProductExemplaar> GetProductsByReservation(int reserveringsID)
+        {
+            List<ProductExemplaar> result = new List<ProductExemplaar>();
+            using (SqlConnection connection = Connection.SQLconnection)
+            {
+                string query = "SELECT PRODUCTEXEMPLAAR.ID, PRODUCTEXEMPLAAR.product_id, PRODUCTEXEMPLAAR.volgnummer, PRODUCTEXEMPLAAR.barcode FROM PRODUCTEXEMPLAAR INNER JOIN VERHUUR ON (PRODUCTEXEMPLAAR.ID=VERHUUR.productexemplaar_id) INNER JOIN RESERVERING_POLSBANDJE ON (VERHUUR.res_pb_id=RESERVERING_POLSBANDJE.ID) WHERE RESERVERING_POLSBANDJE.reservering_id = @reserveringsID";
+
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@reserveringsID", reserveringsID);
+                    try
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                result.Add(CreateReserveringFromReader(reader));
+                            }
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                }
+            }
+            return result;
+        }
+
+        public ProductExemplaar GetByProduct(int productId)
         {        
             List<ProductExemplaar> rlist = new List<ProductExemplaar>();
                 using (SqlConnection connection = Connection.SQLconnection)
@@ -48,7 +78,7 @@ namespace EventsApplication.App_DAL
                     string query = "SELECT * FROM PRODUCTEXEMPLAAR WHERE product_id = @param1";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("param1", productId);
+                        command.Parameters.AddWithValue("@param1", productId);
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             if (reader.Read())

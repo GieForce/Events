@@ -1,22 +1,105 @@
-﻿@model IEnumerable<EventsApplication.Models.Account>
-
+﻿@using EventsApplication.Models
+@using EventsApplication.ViewModels
+@using Microsoft.Ajax.Utilities
+@model EventsApplication.ViewModels.AccountViewModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Toegangscontrole";
 }
 <link rel="stylesheet" type="text/css" href="../Content/bootstrap.css"/>
+<!-- Website CSS style -->
+<link href="https://fonts.googleapis.com/css?family=Pacifico&subset=latin-ext,vietnamese" rel="stylesheet">
+<!-- Website Font style -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&subset=latin-ext" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="~/Content/Login.css">
+<link rel="stylesheet" type="text/css" href="~/Content/Toegangscontrole.css">
 
-@Html.ActionLink("Aanwezige mensen", "Aanwezig")
 
-<div class="container">
-    <div class="row">
-        <div class="col-xs-4">
-            ONE
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="box">
+        <div class="div1">
+           
+            <p>
+            @if (Model != null)
+            {
+                <h4>Bezoeker:</h4>
+                <ul>
+                    <li>@Model.Account.Gebruikersnaam</li>
+                    <li>@Model.Account.Telefoonnummer</li>
+                    <li>geactiveerd: @Model.Account.Geactiveerd</li>
+                    <li>Aanwezig: @Model.Account.Aanwezig</li>
+                    <li>Begindatum: @Model.Reservering.StartDatum.ToShortDateString()</li>
+                    <li>Einddatum: @Model.Reservering.EindDatum.ToShortDateString()</li>
+                    <li><b>Betaald: @Model.Reservering.Betaalstatus</b></li>
+                    @foreach (Standplaats standplaats in Model.Reservering.Staanplaatsen)
+                    {
+                        <li>Standplaats: @standplaats.Plaatsnummer</li>
+                    }
+
+                    @if (@Model.Polsbandje.actief == 0)
+                    {
+                        <li>Polsbandje is niet geactiveerd.</li>
+                    }
+                    else
+                    {
+                        <li>Polsbandje is geactiveerd.</li>
+                    }
+                </ul>
+                if (Model.Reservering.Betaalstatus == false)
+                {
+                    @*Button pay, when reservation hasnt been payed yet*@
+                    <input type="submit" value="Betalen" class="btn btn-block"/>
+                }
+            }
+            else
+            {
+                <h4></h4>
+
+                <div class="form">
+                    <div class="form-group">
+                        <label for="form2">Email</label>
+                        <input type="text" id="form4" name="email" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form4">Activatiehash</label>
+                        <input type="text" id="form4" name="activatiehash" class="form-control">
+                    </div>
+
+                    <div class="text-xs-center">
+                        <input type="submit" value="Zoek gebruiker" class="btn btn-default"/>
+                    </div>
+                    <br/>
+                    <br/>
+                    <br/>
+
+                </div>
+            }
         </div>
-        <div class="col-xs-4">
-            TWO
-        </div>
-        <div class="col-xs-4">
-            Three
-        </div>
+    <div class="div2">
+    @if (Model != null)
+    {
+        if (Model.Polsbandje.Barcode == null)
+        {
+            @Html.ActionLink("Koppel RFID", "KoppelRFID")
+        }
+        else
+        {
+            <h4>Materialen:</h4>
+            @Html.ActionLink("Materiaal bij reservering", "Materialen")
+        }
+    }
+    else
+    {
+    }
     </div>
+    
+        <div class="clear"></div>
 </div>
+    
+}

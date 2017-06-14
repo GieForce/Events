@@ -75,9 +75,9 @@ namespace EventsApplication.App_DAL
 
         }
 
-        public Standplaats GetByReservation(int reservationID)
+        public List<Standplaats> GetByReservation(int reservationID)
         {
-            Standplaats splts = null;
+            List<Standplaats> splts = new List<Standplaats>();
             SqlConnection conn = Connection.SQLconnection;
             try
             {
@@ -89,20 +89,19 @@ namespace EventsApplication.App_DAL
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    int ID = Convert.ToInt32(reader["P.ID"].ToString());
-                    int capaciteit = Convert.ToInt32(reader["P.capaciteit"].ToString());
-                    int nummer = Convert.ToInt32(reader["P.nummer"].ToString());
-                    decimal prijs = Convert.ToDecimal(reader["P.prijs"].ToString());
-                    string specificatie = reader["S.naam"].ToString();
+                    int ID = Convert.ToInt32(reader["ID"]);
+                    int capaciteit = Convert.ToInt32(reader["capaciteit"]);
+                    int nummer = Convert.ToInt32(reader["nummer"]);
+                    string specificatie = Convert.ToString(reader["naam"]);
+                    decimal prijs = Convert.ToDecimal(reader["prijs"]);
 
-                    splts = new Standplaats(ID, nummer, capaciteit, prijs, specificatie);
+                    splts.Add(new Standplaats(ID, nummer, capaciteit, prijs, specificatie));
                 }
                 conn.Close();
 
             }
             catch
             {
-
             }
 
             return splts;

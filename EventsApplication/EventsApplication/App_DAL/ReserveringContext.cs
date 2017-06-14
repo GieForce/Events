@@ -16,7 +16,7 @@ namespace EventsApplication.App_DAL
             List<Reservering> result = new List<Reservering>();
             using (SqlConnection connection = Connection.SQLconnection)
             {
-                string query = "SELECT reservering.id, voornaam, tussenvoegsel, achternaam, straat, huisnr, woonplaats, betaald, datumStart, datumEinde, plek_id FROM Reservering INNER JOIN Persoon ON persoon_id = persoon.id INNER JOIN PLEK_RESERVERING ON reservering.ID = PLEK_RESERVERING.plek_id;";
+                string query = "SELECT reservering.id, voornaam, tussenvoegsel, achternaam, straat, huisnr, woonplaats, betaald, datumStart, datumEinde, plek_id, eventID FROM Reservering INNER JOIN Persoon ON persoon_id = persoon.id INNER JOIN PLEK_RESERVERING ON reservering.ID = PLEK_RESERVERING.plek_id;";
 
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -44,7 +44,7 @@ namespace EventsApplication.App_DAL
         {
             using (SqlConnection connection = Connection.SQLconnection)
             {
-                string query = "SELECT reservering.id, voornaam, tussenvoegsel, achternaam, straat, huisnr, woonplaats, betaald, datumStart, datumEinde, plek_id FROM Reservering INNER JOIN Persoon ON persoon_id = persoon.id INNER JOIN PLEK_RESERVERING ON reservering.ID = PLEK_RESERVERING.plek_id WHERE RESERVERING.ID = @id";
+                string query = "SELECT reservering.id, voornaam, tussenvoegsel, achternaam, straat, huisnr, woonplaats, betaald, datumStart, datumEinde, plek_id, eventID FROM Reservering INNER JOIN Persoon ON persoon_id = persoon.id INNER JOIN PLEK_RESERVERING ON reservering.ID = PLEK_RESERVERING.plek_id WHERE RESERVERING.ID = @id";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@id", id);
@@ -401,7 +401,8 @@ namespace EventsApplication.App_DAL
             Convert.ToInt32(reader["betaald"]),
             Convert.ToDateTime(reader["datumStart"]),
             Convert.ToDateTime(reader["datumEinde"]),
-            Convert.ToInt32(reader["plek_id"]));
+            Convert.ToInt32(reader["plek_id"]),
+            Convert.ToInt32(reader["eventID"]));
         }
     }
 }

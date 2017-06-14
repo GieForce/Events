@@ -62,29 +62,29 @@ namespace EventsApplication.Models
 
         public Standplaats(int plaatsnummer, int locatieid, int capaciteit, decimal prijs)
         {
-            Plaatsnummer = plaatsnummer;
-            Locatieid = locatieid;
-            Capaciteit = capaciteit;
-            Prijs = prijs;
+            this.plaatsnummer = plaatsnummer;
+            this.locatieid = locatieid;
+            this.capaciteit = capaciteit;
+            this.prijs = prijs;
         }
 
         public Standplaats(int id, int plaatsnummer, int capaciteit, decimal prijs, string specificatie)
         {
             this.id = id;
-            Plaatsnummer = plaatsnummer;
-            Capaciteit = capaciteit;
-            Prijs = prijs;
+            this.plaatsnummer = plaatsnummer;
+            this.capaciteit = capaciteit;
+            this.prijs = prijs;
             if(specificatie == "kraan beschikbaar")
             {
-                Kraanbeschikbaar = true;
+                kraanbeschikbaar = true;
             }
             if (specificatie == "handicap geschikt")
             {
-                Handicapbeschikbaar = true;
+                handicapbeschikbaar = true;
             }
             if (specificatie == "comfortplek")
             {
-                Comfortplek = true;
+                comfortplek = true;
             }
         }
 
