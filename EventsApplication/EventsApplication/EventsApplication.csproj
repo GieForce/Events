@@ -397,6 +397,7 @@
     <Content Include="Views\Hosting\EventEdit.cshtml" />
     <Content Include="Views\Hosting\EventIndex.cshtml" />
     <Content Include="Views\Hosting\LocatieEdit.cshtml" />
+    <Content Include="Views\Hosting\ProductDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

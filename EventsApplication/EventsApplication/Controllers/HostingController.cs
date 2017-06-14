@@ -53,7 +53,11 @@ namespace EventsApplication.Controllers
                 ViewBag.productcategorie = productcats;
                 return View(products);
             }
-            catch { return View("Error"); }
+            catch(Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+             return View("Error");
+            }
         }
 
         public ActionResult ProductCreate()
@@ -68,7 +72,11 @@ namespace EventsApplication.Controllers
                 List<Account> accounts = accountrepo.GetAllAccounts();
                 return View(accounts);
             }
-            catch { return View("Error"); }
+            catch (Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+                return View("Error");
+            }
         }
 
         public ActionResult LocatieIndex()
@@ -77,7 +85,11 @@ namespace EventsApplication.Controllers
                 List<Locatie> locaties = locatierepo.GetAll();
                 return View(locaties);
             }
-            catch { return View("Error"); }
+            catch (Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+                return View("Error");
+            }
         }
 
         
@@ -88,7 +100,25 @@ namespace EventsApplication.Controllers
                 Session["activeevent"] = evento;
                 return View(evento);
             }
-            catch { return View("Error"); }
+            catch (Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+                return View("Error");
+            }
+        }
+
+        public ActionResult ProductDetails(int id)
+        {
+            try
+            {
+                Product product = productrepo.getproductbyid(id);
+                return View(product);
+            }
+            catch (Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+                return View("Error");
+            }
         }
 
 
@@ -111,7 +141,11 @@ namespace EventsApplication.Controllers
                 ViewBag.Locatieding = locatieitems;
                 return View();
             }
-            catch { return View("Error"); }
+            catch (Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+                return View("Error");
+            }
         }
 
         public ActionResult StandplaatsCreate()
@@ -135,9 +169,10 @@ namespace EventsApplication.Controllers
                 accountrepo.insertadmin(account);
                 return RedirectToAction("AccountIndex");
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                ViewBag.Fout = e.ToString();
+                return View("Error");
             }
         }
 
@@ -321,9 +356,10 @@ namespace EventsApplication.Controllers
                 ViewBag.Error = "Please Upload Files in .csv format";
                 return View();
             }
-            catch
+            catch (Exception e)
             {
-               return View();
+                ViewBag.Fout = e.ToString();
+                return View("Error");
             }
         }
 
@@ -347,9 +383,10 @@ namespace EventsApplication.Controllers
                 accountrepo.Update(accounto);
                 return RedirectToAction("AccountIndex");
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                ViewBag.Fout = e.ToString();
+                return View("Error");
             }
         }
 
@@ -371,9 +408,10 @@ namespace EventsApplication.Controllers
                 accountrepo.Update(accounto);
                 return RedirectToAction("AccountIndex");
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                ViewBag.Fout = e.ToString();
+                return View("Error");
             }
         }
 
@@ -395,9 +433,10 @@ namespace EventsApplication.Controllers
                 locatierepo.Update(locatie);
                 return RedirectToAction("LocatieIndex");
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                ViewBag.Fout = e.ToString();
+                return View("Error");
             }
         }
 
@@ -407,7 +446,11 @@ namespace EventsApplication.Controllers
                 eventrepo.Delete(id);
                 return RedirectToAction("EventIndex");
             }
-            catch { return View("Error"); }
+            catch (Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+                return View("Error");
+            }
         }
 
         public ActionResult LocatieDelete(int id)
@@ -416,7 +459,11 @@ namespace EventsApplication.Controllers
                 locatierepo.Delete(locatierepo.getbyid(id));
                 return RedirectToAction("LocatieIndex");
             }
-            catch { return View("Error"); }
+            catch (Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+                return View("Error");
+            }
         }
 
         public ActionResult AccountDelete(int id)
@@ -425,7 +472,11 @@ namespace EventsApplication.Controllers
                 accountrepo.Delete(id);
                 return RedirectToAction("AccountIndex");
             }
-            catch { return View("Error"); }
+            catch (Exception e)
+            {
+                ViewBag.Fout = e.ToString();
+                return View("Error");
+            }
         }
 
     }
