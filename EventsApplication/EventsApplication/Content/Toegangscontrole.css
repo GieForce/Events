@@ -1,7 +1,7 @@
 ﻿div.box {
         position: absolute;
     margin-top: 5%;
-      background: #EEE;
+      background-color:rgba(0, 0, 0, 0.7);
       height: 100%;
       width: 600px;
       left: 50%;
@@ -30,4 +30,8 @@ div.clear {
   overflow: hidden;
   font-size: 0pt;
   margin-top: -1px;
+}
+
+h4, ul, label {
+    color: white;
 }

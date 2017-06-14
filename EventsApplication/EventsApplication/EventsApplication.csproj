@@ -242,6 +242,7 @@
     <Content Include="Content\Media.css" />
     <Content Include="Content\navbar.css" />
     <Content Include="Content\Pictures\background3.jpg" />
+    <Content Include="Content\RFID.css" />
     <Content Include="Content\tag.css" />
     <Content Include="Content\Toegangscontrole.css" />
     <Content Include="favicon.ico" />

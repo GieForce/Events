@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Aanwezig";
 }
-@if (!string.IsNullOrEmpty(Session["LoginToegangssysteem"] as string))
+@if (Session["LoginToegangssysteem"] != null)
 {
     if (Session["LoginToegangssysteem"].ToString() == "true")
     {

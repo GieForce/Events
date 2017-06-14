@@ -17,18 +17,13 @@ namespace EventsApplication.Controllers
         AccountRepository accountRepository = new AccountRepository(new AccountContext());
         PolsbandjeRepository polsbandjeRepository = new PolsbandjeRepository(new PolsbandjeContext());
         ReserveringRepository reserveringRepository = new ReserveringRepository(new ReserveringContext());
-        private RFID rfid;
 
         // GET: Toegangs
         public ActionResult Index()
         {
-            if (!string.IsNullOrEmpty(Session["LoginToegangssysteem"] as string))
+            if (Session["event"] != null)
             {
-                if (Session["LoginToegangssysteem"].ToString() != "true")
-                {
-                    return RedirectToAction("Login");
-                }
-                else
+                if (Session["LoginToegangssysteem"] == null || Session["LoginToegangssysteem"].ToString() != "true")
                 {
                     if (Session["account"] == null)
                     {
@@ -40,47 +35,59 @@ namespace EventsApplication.Controllers
                         return View(acwm);
                     }
                 }
+                else
+                {
+                    return RedirectToAction("Login");
+                }
             }
             else
             {
-                return RedirectToAction("Login");
+                    return RedirectToAction("Index", "Home");
             }
-
-        }
+          }
 
         [HttpPost]
         public ActionResult Index(string email, string activatiehash)
         {
-            if (!string.IsNullOrEmpty(Session["event"] as string))
+            if (Session["event"] != null)
             {
-                Event huidigEvent = (Event) Session["event"];
-                ModelToViewModel.EventToEventViewModel(huidigEvent);
-
-                Account account = accountRepository.GetCompleteAccountByEmailAndActivationhash(email, activatiehash);
-
-                if (account != null)
+                if (Session["LoginToegangssysteem"] == null || Session["LoginToegangssysteem"].ToString() != "true")
                 {
-                    Polsbandje polsbandje = polsbandjeRepository.GetByAccountId(account);
-                    Reservering reservering = reserveringRepository.GetById(polsbandje.ReserveringsId);
+                    Event huidigEvent = (Event)Session["event"];
+                    ModelToViewModel.EventToEventViewModel(huidigEvent);
 
-                    Session["account"] = account;
+                    Account account = accountRepository.GetCompleteAccountByEmailAndActivationhash(email, activatiehash);
 
-                    //Check if account made a reservation for current event
-                    if (reservering.EvenementIDReservering.ID1 == huidigEvent.ID1)
+                    if (account != null)
                     {
+                        Polsbandje polsbandje = polsbandjeRepository.GetByAccountId(account);
+                        Reservering reservering = reserveringRepository.GetById(polsbandje.ReserveringsId);
+
                         Session["account"] = account;
-                        return RedirectToAction("Index");
+
+                        //Check if account made a reservation for current event
+                        if (reservering.EvenementIDReservering.ID1 == huidigEvent.ID1)
+                        {
+                            Session["account"] = account;
+                            AccountViewModel acwm = ModelToViewModel.ConvertAccounttoViewModel(account);
+                            return View(acwm);
+                        }
+                        else
+                        {
+                            return View("Error");
+                        }
+
                     }
                     else
                     {
-                        return View("Error");
+                        return RedirectToAction("Index");
                     }
-
                 }
                 else
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Login");
                 }
+
                 
             }
             else
@@ -134,35 +141,24 @@ namespace EventsApplication.Controllers
         //Uitloggen
         public ActionResult LogOff()
         {
-            rfid.Antenna = false;
-            rfid.LED = false;
-            rfid.close();
-            rfid = null;
-
             Session["LoginToegangssysteem"] = "false";
+            Session["RFID"] = null;
             return RedirectToAction("Index", "Home");
         }
 
         //Koppel RFID
         public ActionResult KoppelRFID()
         {
-            if (!string.IsNullOrEmpty(Session["LoginToegangssysteem"] as string))
+            if (Session["LoginToegangssysteem"] == null || Session["LoginToegangssysteem"].ToString() != "true")
             {
-                if (Session["LoginToegangssysteem"].ToString() != "true")
+                if (Session["account"] == null)
                 {
-                    return RedirectToAction("Login");
+                    return View();
                 }
                 else
                 {
-                    if (Session["account"] == null)
-                    {
-                        return View();
-                    }
-                    else
-                    {
-                        AccountViewModel acwm = ModelToViewModel.ConvertAccounttoViewModel((Account)Session["account"]);
-                        return View(acwm);
-                    }
+                    AccountViewModel acwm = ModelToViewModel.ConvertAccounttoViewModel((Account)Session["account"]);
+                    return View(acwm);
                 }
             }
             else
