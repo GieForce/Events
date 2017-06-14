@@ -47,17 +47,23 @@ namespace EventsApplication.Controllers
             }
 
         }
+
         [HttpPost]
         public ActionResult Index(string email, string activatiehash)
         {
-            Event huidigEvent = (Event)Session["event"];
-            ModelToViewModel.EventToEventViewModel(huidigEvent);
+            if (!string.IsNullOrEmpty(Session["event"] as string))
+            {
+                Event huidigEvent = (Event) Session["event"];
+                ModelToViewModel.EventToEventViewModel(huidigEvent);
 
-            Account account = accountRepository.GetCompleteAccountByEmailAndActivationhash(email, activatiehash);
+                Account account = accountRepository.GetCompleteAccountByEmailAndActivationhash(email, activatiehash);
+
                 if (account != null)
                 {
                     Polsbandje polsbandje = polsbandjeRepository.GetByAccountId(account);
                     Reservering reservering = reserveringRepository.GetById(polsbandje.ReserveringsId);
+
+                    Session["account"] = account;
 
                     //Check if account made a reservation for current event
                     if (reservering.EvenementIDReservering.ID1 == huidigEvent.ID1)
@@ -69,12 +75,20 @@ namespace EventsApplication.Controllers
                     {
                         return View("Error");
                     }
+
                 }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+                
+            }
             else
             {
-                return View("Error");
+                    return RedirectToAction("Index", "Home");
             }
-        }
+
+         }
 
         // GET: Account present at festival
         public ActionResult Aanwezig()
@@ -147,7 +161,7 @@ namespace EventsApplication.Controllers
                     else
                     {
                         AccountViewModel acwm = ModelToViewModel.ConvertAccounttoViewModel((Account)Session["account"]);
-                        return View();
+                        return View(acwm);
                     }
                 }
             }
@@ -158,14 +172,13 @@ namespace EventsApplication.Controllers
         }
 
         [HttpPost]
-        public ActionResult KoppelRFID(int accountID, string RFID)
+        public ActionResult KoppelRFID(string RFID)
         {
             Session["RFID"] = RFID;
-            //Account account = accountRepository.GetById(accountID);
-            //Polsbandje polsbandje = polsbandjeRepository.GetByAccountId(account);
-            //polsbandjeRepository.ConnectAccountWithRFID(RFID, polsbandje, account);
-            //return RedirectToAction("Index");
-            return View();
+            Account account = (Account)Session["account"];
+            Polsbandje polsbandje = polsbandjeRepository.GetByAccountId(account);
+            polsbandjeRepository.ConnectAccountWithRFID(RFID, polsbandje, account);
+            return RedirectToAction("Index");
         }
 
         public ActionResult Materialen()
@@ -188,72 +201,5 @@ namespace EventsApplication.Controllers
             }
 
         }
-
-        //RFID---------------
-        public void rfidReader()
-        {
-            rfid = new RFID();
-
-            rfid.Attach += new AttachEventHandler(rfid_Attach);
-            rfid.Detach += new DetachEventHandler(rfid_Detach);
-            rfid.Error += new ErrorEventHandler(rfid_Error);
-
-            rfid.Tag += new TagEventHandler(rfid_Tag);
-            rfid.TagLost += new TagEventHandler(rfid_TagLost);
-            rfid.open();
-
-            rfid.waitForAttachment();
-            rfid.Antenna = true;
-            rfid.LED = true;
-        }
-
-        public void rfid_Attach(object sender, AttachEventArgs e)
-        {
-            ViewBag.error("RFIDReader attached!",e.Device.SerialNumber.ToString());
-        }
-
-        public void rfid_Detach(object sender, DetachEventArgs e)
-        {
-            ViewBag.error("RFID reader detached!", e.Device.SerialNumber.ToString());
-        }
-
-        public void rfid_Error(object sender, ErrorEventArgs e)
-        {
-            ViewBag.error("RFID reader storing");
-        }
-
-        public void rfid_Tag(object sender, TagEventArgs e)
-        {
-            string tag = "0";
-            try
-            {
-                tag = e.Tag;
-                Session["RFID"] = tag;
-
-                ViewBag.Error("Tag " + e.Tag + " scanned", e.Tag);
-            }
-            catch
-            {
-                ViewBag.Error("Kan tagnummer niet scannen.");
-            }
-            if (!string.IsNullOrEmpty(Session["Account"] as string))
-            {
-                try
-                {
-                    Account account = accountRepository.GetCompleteAccountsByRRFID(tag);
-                    Session["Account"] = account;
-                }
-                catch
-                {
-                    ViewBag.Error("Onbekende RFID.");
-                }
-            }
-        }
-
-        public void rfid_TagLost(object sender, TagEventArgs e)
-        {
-            RedirectToAction("Index");
-        }
-        //END RFID-----------------
     }
 }

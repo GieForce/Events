@@ -5,13 +5,6 @@
     ViewBag.Title = "KoppelRFID";
 }
 
-<p>
-    @if (!string.IsNullOrEmpty(Session["RFID"] as string))
-    {
-        Session["RFID"].ToString();
-    }
-</p>
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -35,11 +28,11 @@
 
             <div class="form-group">
                 <label for="form4">RFID</label>
-                <input type="text" id="form4" name="RFID" class="form-control">
+                <input type="text" id="RFID" name="RFID" class="form-control" autofocus>
             </div>
 
             <div class="text-xs-center">
-                <input type="submit" value="Koppel RFID" class="btn btn-default" />
+                <input type="submit" value="Koppel RFID" class="btn btn-default"/>
             </div>
             <br />
             <br />

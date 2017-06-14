@@ -33,13 +33,12 @@
                     <li>@Model.Account.Telefoonnummer</li>
                     <li>geactiveerd: @Model.Account.Geactiveerd</li>
                     <li>Aanwezig: @Model.Account.Aanwezig</li>
-                    <li>Begindatum: @Model.Reservering.</li>
                     <li>Begindatum: @Model.Reservering.StartDatum.ToShortDateString()</li>
                     <li>Einddatum: @Model.Reservering.EindDatum.ToShortDateString()</li>
                     <li><b>Betaald: @Model.Reservering.Betaalstatus</b></li>
                     @foreach (Standplaats standplaats in Model.Reservering.Staanplaatsen)
                     {
-                        <li>Standplaats: staanplaats.Plaatsnummer</li>
+                        <li>Standplaats: @standplaats.Plaatsnummer</li>
                     }
 
                     @if (@Model.Polsbandje.actief == 0)

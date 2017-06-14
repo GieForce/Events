@@ -98,8 +98,8 @@ namespace EventsApplication.Models
 
         public List<Standplaats> Staanplaatsen
         {
-            get { return Staanplaatsen; }
-            set { Staanplaatsen = value; }
+            get { return staanplaatsen; }
+            set { staanplaatsen = value; }
         }
 
         public List<Account> Accounts
@@ -145,7 +145,7 @@ namespace EventsApplication.Models
             this.standplaatsID = standplaatsId;
 
             this.evenementIDReservering = eventRepository.GetById(eventID);
-            this.Staanplaatsen = standplaatsRepository.GetByReservation(id);
+            this.staanplaatsen = standplaatsRepository.GetByReservation(id);
             this.accounts = accountRepository.GetAllAccountsByReservation(id);
             this.productExemplaar = productExemplaarRepository.GetProductsByReservation(id);
         }

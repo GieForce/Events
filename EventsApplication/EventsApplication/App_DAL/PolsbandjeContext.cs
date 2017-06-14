@@ -111,9 +111,10 @@ namespace EventsApplication.App_DAL.Interfaces
             {
                 using (SqlConnection connection = Connection.SQLconnection)
                 {
-                    string queryUpdatePolsbandje = "UPDATE POLSBANDJE SET barcode = '027393000146', actief = 1 WHERE ID IN (SELECT polsbandje_id FROM RESERVERING_POLSBANDJE WHERE account_id=@accountId";
+                    string queryUpdatePolsbandje = "UPDATE POLSBANDJE SET barcode = @RFID, actief = 1 WHERE ID IN (SELECT polsbandje_id FROM RESERVERING_POLSBANDJE WHERE account_id=@accountId);";
                     using (SqlCommand command = new SqlCommand(queryUpdatePolsbandje, connection))
                     {
+                        command.Parameters.AddWithValue("@RFID", RFID);
                         command.Parameters.AddWithValue("@accountId", account.Id);
 
                         command.ExecuteNonQuery();

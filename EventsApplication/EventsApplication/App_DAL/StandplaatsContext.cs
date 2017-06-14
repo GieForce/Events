@@ -77,7 +77,7 @@ namespace EventsApplication.App_DAL
 
         public List<Standplaats> GetByReservation(int reservationID)
         {
-            List<Standplaats> splts = null;
+            List<Standplaats> splts = new List<Standplaats>();
             SqlConnection conn = Connection.SQLconnection;
             try
             {
@@ -102,7 +102,6 @@ namespace EventsApplication.App_DAL
             }
             catch
             {
-
             }
 
             return splts;
