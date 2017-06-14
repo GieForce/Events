@@ -37,7 +37,7 @@ namespace EventsApplication.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login");
+                    return RedirectToAction("AdminLogin", "Account");
                 }
             }
             else
@@ -85,10 +85,8 @@ namespace EventsApplication.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login");
+                    return RedirectToAction("AdminLogin", "Account");
                 }
-
-                
             }
             else
             {
@@ -100,22 +98,50 @@ namespace EventsApplication.Controllers
         // GET: Account present at festival
         public ActionResult Aanwezig()
         {
-            List<Account> accountsPresent = accountRepository.GetAllAccountsPresentAtFestival((Event)Session["event"]);
-            return View("Aanwezig", accountsPresent);
+            if (Session["event"] != null)
+            {
+                if (Session["adminLogin"] != null || Session["adminLogin"].ToString() == "true")
+                {
+                    List<AccountViewModel> acwm = ModelToViewModel.ConvertAccounttoViewModel(accountRepository.GetAllAccountsPresentAtFestival((Event)Session["event"]));
+                    return View(acwm);
+                }
+                else
+                {
+                    return RedirectToAction("AdminLogin", "Account");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         // GET: Details from account
         public ActionResult Details(int id)
         {
-            AccountViewModel acwm = ModelToViewModel.ConvertAccounttoViewModel(accountRepository.GetById(id));
-            return View(acwm);
+            if (Session["event"] != null)
+            {
+                if (Session["adminLogin"] != null || Session["adminLogin"].ToString() == "true")
+                {
+                    AccountViewModel acwm = ModelToViewModel.ConvertAccounttoViewModel(accountRepository.GetById(id));
+                    return View(acwm);
+                }
+                else
+                {
+                    return RedirectToAction("AdminLogin", "Account");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         //Login
         [AllowAnonymous]
         public ActionResult Login()
         {
-            return View();
+            return View(); 
         }
 
         [HttpPost]
@@ -149,7 +175,7 @@ namespace EventsApplication.Controllers
         //Koppel RFID
         public ActionResult KoppelRFID()
         {
-            if (Session["adminLogin"] == null || Session["adminLogin"].ToString() != "true")
+            if (Session["adminLogin"] != null || Session["adminLogin"].ToString() == "true")
             {
                 if (Session["account"] == null)
                 {
@@ -163,7 +189,7 @@ namespace EventsApplication.Controllers
             }
             else
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("AdminLogin", "Account");
             }
         }
 
@@ -181,7 +207,7 @@ namespace EventsApplication.Controllers
         {
             if (Session["adminLogin"].ToString() != "true")
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("AdminLogin", "Account");
             }
             else
             {
