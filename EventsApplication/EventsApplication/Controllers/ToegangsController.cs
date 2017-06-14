@@ -23,7 +23,7 @@ namespace EventsApplication.Controllers
         {
             if (Session["event"] != null)
             {
-                if (Session["LoginToegangssysteem"] == null || Session["LoginToegangssysteem"].ToString() != "true")
+                if (!string.IsNullOrEmpty(Session["LoginToegangssysteem"] as string) && Session["LoginToegangssysteem"].ToString() == "true")
                 {
                     if (Session["account"] == null)
                     {
