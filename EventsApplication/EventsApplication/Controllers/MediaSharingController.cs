@@ -173,12 +173,12 @@ namespace EventsApplication.Controllers
 
                 repository.DeletePost(id);
 
-                return RedirectToAction("ShowPosts", "MediaSharing");
+                return RedirectToAction("Index", "MediaSharing");
             }
 
             catch
             {
-                return RedirectToAction("ShowPosts", "MediaSharing");
+                return RedirectToAction("Index", "MediaSharing");
          
             }
 
