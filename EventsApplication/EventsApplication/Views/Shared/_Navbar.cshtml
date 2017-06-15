@@ -46,10 +46,16 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                   @if (evenement != null)
+                   {
                     <li>@Html.ActionLink("Reserveer", "Index", "Reserveer")</li>
                     <li>@Html.ActionLink("Mediasharing", "Index", "MediaSharing")</li>
-                    <li>@Html.ActionLink("Toegangscontrole", "Index", "Toegangs")</li>
-                    <li>@Html.ActionLink("Hostingsysteem", "Index", "Hosting")</li>
+                        if (Session["adminLogin"] != null && Session["adminLogin"].ToString() == "true")
+                        {
+                            <li>@Html.ActionLink("Toegangscontrole", "Index", "Toegangs")</li>
+                            <li>@Html.ActionLink("Hostingsysteem", "Index", "Hosting")</li>
+                        }
+                   }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

@@ -8,7 +8,7 @@
     <th></th>
     </tr>
     <tr>
-        <td>@Html.DisplayNameFor(model => model.Reservering.Staanplaats.Plaatsnummer)</td>
+        <td>@Html.DisplayNameFor(model => model.Reservering.StandplaatsId)</td>
         <td>@Html.DisplayFor(modelItem => Model.Reservering.StandplaatsId)</td>
     <tr>
         <td>@Html.DisplayNameFor(model => model.Account.Gebruikersnaam)</td>
@@ -36,10 +36,10 @@
     </tr>
     <tr>    
         <td>@Html.DisplayNameFor(model => model.Reservering.StartDatum)</td>
-        <td>@Html.DisplayFor(modelItem => Model.Reservering.StartDatum.ToShortDateString())</td>
+        <td>@Html.DisplayFor(modelItem => Model.Reservering.StartDatum)</td>
     </tr>
     <tr>    
         <td>@Html.DisplayNameFor(model => model.Reservering.EindDatum)</td>
-        <td>@Html.DisplayFor(modelItem => Model.Reservering.EindDatum.ToShortDateString())</td>
+        <td>@Html.DisplayFor(modelItem => Model.Reservering.EindDatum)</td>
     </tr>
 </table>

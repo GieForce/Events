@@ -84,15 +84,15 @@
     <div class="div2">
     @if (Model != null)
     {
-        if (Model.Polsbandje.Barcode == null)
-        {
+        <p>
+            <h4>Koppel een nieuw polsbandje</h4>
             @Html.ActionLink("Koppel RFID", "KoppelRFID")
-        }
-        else
-        {
-            <h4>Materialen:</h4>
+        </p>
+        <p></p>
+        <p>
+            <h4>Gereserveerde materialen</h4>
             @Html.ActionLink("Materiaal bij reservering", "Materialen")
-        }
+        </p>
     }
     else
     {

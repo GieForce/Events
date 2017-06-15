@@ -31,6 +31,11 @@ namespace EventsApplication.Controllers
             return context.GetAllAccountsPresent();
         }
 
+        public List<Account> GetAllAccountsPresentAtFestival(Event evenement)
+        {
+            return context.GetAllAccountsPresentAtFestival(evenement);
+        }
+
         public List<Account> GetAllAccountsByReservation(int reserveringsID)
         {
             return context.GetAllAccountsByReservation(reserveringsID);
