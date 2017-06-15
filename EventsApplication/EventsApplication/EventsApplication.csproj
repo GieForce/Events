@@ -402,7 +402,7 @@
     <Content Include="Views\MediaSharing\CreateMediaBericht.cshtml" />
     <Content Include="Views\Reserveer\Materiaal.cshtml" />
     <Content Include="Views\Reserveer\Finish.cshtml" />
-    <Content Include="Views\Reserveer\Succes.cshtml" />
+    <Content Include="Views\Reserveer\Success.cshtml" />
     <Content Include="Views\Reserveer\Activeer.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Toegangs\Login.cshtml" />

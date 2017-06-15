@@ -193,17 +193,6 @@ namespace EventsApplication.Models
             this.status = status;
         }
 
-        public Account(int id, string gebruikersnaam, string email, string activatiehash, bool geactiveerd, string wachtwoord, string telefoonnummer, bool status)
-        {
-            this.ID = id;
-            this.gebruikersnaam = gebruikersnaam;
-            this.email = email;
-            this.activatiehash = activatiehash;
-            this.geactiveerd = geactiveerd;
-            this.telefoonnummer = telefoonnummer;
-            this.status = status;
-        }
-
         public Account(int id, string gebruikersnaam, string telefoonnummer, bool aanwezig)
         {
             this.Id = id;

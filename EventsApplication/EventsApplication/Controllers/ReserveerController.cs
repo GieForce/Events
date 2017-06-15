@@ -229,17 +229,19 @@ namespace EventsApplication.Controllers
             // Email
             foreach (AccountViewModel account in reservering.Accounts)
             {
-                string message = "Beste " + account.Gebruikersnaam + "," +
-                    Environment.NewLine +
-                    Environment.NewLine +
-                    "Bedankt voor het reserveren bij " + reservering.Evenement.Naam + Environment.NewLine +
-                    "Om uw account te activeren gaat u naar deze link: 192.168.20.22/reserveer/activeer?activatiehash=" + arepo.GetAllAccounts().First(x => x.Gebruikersnaam == account.Gebruikersnaam).Activatiehash + " " + Environment.NewLine + Environment.NewLine +
-                    "Groeten," + Environment.NewLine + Environment.NewLine + "Het EyeCT4Events Team"
-                    ;
+                string message = "Beste " + account.Gebruikersnaam + ",<br><br>" +
+                    "Bedankt voor het reserveren bij " + reservering.Evenement.Naam + "<br>" +
+                    "Om uw account te activeren gaat u naar deze link: <a href=\"192.168.20.22/reserveer/activeer?activatiehash=" + arepo.GetAllAccounts().First(x => x.Gebruikersnaam == account.Gebruikersnaam).Activatiehash + "\"> link</a><br><br>" +
+                    "Groeten,<br><br>" + "Het EyeCT4Events Team";
                 SendMail(account.Email, message);
             }
             
-            return View("Succes");
+            return Redirect("/reserveer/success");
+        }
+
+        public ActionResult Success()
+        {
+            return View();
         }
 
         public ActionResult Activeer(string activatiehash)
@@ -266,9 +268,10 @@ namespace EventsApplication.Controllers
                     From = new MailAddress("eyect4eventsc@gmail.com", ""),
                     To = { emailaddres },
                     CC = { "eyect4eventsc@gmail.com" },
-                    Subject = "...",
+                    Subject = "Activatielink EYECT4EVENTS",
                     Body = tekst,
-                    BodyEncoding = Encoding.UTF8
+                    BodyEncoding = Encoding.UTF8,
+                    IsBodyHtml = true
                 });
         }
     }

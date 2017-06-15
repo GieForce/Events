@@ -29,7 +29,6 @@ namespace EventsApplication.ViewModels
         public string Straat { get; set; }
         [RegularExpression(@"^.{5,}$", ErrorMessage = "Minimum 1 character required")]
         [Required(ErrorMessage = "Dit veld mag niet leeg zijn")]
-        [StringLength(50, MinimumLength = 1, ErrorMessage = "Dit veld mag niet leeg zijn")]
         public int Huisnummer { get; set; }
         [RegularExpression(@"^.{5,}$", ErrorMessage = "Minimum 1 character required")]
         [Required(ErrorMessage = "Dit veld mag niet leeg zijn")]
