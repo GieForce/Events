@@ -231,7 +231,7 @@ namespace EventsApplication.Controllers
             {
                 string message = "Beste " + account.Gebruikersnaam + ",<br><br>" +
                     "Bedankt voor het reserveren bij " + reservering.Evenement.Naam + "<br>" +
-                    "Om uw account te activeren gaat u naar deze link: <a href=\"192.168.20.22/reserveer/activeer?activatiehash=" + arepo.GetAllAccounts().First(x => x.Gebruikersnaam == account.Gebruikersnaam).Activatiehash + "\"> link</a><br><br>" +
+                    "Om uw account te activeren gaat u naar deze link: http://eyectc.com/reserveer/activeer?activatiehash=" + arepo.GetAllAccounts().First(x => x.Gebruikersnaam == account.Gebruikersnaam).Activatiehash + "<br><br>" +
                     "Groeten,<br><br>" + "Het EyeCT4Events Team";
                 SendMail(account.Email, message);
             }
