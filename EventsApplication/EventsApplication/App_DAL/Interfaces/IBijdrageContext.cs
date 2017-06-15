@@ -14,6 +14,8 @@ namespace EventsApplication.App_DAL
         bool Insert(Bericht bijdrage);
 
         bool InsertMediaBericht(int categorieId, string bestandlocatie, int accountid);
+
+        bool InsertPost(string titel, string inhoud, int accountid, int categorieId);
         bool InsertLike(AccountBijdrage accountBijdrage);
 
         bool DeletePost(int id);

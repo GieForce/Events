@@ -48,4 +48,14 @@ namespace EventsApplication.ViewModels
         public string bestandslocatie { get; set; }
         public int selectedCategorieId { get; set; }
     }
+
+    public class NewBerichtViewModel
+    {
+        public Account account { get; set; }
+        public Categorie categorie { get; set; }
+        public List<Categorie> categorieList { get; set; }
+
+        public Bericht bericht { get; set; }
+        public int selectedCategorieId { get; set; }
+    }
 }

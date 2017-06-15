@@ -138,6 +138,16 @@ namespace EventsApplication.Controllers
             MediaBerichtViewModel bvm = new MediaBerichtViewModel() { categorieList = categorieList, account = account };
             return PartialView("CreateMediaBericht", bvm);
         }
+
+        public ActionResult CreateNewBericht()
+        {
+            List<Categorie> categorieList = categorieRepository.CategorieList();
+            Account account = (Account)(Session["user"]);
+            accountRepository.GetById(account.Id);
+            NewBerichtViewModel bvm = new NewBerichtViewModel() { categorieList = categorieList, account = account };
+            return PartialView("CreateNewBericht", bvm);
+        }
+
         [HttpPost]
         public ActionResult CreateNewCategorie(MediaBerichtViewModel mvm)
         {
@@ -166,6 +176,7 @@ namespace EventsApplication.Controllers
         }
 
 
+
         [HttpPost]
         public ActionResult CreateNewMediaBericht(HttpPostedFileBase file, MediaBerichtViewModel mvm)
         {
@@ -189,7 +200,23 @@ namespace EventsApplication.Controllers
             }
         }
 
- 
+        [HttpPost]
+        public ActionResult CreateNewBericht(NewBerichtViewModel mvm)
+        {
+            try
+            {
+                    Account account = (Account)(Session["user"]);
+                    accountRepository.GetById(account.Id);
+                    repository.InsertPost(mvm.bericht.Titel, mvm.bericht.Inhoud, account.Id, mvm.selectedCategorieId);
+                    return RedirectToAction("Index", "MediaSharing");
+            }
+            catch
+            {
+                return View("Error");
+            }
+        }
+
+
         [HttpPost]
         public ActionResult CreateComment(string id, string text)
         {

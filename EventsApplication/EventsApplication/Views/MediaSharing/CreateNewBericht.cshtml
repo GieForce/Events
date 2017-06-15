@@ -1,0 +1,30 @@
+﻿@model EventsApplication.ViewModels.NewBerichtViewModel
+
+
+
+<div class="col-md-8 col-md-offset-4">
+    @using (Html.BeginForm("CreateNewBericht", "MediaSharing", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        Html.EnableClientValidation(true);
+        <div class="form-horizontal">
+            <h4>Bestand</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            
+            @Html.DropDownListFor(m => m.selectedCategorieId, new SelectList(Model.categorieList, "ID", "naam", "value"), new {@class="form-control"})    
+            <br/>
+            @Html.LabelFor(m => m.bericht.Titel)
+            @Html.TextBoxFor(m => m.bericht.Titel, new { @class = "form-control" })
+            <br />
+            @Html.LabelFor(m => m.bericht.Inhoud)
+            @Html.TextAreaFor(m => m.bericht.Inhoud, new { @class = "form-control" })
+            <br />
+            <input type="submit" value="Invoeren" class="btn btn-default"/>
+            
+        </div>
+
+
+    }
+</div>
+

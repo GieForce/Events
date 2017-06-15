@@ -199,7 +199,7 @@ namespace EventsApplication.Models
             this.gebruikersnaam = gebruikersnaam;
             this.telefoonnummer = telefoonnummer;
             this.aanwezig = aanwezig;
-            this.administrator = status;
+
         }
     }
 }

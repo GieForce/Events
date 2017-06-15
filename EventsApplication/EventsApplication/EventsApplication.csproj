@@ -416,6 +416,7 @@
     <Content Include="Views\Hosting\LocatieEdit.cshtml" />
     <Content Include="Views\Hosting\ProductDetails.cshtml" />
     <Content Include="Views\MediaSharing\Categorie.cshtml" />
+    <Content Include="Views\MediaSharing\CreateNewBericht.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

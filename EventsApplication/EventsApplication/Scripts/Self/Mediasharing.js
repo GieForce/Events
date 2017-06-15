@@ -69,6 +69,20 @@
                 });
         });
 
+    $("#CreateNewPost").on("click",
+        function () {
+            $("#showPosts").html("");
+            $loading.show();
+            $.ajax({
+                    url: "/Mediasharing/CreateNewBericht",
+                    type: "GET"
+                })
+                .done(function (partialViewResult) {
+                    $("#showPosts").html(partialViewResult);
+                    $loading.hide();
+                });
+        });
+
     $("#btnVoegToe").on("click",
         function () {
      //       $("#CreateNewCategorie").html("");

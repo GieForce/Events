@@ -266,3 +266,10 @@ body {
     text-align: center;
     color: red;
 }
+.titelBericht {
+    margin-top: -5px;
+}
+
+.inhoudBericht {
+    margin-bottom: 20px;
+}
