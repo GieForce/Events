@@ -4,12 +4,14 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Data.OleDb;
+using System.Globalization;
 using System.Web.Mvc;
 using EventsApplication.Controllers.Repositorys;
 using EventsApplication.App_DAL;
 using EventsApplication.Models;
 using System.IO;
 using EventsApplication.App_DAL.Interfaces;
+using EventsApplication.ViewModels;
 
 namespace EventsApplication.Controllers
 {
@@ -23,26 +25,37 @@ namespace EventsApplication.Controllers
         ProductCatRepository productcatrepo = new ProductCatRepository(new ProductCatContext());
         ProductExemplaarRepository productexemplaarrepo = new ProductExemplaarRepository(new ProductExemplaarContext());
         PolsbandjeRepository polsbandjerepo = new PolsbandjeRepository(new PolsbandjeContext());
-        
+
 
         // GET: Hosting
         public ActionResult HostingHome()
         {
+            if(!IsAdmin())
+                return RedirectToAction("AdminLogin", "Account");
             return View();
         }
 
         public ActionResult EventIndex()
         {
-            try {
+            try
+            {
+                if (!IsAdmin())
+                    return RedirectToAction("AdminLogin", "Account");
                 List<Event> events = eventrepo.GetAllEvents();
                 return View(events);
             }
-            catch { return View("Error"); }
+            catch
+            {
+                return View("Error");
+            }
         }
 
         public ActionResult ProductIndex()
         {
-            try {
+            try
+            {
+                if (!IsAdmin())
+                    return RedirectToAction("AdminLogin", "Account");
                 List<Product> products = productrepo.GetAll();
                 List<ProductCat> productcats = new List<ProductCat>();
                 foreach (Product product in products)
@@ -53,22 +66,27 @@ namespace EventsApplication.Controllers
                 ViewBag.productcategorie = productcats;
                 return View(products);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ViewBag.Fout = e.ToString();
-             return View("Error");
+                return View("Error");
             }
         }
 
         public ActionResult ProductCreate()
         {
+            if (!IsAdmin())
+                return RedirectToAction("AdminLogin", "Account");
             return View();
         }
 
 
         public ActionResult AccountIndex()
         {
-            try {
+            try
+            {
+                if (!IsAdmin())
+                    return RedirectToAction("AdminLogin", "Account");
                 List<Account> accounts = accountrepo.GetAllAccounts();
                 return View(accounts);
             }
@@ -81,7 +99,10 @@ namespace EventsApplication.Controllers
 
         public ActionResult LocatieIndex()
         {
-            try {
+            try
+            {
+                if (!IsAdmin())
+                    return RedirectToAction("AdminLogin", "Account");
                 List<Locatie> locaties = locatierepo.GetAll();
                 return View(locaties);
             }
@@ -92,10 +113,13 @@ namespace EventsApplication.Controllers
             }
         }
 
-        
+
         public ActionResult EventDetails(int id)
         {
-            try {
+            try
+            {
+                if (!IsAdmin())
+                    return RedirectToAction("AdminLogin", "Account");
                 Event evento = eventrepo.GetById(id);
                 Session["activeevent"] = evento;
                 return View(evento);
@@ -111,6 +135,8 @@ namespace EventsApplication.Controllers
         {
             try
             {
+                if (!IsAdmin())
+                    return RedirectToAction("AdminLogin", "Account");
                 Product product = productrepo.getproductbyid(id);
                 return View(product);
             }
@@ -124,18 +150,23 @@ namespace EventsApplication.Controllers
 
         public ActionResult AccountCreate()
         {
+            if (!IsAdmin())
+                return RedirectToAction("AdminLogin", "Account");
             return View();
         }
 
         public ActionResult EventCreate()
         {
-            try {
+            try
+            {
+                if (!IsAdmin())
+                    return RedirectToAction("AdminLogin", "Account");
                 List<Locatie> locaties = locatierepo.GetAll();
                 List<SelectListItem> locatieitems = new List<SelectListItem>();
 
                 foreach (Locatie locatie in locaties)
                 {
-                    locatieitems.Add(new SelectListItem { Text = locatie.Naam, Value = Convert.ToString(locatie.Id) });
+                    locatieitems.Add(new SelectListItem {Text = locatie.Naam, Value = Convert.ToString(locatie.Id)});
                 }
 
                 ViewBag.Locatieding = locatieitems;
@@ -148,13 +179,10 @@ namespace EventsApplication.Controllers
             }
         }
 
-        public ActionResult StandplaatsCreate()
-        {
-            return View();
-        }
-
         public ActionResult LocatieCreate()
         {
+            if (!IsAdmin())
+                return RedirectToAction("AdminLogin", "Account");
             return View();
         }
 
@@ -165,7 +193,9 @@ namespace EventsApplication.Controllers
             {
 
                 // TODO: Add insert logic here
-                Account account = new Account(collection["Gebruikersnaam"], collection["Email"], Convert.ToString(accountrepo.newactivationhash()), 0, collection["Wachtwoord"], collection["Telefoonnummer"], true);
+                Account account = new Account(collection["Gebruikersnaam"], collection["Email"],
+                    Convert.ToString(accountrepo.newactivationhash()), 0, collection["Wachtwoord"],
+                    collection["Telefoonnummer"], true);
                 accountrepo.insertadmin(account);
                 return RedirectToAction("AccountIndex");
             }
@@ -183,8 +213,10 @@ namespace EventsApplication.Controllers
             try
             {
                 int maxbezoekers = Convert.ToInt32(collection["Maxbezoekers"]);
-                DateTime start = Convert.ToDateTime(collection["Datumstart"]);
-                DateTime eind = Convert.ToDateTime(collection["Datumeind"]);
+                DateTime start = DateTime.ParseExact(collection["Datumstart"], "dd/MM/yyyy",
+                    CultureInfo.InvariantCulture);
+                DateTime eind = DateTime.ParseExact(collection["Datumeind"], "dd/MM/yyyy",
+                    CultureInfo.InvariantCulture);
                 if (maxbezoekers != 0 && start < eind)
                 {
                     Locatie locatie = locatierepo.getbyid(Convert.ToInt32(collection["Locatieding"]));
@@ -204,13 +236,14 @@ namespace EventsApplication.Controllers
 
                     foreach (Locatie locatie in locaties)
                     {
-                        locatieitems.Add(new SelectListItem { Text = locatie.Naam, Value = Convert.ToString(locatie.Id) });
+                        locatieitems.Add(
+                            new SelectListItem {Text = locatie.Naam, Value = Convert.ToString(locatie.Id)});
                     }
 
                     ViewBag.Locatieding = locatieitems;
                     return View();
                 }
-                
+
                 return RedirectToAction("EventIndex");
             }
             catch
@@ -220,7 +253,7 @@ namespace EventsApplication.Controllers
 
                 foreach (Locatie locatie in locaties)
                 {
-                    locatieitems.Add(new SelectListItem { Text = locatie.Naam, Value = Convert.ToString(locatie.Id) });
+                    locatieitems.Add(new SelectListItem {Text = locatie.Naam, Value = Convert.ToString(locatie.Id)});
                 }
 
                 ViewBag.Locatieding = locatieitems;
@@ -231,12 +264,12 @@ namespace EventsApplication.Controllers
         [HttpPost]
         public ActionResult ProductCreate(FormCollection collection)
         {
-            
+
 
             try
             {
                 int x = Convert.ToInt32(collection["Hoeveelheid"]);
-                if ( x == 0)
+                if (x == 0)
                 {
                     ViewBag.Error = "Voer een getal in";
                     return View();
@@ -245,19 +278,21 @@ namespace EventsApplication.Controllers
                 ProductCat categorie = new ProductCat(collection["Categorie"]);
                 productcatrepo.Insert(categorie);
                 categorie = productcatrepo.getlastcategorie();
-                Product product = new Product(categorie, collection["Merk"], collection["Serie"], Convert.ToInt32(collection["Typenummer"]), Convert.ToDecimal(collection["Prijs"]));
+                Product product = new Product(categorie, collection["Merk"], collection["Serie"],
+                    Convert.ToInt32(collection["Typenummer"]), Convert.ToDecimal(collection["Prijs"]));
                 productrepo.Insert(product);
 
                 for (int i = 0; i < x; i++)
                 {
                     Product product2 = productrepo.getlatestproduct();
-                    ProductExemplaar productexemplaar = new ProductExemplaar(product2.Id, i, Convert.ToString(i) + Convert.ToString(product2.Typenummer));
+                    ProductExemplaar productexemplaar = new ProductExemplaar(product2.Id, i,
+                        Convert.ToString(i) + Convert.ToString(product2.Typenummer));
                     productexemplaarrepo.insert(productexemplaar);
                 }
 
                 return RedirectToAction("ProductIndex");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ViewBag.Fout = e.ToString();
                 return View("Error");
@@ -271,16 +306,18 @@ namespace EventsApplication.Controllers
             {
 
                 // TODO: Add insert logic here
-                Locatie locatie = new Locatie(collection["Naam"], collection["Straat"], Convert.ToInt32(collection["Nr"]), collection["Postcode"], collection["Plaats"]);
+                Locatie locatie = new Locatie(collection["Naam"], collection["Straat"],
+                    Convert.ToInt32(collection["Nr"]), collection["Postcode"], collection["Plaats"]);
                 locatierepo.Insert(locatie);
 
                 if (Request.Files["FileUpload1"].ContentLength > 0)
                 {
                     string extension = System.IO.Path.GetExtension(Request.Files["FileUpload1"].FileName).ToLower();
 
-                    string[] validFileTypes = { ".csv" };
+                    string[] validFileTypes = {".csv"};
 
-                    string path1 = string.Format("{0}/{1}", Server.MapPath("~/Content/Uploads"), Request.Files["FileUpload1"].FileName);
+                    string path1 = string.Format("{0}/{1}", Server.MapPath("~/Content/Uploads"),
+                        Request.Files["FileUpload1"].FileName);
                     if (!Directory.Exists(path1))
                     {
                         Directory.CreateDirectory(Server.MapPath("~/Content/Uploads"));
@@ -292,63 +329,66 @@ namespace EventsApplication.Controllers
                             System.IO.File.Delete(path1);
                         }
                         Request.Files["FileUpload1"].SaveAs(path1);
-                    if (extension == ".csv")
-                    {
-                        DataTable dt = Utility.ConvertCSVtoDataTable(path1);
-                        ViewBag.Data = dt;
-                        int a = 0;
-                        decimal prijs = 0;
-                        int capaciteit = 0;
-                        int nummer = 0;
-                        string specificatie = "";
-                        foreach (DataRow dr in dt.Rows)
+                        if (extension == ".csv")
                         {
-                            foreach (DataColumn column in dt.Columns)
+                            DataTable dt = Utility.ConvertCSVtoDataTable(path1);
+                            ViewBag.Data = dt;
+                            int a = 0;
+                            decimal prijs = 0;
+                            int capaciteit = 0;
+                            int nummer = 0;
+                            string specificatie = "";
+                            foreach (DataRow dr in dt.Rows)
                             {
-
-                                string volledig = Convert.ToString(dr[column]);
-                                using (StringReader sr = new StringReader(volledig))
+                                foreach (DataColumn column in dt.Columns)
                                 {
-                                    string[] dingen = sr.ReadLine().Split(';');
-                                    foreach (string header in dingen)
+
+                                    string volledig = Convert.ToString(dr[column]);
+                                    using (StringReader sr = new StringReader(volledig))
                                     {
-                                        if (a == 0)
+                                        string[] dingen = sr.ReadLine().Split(';');
+                                        foreach (string header in dingen)
                                         {
-                                            prijs = Convert.ToDecimal(header);
-                                        }
-                                        if(a == 1)
-                                        {
-                                            capaciteit = Convert.ToInt32(header);
-                                        }
-                                        if(a == 2)
-                                        {
-                                            nummer = Convert.ToInt32(header);
-                                        }
-                                        if(a == 3)
-                                        {
-                                            specificatie = header;
+                                            if (a == 0)
+                                            {
+                                                prijs = Convert.ToDecimal(header);
+                                            }
+                                            if (a == 1)
+                                            {
+                                                capaciteit = Convert.ToInt32(header);
+                                            }
+                                            if (a == 2)
+                                            {
+                                                nummer = Convert.ToInt32(header);
+                                            }
+                                            if (a == 3)
+                                            {
+                                                specificatie = header;
+                                            }
+
+                                            a = a + 1;
                                         }
 
-                                        a = a + 1;
+
+
                                     }
-
-                                    
-
+                                    int locatieid = locatierepo.locatieidophalen(locatie.Naam, locatie.Straat,
+                                        locatie.Nr, locatie.Postcode, locatie.Plaats);
+                                    Locatie locatie2 =
+                                        new Locatie(locatie.Naam, locatie.Straat, locatie.Nr, locatieid,
+                                            locatie.Postcode, locatie.Plaats);
+                                    standplaatsrepo.Insert(locatie2, prijs, capaciteit, nummer, specificatie);
+                                    a = 0;
                                 }
-                                int locatieid = locatierepo.locatieidophalen(locatie.Naam, locatie.Straat, locatie.Nr, locatie.Postcode, locatie.Plaats);
-                                Locatie locatie2 = new Locatie(locatie.Naam, locatie.Straat, locatie.Nr, locatieid, locatie.Postcode, locatie.Plaats);
-                                standplaatsrepo.Insert(locatie2, prijs, capaciteit, nummer, specificatie);
-                                a = 0;
+
+
                             }
-                           
+                        }
+                        else
+                        {
+                            ViewBag.Error = "Please Upload Files in .csv format";
 
                         }
-                    }
-                    else
-                    {
-                        ViewBag.Error = "Please Upload Files in .csv format";
-
-                    }
 
                     }
                     return RedirectToAction("LocatieIndex");
@@ -367,6 +407,8 @@ namespace EventsApplication.Controllers
         // GET: Account/Edit/5
         public ActionResult AccountEdit(int id)
         {
+            if (!IsAdmin())
+                return RedirectToAction("AdminLogin", "Account");
             Account account = accountrepo.GetById(id);
             Session["accountid"] = id;
             return View(account);
@@ -379,7 +421,9 @@ namespace EventsApplication.Controllers
             try
             {
                 // TODO: Add update logic here
-                Account accounto = new Account(Convert.ToInt32(Session["accountid"]),collection["Gebruikersnaam"], collection["Email"], Convert.ToString(accountrepo.newactivationhash()), true, collection["Wachtwoord"], collection["Telefoonnummer"]);
+                Account accounto = new Account(Convert.ToInt32(Session["accountid"]), collection["Gebruikersnaam"],
+                    collection["Email"], Convert.ToString(accountrepo.newactivationhash()), true,
+                    collection["Wachtwoord"], collection["Telefoonnummer"]);
                 accountrepo.Update(accounto);
                 return RedirectToAction("AccountIndex");
             }
@@ -392,6 +436,8 @@ namespace EventsApplication.Controllers
 
         public ActionResult EventEdit(int id)
         {
+            if (!IsAdmin())
+                return RedirectToAction("AdminLogin", "Account");
             Event evento = eventrepo.GetById(id);
             Session["eventid"] = id;
             return View(evento);
@@ -404,7 +450,9 @@ namespace EventsApplication.Controllers
             try
             {
                 // TODO: Add update logic here
-                Account accounto = new Account(Convert.ToInt32(Session["eventid"]), collection["Gebruikersnaam"], collection["Email"], Convert.ToString(accountrepo.newactivationhash()), true, collection["Wachtwoord"], collection["Telefoonnummer"]);
+                Account accounto = new Account(Convert.ToInt32(Session["eventid"]), collection["Gebruikersnaam"],
+                    collection["Email"], Convert.ToString(accountrepo.newactivationhash()), true,
+                    collection["Wachtwoord"], collection["Telefoonnummer"]);
                 accountrepo.Update(accounto);
                 return RedirectToAction("AccountIndex");
             }
@@ -417,6 +465,8 @@ namespace EventsApplication.Controllers
 
         public ActionResult LocatieEdit(int id)
         {
+            if (!IsAdmin())
+                return RedirectToAction("AdminLogin", "Account");
             Locatie locatie = locatierepo.getbyid(id);
             Session["locatie"] = locatie;
             return View(locatie);
@@ -429,7 +479,9 @@ namespace EventsApplication.Controllers
             try
             {
                 // TODO: Add update logic here
-                Locatie locatie = new Locatie(collection["Naam"], collection["Straat"], Convert.ToInt32(collection["Nr"]), collection["Postcode"], collection["Plaats"]);
+                Locatie l = (Locatie) Session["locatie"];
+                Locatie locatie = new Locatie(collection["Naam"], collection["Straat"],
+                    Convert.ToInt32(collection["Nr"]), l.Id, collection["Postcode"], collection["Plaats"]);
                 locatierepo.Update(locatie);
                 return RedirectToAction("LocatieIndex");
             }
@@ -442,7 +494,8 @@ namespace EventsApplication.Controllers
 
         public ActionResult EventDelete(int id)
         {
-            try {
+            try
+            {
                 eventrepo.Delete(id);
                 return RedirectToAction("EventIndex");
             }
@@ -455,7 +508,8 @@ namespace EventsApplication.Controllers
 
         public ActionResult LocatieDelete(int id)
         {
-            try {
+            try
+            {
                 locatierepo.Delete(locatierepo.getbyid(id));
                 return RedirectToAction("LocatieIndex");
             }
@@ -468,8 +522,12 @@ namespace EventsApplication.Controllers
 
         public ActionResult AccountDelete(int id)
         {
-            try {
-                accountrepo.Delete(id);
+            try
+            {
+                Account c = accountrepo.GetById(id);
+                c.Geactiveerd = false;
+                c.Wachtwoord = "Geblokkeerd123!";
+                accountrepo.Update(c);
                 return RedirectToAction("AccountIndex");
             }
             catch (Exception e)
@@ -479,5 +537,13 @@ namespace EventsApplication.Controllers
             }
         }
 
+        public bool IsAdmin()
+        {
+            if (!string.IsNullOrEmpty(Session["adminLogin"] as string) && Session["adminLogin"].ToString() == "true")
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

@@ -115,7 +115,7 @@ namespace EventsApplication.Controllers
 
             Account userLoggedIn = db.Login(wachtwoord, gebruikersnaam);
 
-            if (userLoggedIn != null && userLoggedIn.Administrator == true)
+            if (userLoggedIn != null && userLoggedIn.Status)
             {
                 Session["adminLogin"] = "true";
                 return RedirectToAction("HostingHome", "Hosting");

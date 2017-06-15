@@ -53,7 +53,7 @@
                         if (Session["adminLogin"] != null && Session["adminLogin"].ToString() == "true")
                         {
                             <li>@Html.ActionLink("Toegangscontrole", "Index", "Toegangs")</li>
-                            <li>@Html.ActionLink("Hostingsysteem", "Index", "Hosting")</li>
+                            <li>@Html.ActionLink("Hostingsysteem", "HostingHome", "Hosting")</li>
                         }
                    }
                 </ul>

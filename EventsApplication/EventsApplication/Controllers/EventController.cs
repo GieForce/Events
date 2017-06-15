@@ -30,9 +30,8 @@ namespace EventsApplication.Controllers
         {
             try
             {
-
                 // TODO: Add insert logic here
-                //Account evento = new Event(collection["Naam"], collection["Email"], collection["Activatiehash"], false);
+                //Event evento = new Event(collection["Naam"], collection["Email"], collection["Activatiehash"], false);
                 //eventrepository.Insert(evento);
                 return RedirectToAction("Index");
             }
