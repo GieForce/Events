@@ -44,7 +44,7 @@ namespace EventsApplication.Controllers
                 Account account = (Account)(Session["user"]);
                 accountRepository.GetById(account.Id);
                 BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
-                return View(bvm);
+                return PartialView("Bijdrages",bvm);
             }
             else
             {
@@ -61,7 +61,7 @@ namespace EventsApplication.Controllers
                 Account account = (Account)(Session["user"]);
                 accountRepository.GetById(account.Id);
                 BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
-                return PartialView("Admin", bvm);
+                return PartialView("Bijdrages", bvm);
             }
             else
             {
@@ -202,34 +202,6 @@ namespace EventsApplication.Controllers
 
         }
 
-        //public string CalculateMD5Hash(string input)
-
-        //{
-        //    // step 1, calculate MD5 hash from input
-
-        //    MD5 md5 = System.Security.Cryptography.MD5.Create();
-
-        //    byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
-
-        //    byte[] hash = md5.ComputeHash(inputBytes);
-
-
-        //    // step 2, convert byte array to hex string
-
-        //    StringBuilder sb = new StringBuilder();
-
-        //    for (int i = 0; i < hash.Length; i++)
-
-        //    {
-
-        //        sb.Append(i.ToString("X2"));
-
-        //    }
-
-        //    return sb.ToString();
-
-        //}
-
         [HttpPost]
         public ActionResult GiveALike(int id)
         {       
@@ -240,8 +212,6 @@ namespace EventsApplication.Controllers
             try
             {
                 repository.InsertLike(new AccountBijdrage(account.Id, id, 1, 0));
-
-
                 return PartialView("Bijdrages", bvm);
             }
 
@@ -306,7 +276,7 @@ namespace EventsApplication.Controllers
                 Account account = (Account)(Session["user"]);
                 accountRepository.GetById(account.Id);
                 BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
-                return PartialView("Admin", bvm);
+                return PartialView("Bijdrages", bvm);
             }
 
             catch

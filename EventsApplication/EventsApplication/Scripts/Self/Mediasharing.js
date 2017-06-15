@@ -14,19 +14,7 @@
                     $loading.hide();
                 });
         });
-    $("#Reportedposts").on("click",
-        function () {
-            $("#AdminPanel").html("");
-            $loading.show();
-            $.ajax({
-                    url: "/Mediasharing/AdminPanel",
-                    type: "GET"
-                })
-                .done(function (partialViewResult) {
-                    $("#AdminPanel").html(partialViewResult);
-                    $loading.hide();
-                });
-        });
+    
     $("#ShowPostsById").on("click",
         function () {
             $("#showPosts").html("");
@@ -199,5 +187,17 @@
                 });
         });
 
-
+    $("#Reportedposts").on("click",
+        function () {
+            $("#showPosts").html("");
+            $loading.show();
+            $.ajax({
+                    url: "/Mediasharing/AdminPanel",
+                    type: "GET"
+                })
+                .done(function (partialViewResult) {
+                    $("#showPosts").html(partialViewResult);
+                    $loading.hide();
+                });
+        });
 }); 

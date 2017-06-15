@@ -29,6 +29,13 @@
                     <li>
                         <a href="#" id="ShowAccount">Mijn Account</a>
                     </li>
+                    @if (Model.account.Status == true)
+                    {
+                        <li>
+                            <a href="#" id="Reportedposts">Reported posts</a>
+                        </li>
+                    }
+                    
                     <li>
                         @Html.ActionLink("Uitloggen", "Logout", "Account")
                     </li>

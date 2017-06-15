@@ -360,13 +360,12 @@ namespace EventsApplication.App_DAL
 
             using (SqlConnection connection = Connection.SQLconnection)
             {
-                string query = "SELECT c.bijdrage_id, c.naam, b.*, be.*, br.*, a.* FROM BIJDRAGE b " +
-                               "LEFT JOIN CATEGORIE c on b.ID = c.bijdrage_id " +
-                               "LEFT JOIN BESTAND be on b.ID = be.bijdrage_id " +
-                               "LEFT JOIN BERICHT br on b.ID = br.bijdrage_id " +
-                               "LEFT JOIN ACCOUNT a on b.account_id = a.ID " +
-                               "where be.bijdrage_id = (SELECT ab.bijdrage_id FROM ACCOUNT_BIJDRAGE ab LEFT JOIN bijdrage b ON ab.bijdrage_id = b.ID where ongewenst >= 1) or br.bijdrage_id = (SELECT ab.bijdrage_id FROM ACCOUNT_BIJDRAGE ab LEFT JOIN bijdrage b ON ab.bijdrage_id = b.ID where ongewenst >= 1)";
-
+                string query =
+                    "SELECT c.bijdrage_id, c.naam, b.*, be.*, br.*, a.*, ab.* FROM ACCOUNT_BIJDRAGE ab " +
+                    "LEFT JOIN BIJDRAGE b on ab.bijdrage_id = b.ID LEFT JOIN CATEGORIE c on b.ID = c.bijdrage_id " +
+                    "LEFT JOIN BESTAND be on b.ID = be.bijdrage_id LEFT JOIN BERICHT br on b.ID = br.bijdrage_id " +
+                    "LEFT JOIN ACCOUNT a on b.account_id = a.ID " +
+                    "WHERE ab.ongewenst >= 1";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
