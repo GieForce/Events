@@ -4,9 +4,6 @@
     ViewBag.Title = "EventCreate";
 }
 @Styles.Render("/content/home.css")
-<head>
-    <link href="~/Content/DateTime/bootstrap-datepicker3.min.css" rel="stylesheet" />
-</head>
 
 <h2>EventCreate</h2>
 
@@ -82,7 +79,6 @@
 
 
 <script>
-
     $('.input-daterange').datepicker({
         format: "dd/mm/yyyy",
         language: "nl",
@@ -91,7 +87,7 @@
     });
 </script>
 
-<script type="text/javascript">
+@*<script type="text/javascript">
        function ValidateNumber(e) {
            var evt = (e) ? e : window.event;
            var charCode = (evt.keyCode) ? evt.keyCode : evt.which;
@@ -100,4 +96,4 @@
            }
            return true;
        };
-    </script>
+    </script>*@

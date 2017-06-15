@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -14,11 +15,19 @@ namespace EventsApplication.Models
         private string categorie;
         private int hoeveelheid;
 
-
+        [RegularExpression(@"^.{1,}$", ErrorMessage = "Minimum 1 character required")]
+        [Required(ErrorMessage = "Dit veld mag niet leeg zijn")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "Dit veld mag niet leeg zijn")]
         public string Merk => merk;
+        [RegularExpression(@"^.{1,}$", ErrorMessage = "Minimum 1 character required")]
+        [Required(ErrorMessage = "Dit veld mag niet leeg zijn")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "Dit veld mag niet leeg zijn")]
         public string Serie => serie;
         public int Typenummer => typenummer;
         public decimal Prijs => prijs;
+        [RegularExpression(@"^.{1,}$", ErrorMessage = "Minimum 1 character required")]
+        [Required(ErrorMessage = "Dit veld mag niet leeg zijn")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "Dit veld mag niet leeg zijn")]
         public string Categorie => categorie;
         public int Hoeveelheid => hoeveelheid;
 

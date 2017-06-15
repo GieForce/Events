@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using EventsApplication.App_DAL;
+using System.ComponentModel.DataAnnotations;
 
 namespace EventsApplication.Models
 {
@@ -25,10 +26,12 @@ namespace EventsApplication.Models
             this.naam = naam;
         }
 
+        
         public ProductCat(string naam)
         {
             this.naam = naam;
         }
+
 
         public ProductCat(List<ProductCat> subcats, string naam)
         {

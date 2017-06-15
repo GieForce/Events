@@ -9,6 +9,8 @@
 }
 <head>
     <link href="~/Content/DateTime/bootstrap-datepicker3.min.css" rel="stylesheet" />
+        <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 </head>
 <h2>Reserveren</h2>
 <hr />
@@ -32,12 +34,15 @@
         <div class="row">
             <div class="col-md-3">
                 @Html.EditorFor(x => Model.Voornaam, new { htmlAttributes = new { @class = "form-control textboks" } })
+                @Html.ValidationMessageFor(model => model.Voornaam, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-2">
                 @Html.EditorFor(x => Model.Tussenvoegsel, new { htmlAttributes = new { @class = "form-control textboks" } })
+                @Html.ValidationMessageFor(model => model.Tussenvoegsel, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-3">
                 @Html.EditorFor(x => Model.Achternaam, new { htmlAttributes = new { @class = "form-control textboks" } })
+                @Html.ValidationMessageFor(model => model.Achternaam, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -53,9 +58,11 @@
         <div class="row">
             <div class="col-md-3">
                 @Html.EditorFor(x => Model.Straat, new { htmlAttributes = new { @class = "form-control textboks" } })
+                @Html.ValidationMessageFor(model => model.Straat, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-1">
                 @Html.EditorFor(x => Model.Huisnummer, new { htmlAttributes = new { @class = "form-control textboks" } })
+                @Html.ValidationMessageFor(model => model.Huisnummer, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -67,6 +74,7 @@
         <div class="row">
             <div class="col-md-3">
                 @Html.EditorFor(x => Model.Woonplaats, new { htmlAttributes = new { @class = "form-control textboks" } })
+                @Html.ValidationMessageFor(model => model.Woonplaats, "", new { @class = "text-danger" })
             </div>
         </div>
         <hr/>
