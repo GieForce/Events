@@ -53,7 +53,7 @@
                         if (Session["adminLogin"] != null && Session["adminLogin"].ToString() == "true")
                         {
                             <li>@Html.ActionLink("Toegangscontrole", "Index", "Toegangs")</li>
-                            <li>@Html.ActionLink("Hostingsysteem", "Index", "Hosting")</li>
+                            <li>@Html.ActionLink("Hostingsysteem", "HostingHome", "Hosting")</li>
                         }
                    }
                 </ul>
@@ -72,9 +72,13 @@
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/jqueryval")
 @RenderSection("scripts", required: false)
  
 
 </body>
-<head><script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script></head>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+
+</head>
 </html>

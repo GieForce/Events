@@ -8,6 +8,10 @@
 
 @using (Html.BeginForm()) 
 {
+    <head>
+        <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    </head>
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
@@ -72,7 +76,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "ProductIndex")
 </div>
 
 <script type="text/javascript">
