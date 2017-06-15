@@ -353,6 +353,71 @@ namespace EventsApplication.App_DAL
             }
         }
 
+
+        public List<Bijdrage> GetAllReportedBijdrages()
+        {
+            List<Bijdrage> bijdrageList = new List<Bijdrage>();
+
+            using (SqlConnection connection = Connection.SQLconnection)
+            {
+                string query = "SELECT c.bijdrage_id, c.naam, b.*, be.*, br.*, a.* FROM BIJDRAGE b " +
+                               "LEFT JOIN CATEGORIE c on b.ID = c.bijdrage_id " +
+                               "LEFT JOIN BESTAND be on b.ID = be.bijdrage_id " +
+                               "LEFT JOIN BERICHT br on b.ID = br.bijdrage_id " +
+                               "LEFT JOIN ACCOUNT a on b.account_id = a.ID " +
+                               "where be.bijdrage_id = (SELECT ab.bijdrage_id FROM ACCOUNT_BIJDRAGE ab LEFT JOIN bijdrage b ON ab.bijdrage_id = b.ID where ongewenst >= 1) or br.bijdrage_id = (SELECT ab.bijdrage_id FROM ACCOUNT_BIJDRAGE ab LEFT JOIN bijdrage b ON ab.bijdrage_id = b.ID where ongewenst >= 1)";
+
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Bijdrage bijdrage = CreateBijdrageFromReader(reader, connection);
+                            bijdrageList.Add(bijdrage);
+                        }
+                    }
+
+                }
+
+                foreach (Bijdrage bijdrage in bijdrageList)
+                {
+                    string query2 =
+                        "SELECT ab.* FROM ACCOUNT_BIJDRAGE ab LEFT JOIN bijdrage b ON ab.bijdrage_id = b.ID";
+                    using (SqlCommand command = new SqlCommand(query2, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+
+                                string ab = reader["id"].ToString();
+                                string ab1 = reader["account_id"].ToString();
+                                string ab2 = reader["bijdrage_id"].ToString();
+                                string ab3 = reader["like"].ToString();
+                                string ab4 = reader["ongewenst"].ToString();
+
+                                if (bijdrage.Id == Convert.ToInt32(ab2))
+                                {
+                                    AccountBijdrage accountBijdrage1 = new AccountBijdrage(Convert.ToInt32(ab), Convert.ToInt32(ab1),
+                                        Convert.ToInt32(ab2), Convert.ToInt32(ab3),
+                                        Convert.ToInt32(ab4));
+                                    bijdrage.AccountBijdrage.Add(accountBijdrage1);
+                                }
+                                else
+                                {
+                                    continue;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return bijdrageList;
+        }
+
+
         private Bijdrage CreateBijdrageFromReader(SqlDataReader reader, SqlConnection connection)
         {
             AccountRepository accountRepository = new AccountRepository(new AccountContext());

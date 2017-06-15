@@ -132,12 +132,18 @@ namespace EventsApplication.Controllers
 
             Account userLoggedIn = db.Login(wachtwoord, gebruikersnaam);
             
-            if (userLoggedIn != null)
+            if (userLoggedIn != null && userLoggedIn.Status == true)
+            {
+                Session["user"] = userLoggedIn;
+                return RedirectToAction("AdminIndex", "MediaSharing");
+            }
+            else if (userLoggedIn != null && userLoggedIn.Status == false)
             {
                 Session["user"] = userLoggedIn;
                 return RedirectToAction("Index", "MediaSharing");
             }
-            else
+
+            else 
             {
                 return View("Error");
             }

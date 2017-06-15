@@ -56,30 +56,30 @@
                         </div>
                         <h6 class="text-muted time"><span> @item.Datum.DayOfWeek - @item.Datum.Day @item.Datum.ToString("MMMM", CultureInfo.InvariantCulture)</span></h6>
                     </div>
-                    @if (item.Account.Id == account.Id)
-                    {
+                    @*@if (item.Account.Id == account.Id)
+                    {*@
                         <div class="dropdown pull-right">
                             <span class="dropdown-toggle" type="button" data-toggle="dropdown">
                                 <span class="[ glyphicon glyphicon-chevron-down ]"></span>
                             </span>
+
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#" id="@item.Id"  class="delete" data-item="@item.Id" >Delete</a></li> 
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Edit</a></li>
+                                <li><a href="#" id="@item.Id" class="Admindelete" data-item="@item.Id">Delete</a></li>
                             </ul>
 
                         </div>
-                    }
+                    @*}*@
                 </div>
                 <div class="post-description">
                     <div class="col-md-12">
                         <div class="thumbnail">
-                            
+
                             @{ string filelocation = "~/Content/Images/" + item.Bestandlocatie + ".jpg";}
-                            <img src="@Url.Content(filelocation)"/>
+                            <img src="@Url.Content(filelocation)" />
                         </div>
                     </div>
                     <div class="stats">
-                        <a href="#" class="btn btn-default stat-item likePost" data-item="@item.Id">
+                        <a href="#">
                             @{ int likes = item.AccountBijdrage.Count(x => x.Like == 1); }
                             <i class="fa fa-thumbs-up icon"></i>@likes
                         </a>
@@ -90,17 +90,15 @@
                                 @categorie.Naam
                             }
                         </a>
-                        
-                        <a href="#" class="btn btn-default stat-item reportPost" data-item="@item.Id">
-                            <i class="fa fa-ban icon"></i>Rapporteren
-                        </a>
+
+           
                     </div>
                 </div>
                 <div class="post-footer">
                     <div class="input-group addPostForm">
                         <input class="form-control postText-@item.Id" placeholder="Add a comment" type="text">
                         <span class="input-group-addon">
-                            <a href="javascript:void(0);" class="addPost" data-item="@item.Id"><i class="fa fa-edit"></i></a>
+                            <a href="" class="addPost" data-item="@item.Id"><i class="fa fa-edit"></i></a>
                         </span>
                     </div>
                     <div>
@@ -114,5 +112,6 @@
                 </div>
             </div>
         </div>
-    }
+                                }
 </div>
+

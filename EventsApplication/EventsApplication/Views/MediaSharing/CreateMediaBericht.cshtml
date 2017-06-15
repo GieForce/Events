@@ -1,5 +1,7 @@
 ﻿@model EventsApplication.ViewModels.MediaBerichtViewModel
 
+
+
 <div class="col-md-8 col-md-offset-4">
     @using (Html.BeginForm("CreateNewMediaBericht", "MediaSharing", FormMethod.Post, new {enctype = "multipart/form-data"}))
     {
@@ -10,14 +12,19 @@
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-            @Html.DropDownListFor(m => m.selectedCategorieId, new SelectList(Model.categorieList, "ID", "naam", "value"), new {@class="form-control"})
+     
+
+            @Html.DropDownListFor(m => m.selectedCategorieId, new SelectList(Model.categorieList, "ID", "naam", "value"), new {@class="form-control"})    
             <form method="post" enctype="multipart/form-data">
   
                 <label for="file">Filename:</label>
                 <input type="file" name="file" id="file" accept="image/jpeg,image/gif,image/png" />
-
+                
+               
                 <input type="submit" />
             </form>
         </div>
+
+       
     }
 </div>

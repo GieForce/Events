@@ -51,6 +51,11 @@ namespace EventsApplication.Controllers
         {
             return context.LoadBerichtenByPostId(id);
         }
+        public List<Bijdrage> GetallreportedBijdrages()
+        {
+            return context.GetAllReportedBijdrages();
+        }
+
 
         public bool InsertMediaBericht(int categorieId, string bestandlocatie, int accountid)
         {

@@ -21,7 +21,7 @@ namespace EventsApplication.App_DAL
         bool InsertComment(int id, int accountid, string text);
         int getLatestBijdrageID();
         List<Bijdrage> GetAllBijdrages();
-
+        List<Bijdrage> GetAllReportedBijdrages();
         List<Bijdrage> GetAllBijdragesByUserId(int userid);
         List<Bericht> LoadBerichtenByPostId(int id);
     
