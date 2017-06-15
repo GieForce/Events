@@ -36,6 +36,21 @@ namespace EventsApplication.Controllers
                 return View("Error");
             }
         }
+        public ActionResult AdminIndex()
+        {
+            if (Session["user"] != null)
+            {
+                List<Bijdrage> bijdrages = repository.GetallreportedBijdrages();
+                Account account = (Account)(Session["user"]);
+                accountRepository.GetById(account.Id);
+                BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
+                return View(bvm);
+            }
+            else
+            {
+                return View("Error");
+            }
+        }
 
         public ActionResult AdminPanel()
         {
@@ -281,6 +296,27 @@ namespace EventsApplication.Controllers
             }
 
         }
-       
+
+        public ActionResult AdminDeletePosts(int id)
+        {
+
+            try
+            {
+                repository.DeletePost(id);
+                List<Bijdrage> bijdrages = repository.GetAllBijdrages();
+                Account account = (Account)(Session["user"]);
+                accountRepository.GetById(account.Id);
+                BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
+                return PartialView("Admin", bvm);
+            }
+
+            catch
+            {
+                return View("Error");
+
+            }
+
+        }
+
     }
 }

@@ -135,7 +135,7 @@ namespace EventsApplication.Controllers
             if (userLoggedIn != null && userLoggedIn.Status == true)
             {
                 Session["user"] = userLoggedIn;
-                return RedirectToAction("AdminPanel", "MediaSharing");
+                return RedirectToAction("AdminIndex", "MediaSharing");
             }
             else if (userLoggedIn != null && userLoggedIn.Status == false)
             {

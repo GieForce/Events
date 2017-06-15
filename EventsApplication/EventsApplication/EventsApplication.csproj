@@ -417,6 +417,7 @@
     <Content Include="Views\Hosting\ProductDetails.cshtml" />
     <Content Include="Views\MediaSharing\Categorie.cshtml" />
     <Content Include="Views\MediaSharing\Admin.cshtml" />
+    <Content Include="Views\MediaSharing\AdminIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
