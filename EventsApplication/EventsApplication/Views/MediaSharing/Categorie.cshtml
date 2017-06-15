@@ -1,0 +1,17 @@
+﻿@model EventsApplication.ViewModels.MediaBerichtViewModel
+  
+
+<link href="@Url.Content("~/Content/newCategorie.css")" rel="stylesheet" type="text/css" />
+
+<div class="modal-header">
+    <span class="close">&times;</span>
+    <h2>Nieuwe Categorie</h2>
+</div>
+<div class="modal-body">
+    @Html.TextBoxFor(m => m.categorie.Naam, new {@class = "form-control", id ="createNewCategorie", placeholder ="categorie"})
+    <!-- <input type="text" name="text" id="text"/> -->
+</div>
+<div class="modal-footer">
+    <button id="myBtnVoegToe" class="btnVoegToe">Voeg Toe</button>
+              
+</div>

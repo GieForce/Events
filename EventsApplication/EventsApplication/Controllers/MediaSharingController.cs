@@ -37,6 +37,24 @@ namespace EventsApplication.Controllers
             }
         }
 
+        public ActionResult AdminPanel()
+        {
+            if (Session["user"] != null)
+            {
+                System.Threading.Thread.Sleep(2500);
+                List<Bijdrage> bijdrages = repository.GetallreportedBijdrages();
+                Account account = (Account)(Session["user"]);
+                accountRepository.GetById(account.Id);
+                BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
+                return PartialView("Admin", bvm);
+            }
+            else
+            {
+                return View("Error");
+            }
+        }
+
+
         public ActionResult ShowPosts()
         {
             System.Threading.Thread.Sleep(2500);
@@ -105,6 +123,33 @@ namespace EventsApplication.Controllers
             MediaBerichtViewModel bvm = new MediaBerichtViewModel() { categorieList = categorieList, account = account };
             return PartialView("CreateMediaBericht", bvm);
         }
+        [HttpPost]
+        public ActionResult CreateNewCategorie(MediaBerichtViewModel mvm)
+        {
+            try
+            {
+                Account account = (Account)(Session["user"]);
+                accountRepository.GetById(account.Id);
+                try
+                {
+                    categorieRepository.Insert(new Categorie(0, 0, mvm.categorie.Naam));
+
+                    return RedirectToAction("Index", "MediaSharing");
+                }
+
+                catch
+                {
+
+                    return RedirectToAction("CreateNewMediaBericht", "MediaSharing");
+                }
+
+            }
+            catch
+            {
+                return View("Error");
+            }
+        }
+
 
         [HttpPost]
         public ActionResult CreateNewMediaBericht(HttpPostedFileBase file, MediaBerichtViewModel mvm)
@@ -130,6 +175,7 @@ namespace EventsApplication.Controllers
             }
         }
 
+ 
         [HttpPost]
         public ActionResult CreateComment(string id, string text)
         {
@@ -181,15 +227,37 @@ namespace EventsApplication.Controllers
             {
                 repository.InsertLike(new AccountBijdrage(account.Id, id, 1, 0));
 
-           
-                return PartialView("Berichten", bvm);
+
+                return PartialView("Bijdrages", bvm);
             }
 
             catch
             {
                 return RedirectToAction("Index", "MediaSharing");
             }
-         
+
+        }
+
+        [HttpPost]
+        public ActionResult Report(int id)
+        {
+            List<Bijdrage> bijdrages = repository.GetAllBijdrages();
+            Account account = (Account)(Session["user"]);
+            accountRepository.GetById(account.Id);
+            BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
+            try
+            {
+                repository.InsertLike(new AccountBijdrage(account.Id, id, 0, 1));
+
+
+                return PartialView("Bijdrages", bvm);
+            }
+
+            catch
+            {
+                return RedirectToAction("Index", "MediaSharing");
+            }
+
         }
 
 

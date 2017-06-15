@@ -68,6 +68,20 @@
                 });
         });
 
+    $("#btnVoegToe").on("click",
+        function () {
+     //       $("#CreateNewCategorie").html("");
+       //     $loading.show();
+            $.ajax({
+                    url: "/Mediasharing/CreateNewCategorie",
+                    type: "POST"
+                })
+                .done(function (partialViewResult) {
+                    $("#CreateNewBericht").html(partialViewResult);
+                    $loading.hide();
+                });
+        });
+
     $(".ShowCommentsById").on("click",
         function () {
             var $targetItem = $(this).attr("data-item");
@@ -125,11 +139,27 @@
 
     $(".likePost").on("click",
         function () {
-            //         $("#showPosts").html("");
-            //      $loading.show();
+                     $("#showPosts").html("");
+                  $loading.show();
             var $targetItem = $(this).attr("data-item");
             $.ajax({
                     url: "/Mediasharing/GiveALike/" + $targetItem,
+                    type: "POST"
+                })
+                .done(function (partialViewResult) {
+                    $("#showPosts").html(partialViewResult);
+                    $loading.hide();
+                });
+        });
+
+
+    $(".reportPost").on("click",
+        function () {
+            $("#showPosts").html("");
+            $loading.show();
+            var $targetItem = $(this).attr("data-item");
+            $.ajax({
+                    url: "/Mediasharing/Report/" + $targetItem,
                     type: "POST"
                 })
                 .done(function (partialViewResult) {

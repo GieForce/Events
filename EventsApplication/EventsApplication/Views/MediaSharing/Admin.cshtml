@@ -62,9 +62,9 @@
                             <span class="dropdown-toggle" type="button" data-toggle="dropdown">
                                 <span class="[ glyphicon glyphicon-chevron-down ]"></span>
                             </span>
+
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#" id="@item.Id"  class="delete" data-item="@item.Id" >Delete</a></li> 
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Edit</a></li>
+                                <li><a href="#" id="@item.Id" class="delete" data-item="@item.Id">Delete</a></li>
                             </ul>
 
                         </div>
@@ -73,13 +73,13 @@
                 <div class="post-description">
                     <div class="col-md-12">
                         <div class="thumbnail">
-                            
+
                             @{ string filelocation = "~/Content/Images/" + item.Bestandlocatie + ".jpg";}
-                            <img src="@Url.Content(filelocation)"/>
+                            <img src="@Url.Content(filelocation)" />
                         </div>
                     </div>
                     <div class="stats">
-                        <a href="#" class="btn btn-default stat-item likePost" data-item="@item.Id">
+                        <a href="#">
                             @{ int likes = item.AccountBijdrage.Count(x => x.Like == 1); }
                             <i class="fa fa-thumbs-up icon"></i>@likes
                         </a>
@@ -90,10 +90,8 @@
                                 @categorie.Naam
                             }
                         </a>
-                        
-                        <a href="#" class="btn btn-default stat-item reportPost" data-item="@item.Id">
-                            <i class="fa fa-ban icon"></i>Rapporteren
-                        </a>
+
+           
                     </div>
                 </div>
                 <div class="post-footer">
@@ -114,5 +112,6 @@
                 </div>
             </div>
         </div>
-    }
+                                }
 </div>
+

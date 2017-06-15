@@ -63,11 +63,11 @@ namespace EventsApplication.App_DAL
             {
                 using (SqlConnection connection = Connection.SQLconnection)
                 {
-                    string query = "INSERT INTO Categorie (bijdrage_id, categorie_id, naam) VALUES (@param1, @param2, @param3)";
+                    string query = "INSERT INTO Categorie (bijdrage_id, categorie_id, naam) VALUES ((select max(bijdrage_id), @param2, @param3)";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@param1", categorie.Id);
+                   //     command.Parameters.AddWithValue("@param1", categorie.Id);
                         command.Parameters.AddWithValue("@param2", categorie.CategorieId);
                         command.Parameters.AddWithValue("@param3", categorie.Naam);
                         command.ExecuteNonQuery();
