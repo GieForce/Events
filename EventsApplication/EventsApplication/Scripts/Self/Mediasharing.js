@@ -14,6 +14,7 @@
                     $loading.hide();
                 });
         });
+    
     $("#ShowPostsById").on("click",
         function () {
             $("#showPosts").html("");
@@ -68,6 +69,20 @@
                 });
         });
 
+    $("#btnVoegToe").on("click",
+        function () {
+     //       $("#CreateNewCategorie").html("");
+       //     $loading.show();
+            $.ajax({
+                    url: "/Mediasharing/CreateNewCategorie",
+                    type: "POST"
+                })
+                .done(function (partialViewResult) {
+                    $("#CreateNewBericht").html(partialViewResult);
+                    $loading.hide();
+                });
+        });
+
     $(".ShowCommentsById").on("click",
         function () {
             var $targetItem = $(this).attr("data-item");
@@ -89,7 +104,10 @@
                 });
         });
     $(".addPost").on("click",
-        function () {
+        function (event) {
+
+            event.preventDefault();
+
             var $targetItem = $(this).attr("data-item");
             var $classname = $(".showComments" + "-" + $targetItem).attr("data-comment");
             var $text = $(".postText" + "-" + $targetItem).val();
@@ -108,6 +126,78 @@
                 });
         });
 
+    $(".delete").on("click",
+        function () {
+            //         $("#showPosts").html("");
+            //      $loading.show();
+            var $targetItem = $(this).attr("data-item");
+            $.ajax({
+                    url: "/Mediasharing/DeletePosts/" + $targetItem,
+                    type: "POST"
+                })
+                .done(function (partialViewResult) {
+                    $("#showPosts").html(partialViewResult);
+                    //$loading.hide();
+                });
+        });
+
+    $(".Admindelete").on("click",
+        function () {
+            //         $("#showPosts").html("");
+            //      $loading.show();
+            var $targetItem = $(this).attr("data-item");
+            $.ajax({
+                    url: "/Mediasharing/AdminDeletePosts/" + $targetItem,
+                    type: "POST"
+                })
+                .done(function (partialViewResult) {
+                    $("#Reportedposts").html(partialViewResult);
+                    //$loading.hide();
+                });
+        });
+
+    $(".likePost").on("click",
+        function () {
+                     $("#showPosts").html("");
+                  $loading.show();
+            var $targetItem = $(this).attr("data-item");
+            $.ajax({
+                    url: "/Mediasharing/GiveALike/" + $targetItem,
+                    type: "POST"
+                })
+                .done(function (partialViewResult) {
+                    $("#showPosts").html(partialViewResult);
+                    $loading.hide();
+                });
+        });
 
 
+    $(".reportPost").on("click",
+        function () {
+            $("#showPosts").html("");
+            $loading.show();
+            var $targetItem = $(this).attr("data-item");
+            $.ajax({
+                    url: "/Mediasharing/Report/" + $targetItem,
+                    type: "POST"
+                })
+                .done(function (partialViewResult) {
+                    $("#showPosts").html(partialViewResult);
+                    $loading.hide();
+                });
+        });
+
+    $("#Reportedposts").on("click",
+        function () {
+            $("#showPosts").html("");
+            $loading.show();
+            $.ajax({
+                    url: "/Mediasharing/AdminPanel",
+                    type: "GET"
+                })
+                .done(function (partialViewResult) {
+                    $("#showPosts").html(partialViewResult);
+                    $loading.hide();
+                });
+        });
 }); 

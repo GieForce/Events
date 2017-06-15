@@ -21,9 +21,6 @@
                         <a href="#" id="ShowPosts">Tijdlijn</a>
                     </li>
                     <li>
-                        <a href="#" id="ShowPostsById">Reacties</a>
-                    </li>
-                   <li>
                         <a href="#" id="ShowBijdragesByUserID">Mijn Posts</a>
                     </li>
                     <li>
@@ -32,6 +29,13 @@
                     <li>
                         <a href="#" id="ShowAccount">Mijn Account</a>
                     </li>
+                    @if (Model.account.Status == true)
+                    {
+                        <li>
+                            <a href="#" id="Reportedposts">Reported posts</a>
+                        </li>
+                    }
+                    
                     <li>
                         @Html.ActionLink("Uitloggen", "Logout", "Account")
                     </li>
@@ -41,7 +45,7 @@
                 <button class="btn btn-block">
                     <div class="row">
                         <div class="col-md-3">
-                            <img class="img-circle accountimage" src="https://lh3.googleusercontent.com/-CxXg7_7ylq4/AAAAAAAAAAI/AAAAAAAAAQ8/LhCIKQC5Aq4/s46-c-k-no/photo.jpg" alt="Mouse0270" />
+                            @*<img class="img-circle accountimage" src="https://lh3.googleusercontent.com/-CxXg7_7ylq4/AAAAAAAAAAI/AAAAAAAAAQ8/LhCIKQC5Aq4/s46-c-k-no/photo.jpg" alt="Mouse0270" />*@
                         </div>
                         <div class="col-md-9 accountname">
                             <h3>@Model.account.Gebruikersnaam</h3>

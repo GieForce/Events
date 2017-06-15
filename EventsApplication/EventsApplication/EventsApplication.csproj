@@ -244,6 +244,7 @@
     <Content Include="Content\Login.css" />
     <Content Include="Content\Media.css" />
     <Content Include="Content\navbar.css" />
+    <Content Include="Content\newCategorie.css" />
     <Content Include="Content\Pictures\background3.jpg" />
     <Content Include="Content\RFID.css" />
     <Content Include="Content\tag.css" />
@@ -342,6 +343,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\popUp.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\tag.js" />
@@ -413,6 +415,7 @@
     <Content Include="Views\Hosting\EventIndex.cshtml" />
     <Content Include="Views\Hosting\LocatieEdit.cshtml" />
     <Content Include="Views\Hosting\ProductDetails.cshtml" />
+    <Content Include="Views\MediaSharing\Categorie.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

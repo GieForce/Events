@@ -62,9 +62,8 @@
                             <span class="dropdown-toggle" type="button" data-toggle="dropdown">
                                 <span class="[ glyphicon glyphicon-chevron-down ]"></span>
                             </span>
-
                             <ul class="dropdown-menu" role="menu">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Delete</a></li>
+                                <li><a href="#" id="@item.Id"  class="delete" data-item="@item.Id" >Delete</a></li> 
                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Edit</a></li>
                             </ul>
 
@@ -80,7 +79,7 @@
                         </div>
                     </div>
                     <div class="stats">
-                        <a href="#" class="btn btn-default stat-item">
+                        <a href="#" class="btn btn-default stat-item likePost" data-item="@item.Id">
                             @{ int likes = item.AccountBijdrage.Count(x => x.Like == 1); }
                             <i class="fa fa-thumbs-up icon"></i>@likes
                         </a>
@@ -92,7 +91,7 @@
                             }
                         </a>
                         
-                        <a href="#" class="btn btn-default stat-item">
+                        <a href="#" class="btn btn-default stat-item reportPost" data-item="@item.Id">
                             <i class="fa fa-ban icon"></i>Rapporteren
                         </a>
                     </div>
@@ -101,7 +100,7 @@
                     <div class="input-group addPostForm">
                         <input class="form-control postText-@item.Id" placeholder="Add a comment" type="text">
                         <span class="input-group-addon">
-                            <a href="" class="addPost" data-item="@item.Id"><i class="fa fa-edit"></i></a>
+                            <a href="javascript:void(0);" class="addPost" data-item="@item.Id"><i class="fa fa-edit"></i></a>
                         </span>
                     </div>
                     <div>

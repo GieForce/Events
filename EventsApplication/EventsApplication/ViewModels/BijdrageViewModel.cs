@@ -42,6 +42,7 @@ namespace EventsApplication.ViewModels
     public class MediaBerichtViewModel
     {
         public Account account { get; set; }
+        public  Categorie categorie { get; set; }
         public List<Categorie> categorieList { get; set; }
         
         public string bestandslocatie { get; set; }

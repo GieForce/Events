@@ -27,9 +27,9 @@ namespace EventsApplication.Controllers.Repositorys
             return context.GetByBijdrageID(id);
         }
 
-        public bool Insert(Categorie bericht)
+        public bool Insert(Categorie categorie)
         {
-            return context.Insert(bericht);
+            return context.Insert(categorie);
         }
     }
 }

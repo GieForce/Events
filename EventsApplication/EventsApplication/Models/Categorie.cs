@@ -41,6 +41,9 @@ namespace EventsApplication.Models
             this.naam = naam;
         }
 
+        public  Categorie() { }
+     
+
         public override string ToString()
         {
             string method = Naam;

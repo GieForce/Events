@@ -36,6 +36,39 @@ namespace EventsApplication.Controllers
                 return View("Error");
             }
         }
+        public ActionResult AdminIndex()
+        {
+            if (Session["user"] != null)
+            {
+                List<Bijdrage> bijdrages = repository.GetallreportedBijdrages();
+                Account account = (Account)(Session["user"]);
+                accountRepository.GetById(account.Id);
+                BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
+                return PartialView("Bijdrages",bvm);
+            }
+            else
+            {
+                return View("Error");
+            }
+        }
+
+        public ActionResult AdminPanel()
+        {
+            if (Session["user"] != null)
+            {
+                System.Threading.Thread.Sleep(2500);
+                List<Bijdrage> bijdrages = repository.GetallreportedBijdrages();
+                Account account = (Account)(Session["user"]);
+                accountRepository.GetById(account.Id);
+                BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
+                return PartialView("Bijdrages", bvm);
+            }
+            else
+            {
+                return View("Error");
+            }
+        }
+
 
         public ActionResult ShowPosts()
         {
@@ -78,21 +111,7 @@ namespace EventsApplication.Controllers
             return PartialView("Create");
         }
 
-        //public ActionResult CreatePost(PostViewModel postmodel)
-        //{
-        //    Account account = (Account)(Session["user"]);
-        //    AccountBijdrage ab = new AccountBijdrage();
-        //    Bericht bericht = new Bericht(account, postmodel.bericht.Datum,"bericht", ab ,postmodel.bericht.Titel, postmodel.bericht.Inhoud );
-        //    Bestand bestand = new Bestand(account, postmodel.bestand.Datum, "bestand",ab, postmodel.categorie.Id, postmodel.bestand.Bestandlocatie, postmodel.bestand.Grootte);
-
-        //    Categorie categorie = new Categorie( account, DateTime.Now,"categorie" ,ab, postmodel.categorie.CategorieId, postmodel.categorie.Naam);
-        //    accountRepository.GetById(account.Id);
-        //    PostViewModel pvm = new PostViewModel() {account = account, bericht = bericht, categorie = categorie, bestand = bestand};
-
-        //    repository.insertPVM(pvm);
-        //    return PartialView("Create", pvm);
-        //}
-
+        
         public ActionResult LoadBerichtenByPostId(int id)
         {
             Account account = (Account)(Session["user"]);
@@ -119,6 +138,33 @@ namespace EventsApplication.Controllers
             MediaBerichtViewModel bvm = new MediaBerichtViewModel() { categorieList = categorieList, account = account };
             return PartialView("CreateMediaBericht", bvm);
         }
+        [HttpPost]
+        public ActionResult CreateNewCategorie(MediaBerichtViewModel mvm)
+        {
+            try
+            {
+                Account account = (Account)(Session["user"]);
+                accountRepository.GetById(account.Id);
+                try
+                {
+                    categorieRepository.Insert(new Categorie(0, 0, mvm.categorie.Naam));
+
+                    return RedirectToAction("Index", "MediaSharing");
+                }
+
+                catch
+                {
+
+                    return RedirectToAction("CreateNewMediaBericht", "MediaSharing");
+                }
+
+            }
+            catch
+            {
+                return View("Error");
+            }
+        }
+
 
         [HttpPost]
         public ActionResult CreateNewMediaBericht(HttpPostedFileBase file, MediaBerichtViewModel mvm)
@@ -128,12 +174,11 @@ namespace EventsApplication.Controllers
                 if (file.ContentLength > 0)
                 {
                     int latestbijdrage = repository.getLatestBijdrageID();
-                    string hash = CalculateMD5Hash(latestbijdrage.ToString());
-                    var path = Path.Combine(Server.MapPath("~/Content/Images"), hash + ".jpg");
+                    var path = Path.Combine(Server.MapPath("~/Content/Images"), latestbijdrage.ToString() + ".jpg");
                     file.SaveAs(path);
                     Account account = (Account)(Session["user"]);
                     accountRepository.GetById(account.Id);
-                    repository.InsertMediaBericht(mvm.selectedCategorieId, hash, account.Id);
+                    repository.InsertMediaBericht(mvm.selectedCategorieId, latestbijdrage.ToString(), account.Id);
                 }
 
                 return RedirectToAction("Index", "MediaSharing");
@@ -144,6 +189,7 @@ namespace EventsApplication.Controllers
             }
         }
 
+ 
         [HttpPost]
         public ActionResult CreateComment(string id, string text)
         {
@@ -153,34 +199,6 @@ namespace EventsApplication.Controllers
             List<Bericht> berichtenList = repository.LoadBerichtenByPostId(Convert.ToInt32(id));
             BerichtenViewModel bvm = new BerichtenViewModel { berichtenList = berichtenList, account = account };
             return PartialView("Comments", bvm);
-
-        }
-
-        public string CalculateMD5Hash(string input)
-
-        {
-            // step 1, calculate MD5 hash from input
-
-            MD5 md5 = System.Security.Cryptography.MD5.Create();
-
-            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
-
-            byte[] hash = md5.ComputeHash(inputBytes);
-
-
-            // step 2, convert byte array to hex string
-
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < hash.Length; i++)
-
-            {
-
-                sb.Append(hash[i].ToString("X2"));
-
-            }
-
-            return sb.ToString();
 
         }
 
@@ -194,40 +212,80 @@ namespace EventsApplication.Controllers
             try
             {
                 repository.InsertLike(new AccountBijdrage(account.Id, id, 1, 0));
-
-           
-                return PartialView("Berichten", bvm);
+                return PartialView("Bijdrages", bvm);
             }
 
             catch
             {
                 return RedirectToAction("Index", "MediaSharing");
             }
-         
+
+        }
+
+        [HttpPost]
+        public ActionResult Report(int id)
+        {
+            List<Bijdrage> bijdrages = repository.GetAllBijdrages();
+            Account account = (Account)(Session["user"]);
+            accountRepository.GetById(account.Id);
+            BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
+            try
+            {
+                repository.InsertLike(new AccountBijdrage(account.Id, id, 0, 1));
+
+
+                return PartialView("Bijdrages", bvm);
+            }
+
+            catch
+            {
+                return RedirectToAction("Index", "MediaSharing");
+            }
+
         }
 
 
         public ActionResult DeletePosts(int id)
         {
-            List<Bijdrage> bijdrages = repository.GetAllBijdrages();
-            Account account = (Account)(Session["user"]);
-            accountRepository.GetById(account.Id);
-       //     BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
+            
             try
             {
-
                 repository.DeletePost(id);
-
-                return RedirectToAction("Index", "MediaSharing");
+                List<Bijdrage> bijdrages = repository.GetAllBijdrages();
+                Account account = (Account)(Session["user"]);
+                accountRepository.GetById(account.Id);
+                BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
+                return PartialView("Bijdrages", bvm);
             }
 
             catch
             {
-                return RedirectToAction("Index", "MediaSharing");
+                return View("Error");
          
             }
 
         }
-       
+
+        public ActionResult AdminDeletePosts(int id)
+        {
+
+            try
+            {
+                repository.DeletePost(id);
+                List<Bijdrage> bijdrages = repository.GetAllBijdrages();
+                Account account = (Account)(Session["user"]);
+                accountRepository.GetById(account.Id);
+                BijdrageViewModel bvm = new BijdrageViewModel { bijdrageList = bijdrages, account = account };
+                return PartialView("Bijdrages", bvm);
+            }
+
+            catch
+            {
+                return View("Error");
+
+            }
+
+        }
+
     }
 }

@@ -65,5 +65,8 @@ namespace EventsApplication.Models
         {
             this.id = id;
         }
+
+        public Bijdrage() { }
+
     }
 }
