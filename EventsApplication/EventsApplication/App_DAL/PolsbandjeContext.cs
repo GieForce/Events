@@ -105,6 +105,49 @@ namespace EventsApplication.App_DAL.Interfaces
             }
         }
 
+        public void setPolsbandjeAanwezig(Polsbandje polsbandje)
+        {
+            try
+            {
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query = "UPDATE RESERVERING_POLSBANDJE SET aanwezig = 1 WHERE polsbandje_id=@polsbandjeID";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@polsbandjeID", polsbandje.Id);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        public void setPolsbandjeAfwezig(Polsbandje polsbandje)
+        {
+            try
+            {
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query = "UPDATE RESERVERING_POLSBANDJE SET aanwezig = 0 WHERE polsbandje_id=@polsbandjeID";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@barcode", polsbandje.Barcode);
+
+                        command.ExecuteNonQuery();
+                    }
+                    
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
         public void ConnectAccountWithRFID(string RFID, Polsbandje polsbandje, Account account)
         {
             try

@@ -374,8 +374,7 @@ namespace EventsApplication.App_DAL
                 Convert.ToBoolean(reader["geactiveerd"]),
                 Convert.ToString(reader["wachtwoord"]),
                 Convert.ToString(reader["telefoonnummer"]),
-                Convert.ToString(reader["barcode"]),
-                Convert.ToBoolean(reader["status"])
+                Convert.ToString(reader["barcode"])
             );
 
         }
