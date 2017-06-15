@@ -122,7 +122,7 @@ namespace EventsApplication.Controllers
             }
             else
             {
-                return View("Error");
+                return View();
             }
         }
 

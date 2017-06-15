@@ -231,11 +231,12 @@ namespace EventsApplication.Controllers
         [HttpPost]
         public ActionResult ProductCreate(FormCollection collection)
         {
-            int x = Convert.ToInt32(collection["Hoeveelheid"]); 
+            
 
             try
             {
-                if( x == 0)
+                int x = Convert.ToInt32(collection["Hoeveelheid"]);
+                if ( x == 0)
                 {
                     ViewBag.Error = "Voer een getal in";
                     return View();
@@ -256,9 +257,10 @@ namespace EventsApplication.Controllers
 
                 return RedirectToAction("ProductIndex");
             }
-            catch
+            catch(Exception e)
             {
-                return View();
+                ViewBag.Fout = e.ToString();
+                return View("Error");
             }
         }
 
