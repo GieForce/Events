@@ -89,7 +89,10 @@
                 });
         });
     $(".addPost").on("click",
-        function () {
+        function (event) {
+
+            event.preventDefault();
+
             var $targetItem = $(this).attr("data-item");
             var $classname = $(".showComments" + "-" + $targetItem).attr("data-comment");
             var $text = $(".postText" + "-" + $targetItem).val();
