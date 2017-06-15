@@ -156,6 +156,27 @@ namespace EventsApplication.Models
             this.status = status;
         }
 
+        public Account(int id, string gebruikersnaam, string email, string activatiehash, bool geactiveerd, string wachtwoord, string telefoonnummer, string barcode)
+        {
+            this.ID = id;
+            this.gebruikersnaam = gebruikersnaam;
+            this.email = email;
+            this.activatiehash = activatiehash;
+
+            if (geactiveerd == true)
+            {
+                this.geactiveerd = true;
+            }
+            else if (geactiveerd == false)
+            {
+                this.geactiveerd = false;
+            }
+            this.wachtwoord = wachtwoord;
+            this.telefoonnummer = telefoonnummer;
+            this.barcode = barcode;
+        }
+
+
         public Account(string gebruikersnaam, string email, string activatiehash, int geactiveerd, string wachtwoord, string telefoonnummer)
         {
             this.gebruikersnaam = gebruikersnaam;

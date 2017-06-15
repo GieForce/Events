@@ -7,8 +7,6 @@ using System.Web.Mvc;
 using EventsApplication.App_DAL.Interfaces;
 using EventsApplication.Controllers.Repositorys;
 using EventsApplication.ViewModels;
-using Phidgets;
-using Phidgets.Events;
 
 namespace EventsApplication.Controllers
 {
@@ -94,6 +92,62 @@ namespace EventsApplication.Controllers
             }
 
          }
+
+        public ActionResult AanwezigAfwezig()
+        {
+            if (Session["adminLogin"] != null || Session["adminLogin"].ToString() == "true")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("AdminLogin", "Account");
+            }
+        }
+
+        [HttpPost] //Actionresult scanning RFID
+        public ActionResult AanwezigAfwezig(string RFID)
+        {
+            Event huidigEvent = (Event)Session["event"];
+            ModelToViewModel.EventToEventViewModel(huidigEvent);
+
+            Account account = accountRepository.GetCompleteAccountsByRRFID(RFID);
+
+            if (account != null)
+            {
+                Polsbandje polsbandje = polsbandjeRepository.GetByAccountId(account);
+                Reservering reservering = reserveringRepository.GetById(polsbandje.ReserveringsId);
+
+                if (polsbandje.Aanwezig)
+                {
+                    polsbandjeRepository.setPolsbandjeAfwezig(polsbandje);
+                    Session["in-/uitcheck"] = "Status veranderd naar afwezig";
+                    return View();
+                }
+                else
+                {
+                    //Check if account made a reservation for current event
+                    if (reservering.EvenementIDReservering.ID1 == huidigEvent.ID1)
+                    {
+                        polsbandjeRepository.setPolsbandjeAanwezig(polsbandje);
+                        AccountViewModel acwm = ModelToViewModel.ConvertAccounttoViewModel(account);
+                        Session["in-/uitcheck"] = "Status veranderd naar aanwezig";
+                        return View(acwm);
+                    }
+                    else
+                    {
+                        return View("Error");
+                    }
+                }
+
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+
+
+        }
 
         // GET: Account present at festival
         public ActionResult Aanwezig()

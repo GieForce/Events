@@ -36,6 +36,15 @@ namespace EventsApplication.Controllers.Repositorys
             context.ConnectAccountWithRFID(RFID, polsbandje, account);
         }
 
+        public void setPolsbandjeAfwezig(Polsbandje polsbandje)
+        {
+            context.setPolsbandjeAfwezig(polsbandje);
+        }
+
+        public void setPolsbandjeAanwezig(Polsbandje polsbandje)
+        {
+            context.setPolsbandjeAanwezig(polsbandje);
+        }
         public void Delete(Polsbandje polsbandje)
         {
             context.Delete(polsbandje);

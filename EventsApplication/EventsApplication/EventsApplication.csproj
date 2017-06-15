@@ -77,10 +77,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Phidget21.NET, Version=2.1.8.243, Culture=neutral, PublicKeyToken=c2b1f2a3594bce52, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\S26C_ICT4Events\ICT4Events\ICT4Events\bin\Debug\Phidget21.NET.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -417,6 +413,7 @@
     <Content Include="Views\Hosting\ProductDetails.cshtml" />
     <Content Include="Views\MediaSharing\Categorie.cshtml" />
     <Content Include="Views\MediaSharing\CreateNewBericht.cshtml" />
+    <Content Include="Views\Toegangs\AanwezigAfwezig.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -430,17 +427,6 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="Phidget21COM">
-      <Guid>{50484945-4745-5453-0000-000000000000}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>1</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

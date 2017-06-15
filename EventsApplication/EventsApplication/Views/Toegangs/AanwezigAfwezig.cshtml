@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "AanwezigAfwezig";
+}
+
+<link rel="stylesheet" type="text/css" href="../Content/bootstrap.css" />
+<!-- Website CSS style -->
+<link href="https://fonts.googleapis.com/css?family=Pacifico&subset=latin-ext,vietnamese" rel="stylesheet">
+<!-- Website Font style -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&subset=latin-ext" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="~/Content/Login.css">
+<link rel="stylesheet" type="text/css" href="~/Content/Toegangscontrole.css">
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="box">
+        @if (Session["in-/uitcheck"] != null)
+        {
+            <p>@Session["in-/uitcheck"].ToString()</p>
+        }
+
+        <div class="row">
+            <div class="formgroup col-md-10 col-md-offset-1">
+                <label for="form4">Scan polsbandje:</label>
+                <input type="text" width="250" id="RFID" name="RFID" class="form-control" autofocus/>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="formgroup col-md-10 col-md-offset-1">
+                <input type="submit" value="Aanwezig/Afwezig" class="btn btn-default"/>
+            </div>
+        </div>
+    </div>
+}
+
