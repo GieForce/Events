@@ -72,6 +72,11 @@ namespace EventsApplication.Controllers
             return context.getLatestBijdrageID();
         }
 
+        public bool InsertPost(string titel, string inhoud, int accountid, int categorieId)
+        {
+            return context.InsertPost(titel, inhoud, accountid, categorieId);
+        }
+
         public bool InsertLike(AccountBijdrage accountBijdrage)
         {
             return context.InsertLike(accountBijdrage);

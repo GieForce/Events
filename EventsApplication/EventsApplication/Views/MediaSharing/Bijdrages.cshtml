@@ -37,6 +37,78 @@
     {
         <h4>U heeft nog geen posts geuploadt! <span class="glyphicon glyphicon-info-sign"></span></h4>
     }
+
+    @foreach (Bericht item in berichtList)
+    {
+        if (item.Titel != "")
+        {
+           <div class="container">
+                <div class="panel panel-white post panel-shadow">
+                    <div class="post-heading">
+                        <div class="pull-left image">
+                            <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">
+                        </div>
+                        <div class="pull-left meta">
+                            <div class="title h5">
+                                <a href="#"><b>@item.Account.Gebruikersnaam</b></a>
+                                made a post.
+                            </div>
+                            <h6 class="text-muted time"><span> @item.Datum.DayOfWeek - @item.Datum.Day @item.Datum.ToString("MMMM", CultureInfo.InvariantCulture)</span></h6>
+                        </div>
+                        
+                        @if (item.Account.Id == account.Id || account.Status)
+                        {
+                            
+                            <div class="dropdown pull-right">
+                                <span class="dropdown-toggle" type="button" data-toggle="dropdown">
+                                    <span class="[ glyphicon glyphicon-chevron-down ]"></span>
+                                </span>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#" id="@item.Id" class="delete" data-item="@item.Id">Delete</a></li>
+                                    
+                                </ul>
+
+                            </div>
+                        }
+                    </div>
+                    <div class="post-description">
+                        <div class="col-md-12">
+                            <h3 class="titelBericht">@item.Titel</h3>
+                            <h6 class="inhoudBericht">@item.Inhoud</h6>
+                        </div>
+                        <div class="stats">
+                            <a href="#" class="btn btn-default stat-item likePost" data-item="@item.Id">
+                                @{ int likes = item.AccountBijdrage.Count(x => x.Like == 1); }
+                                <i class="fa fa-thumbs-up icon"></i>@likes
+                            </a>
+                            <a href="#" class="btn btn-default stat-item reportPost" data-item="@item.Id">
+                                <i class="fa fa-ban icon"></i>Rapporteren
+                            </a>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <div class="input-group addPostForm">
+                            <input class="form-control postText-@item.Id" placeholder="Add a comment" type="text">
+                            <span class="input-group-addon">
+                                <a href="javascript:void(0);" class="addPost" data-item="@item.Id"><i class="fa fa-edit"></i></a>
+                            </span>
+                        </div>
+                        <div>
+                            <button class="btn btn-default commentsbutton ShowCommentsById" data-item="@item.Id">Load Comments <i class="fa fa-comments" aria-hidden="true"></i></button>
+                            <div style="display: none;" id="loadingcomments-@item.Id">
+                            </div>
+                            <div class="showComments-@item.Id" data-comment="@item.Id">
+                                <div class="showComments-@item.Id"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+
+
     @foreach (Bestand item in bestandList)
     {
         Categorie categorie = categorieList.Find(a => a.Id == item.CategorieId);
@@ -56,7 +128,7 @@
                         </div>
                         <h6 class="text-muted time"><span> @item.Datum.DayOfWeek - @item.Datum.Day @item.Datum.ToString("MMMM", CultureInfo.InvariantCulture)</span></h6>
                     </div>
-                    @if (item.Account.Id == account.Id)
+                    @if (item.Account.Id == account.Id || account.Status)
                     {
                         <div class="dropdown pull-right">
                             <span class="dropdown-toggle" type="button" data-toggle="dropdown">
@@ -64,10 +136,11 @@
                             </span>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="#" id="@item.Id"  class="delete" data-item="@item.Id" >Delete</a></li> 
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Edit</a></li>
+                                
                             </ul>
 
                         </div>
+
                     }
                 </div>
                 <div class="post-description">

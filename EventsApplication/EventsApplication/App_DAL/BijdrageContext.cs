@@ -319,6 +319,38 @@ namespace EventsApplication.App_DAL
             }
         }
 
+        public bool InsertPost(string titel, string inhoud, int accountid, int categorieId)
+        {
+            try
+            {
+                using (SqlConnection connection = Connection.SQLconnection)
+                {
+                    string query = "CreateNew";
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    command.CommandType = CommandType.StoredProcedure;
+
+
+                    command.Parameters.AddWithValue("@accountID", accountid);
+                    command.Parameters.AddWithValue("@datum", DateTime.Now);
+                    command.Parameters.AddWithValue("@soort", "bericht");
+                    command.Parameters.AddWithValue("@titel", titel);
+                    command.Parameters.AddWithValue("@inhoud", inhoud);
+                    command.Parameters.AddWithValue("@categorieID", categorieId);
+                    command.Parameters.AddWithValue("@bestandslocatie", "");
+                    command.Parameters.AddWithValue("@grootte", 0);
+                    command.Parameters.AddWithValue("@naam", "");
+                    command.Parameters.AddWithValue("@id", 0);
+                    command.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public bool InsertComment(int id, int accountid, string text)
         {
             
